@@ -15,7 +15,7 @@ then
     fi
 fi
 
-export CFG_FILES=`find .. -name '*.cfg'`
+CFG_FILES=`find .. -name '*.cfg'`
 if [ ! -d ../logs ]
 then
     mkdir ../logs
@@ -42,5 +42,6 @@ mctr ${CFG_FILES}
 
 LOG_FILES=`find ${TITAN_LOG_DIR} -name '*.log'`
 ttcn3_logmerge -o ${TITAN_LOG_DIR}/merged.log ${LOG_FILES}
+echo "log files were merged into ${TITAN_LOG_DIR}/merged.log"
 
 cd ${CURPWD}

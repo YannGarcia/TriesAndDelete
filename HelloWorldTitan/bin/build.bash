@@ -146,7 +146,7 @@ ADD_RUN_LINE_2='$a\\t@$(PWD)/../bin/$(EXECUTABLE) $(HOST) $(PORT)'
 sed --in-place "${ADD_RUN_LINE_1}" ./Makefile 
 sed --in-place "${ADD_RUN_LINE_2}" ./Makefile 
 ADD_RUN_LINE_1='$arun_d: all_d'
-ADD_RUN_LINE_2='$a\\t@gdb $(PWD)/../bin/$(EXECUTABLE) $(HOST) $(PORT)'
+ADD_RUN_LINE_2='$a\\t@gdb --args $(PWD)/../bin/$(EXECUTABLE) $(HOST) $(PORT)'
 sed --in-place "${ADD_RUN_LINE_1}" ./Makefile 
 sed --in-place "${ADD_RUN_LINE_2}" ./Makefile 
 
