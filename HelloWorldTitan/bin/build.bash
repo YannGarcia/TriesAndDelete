@@ -39,7 +39,7 @@ find .. -type f -name "*.log" -exec rm {} \;
 # Build XSD files if any and put them in objs directory
 if [ -d ../xsd ]
 then
-    export XSD_FILES=`find ../xsd -name '*.xsd'`
+    XSD_FILES=`find ../xsd -name '*.xsd'`
 
     if [ "${OSTYPE}" == "cygwin" ]
     then
@@ -55,7 +55,7 @@ fi
 # Build ASN.1 files if any and put them in objs directory
 if [ -d ../asn.1 ]
 then
-    export ASN1_FILES=`find ../asn.1 -name '*.asn*'`
+    ASN1_FILES=`find ../asn.1 -name '*.asn*'`
 
     if [ "${OSTYPE}" == "cygwin" ]
     then
@@ -80,7 +80,7 @@ done
 #done
 
 # Generate the list of the TTCN-3 files
-export TTCN_FILES=`find .. -name '*.ttcn*'`
+TTCN_FILES=`find .. -name '*.ttcn*'`
 
 # Sart ATS generation - Step 1
 if [ "${OSTYPE}" == "cygwin" ]
@@ -101,8 +101,8 @@ fi
 
 # Sart ATS generation - Step 2
 # Create working variables
-export CC_FILES=`find ../src -name '*.c*'`
-export CFG_FILES=`find ../etc -name '*.cfg'`
+CC_FILES=`find ../src -name '*.c*'`
+CFG_FILES=`find ../etc -name '*.cfg'`
 
 # Sart ATS generation - Step 3
 if [ "${OSTYPE}" == "cygwin" ]
@@ -129,8 +129,11 @@ ADD_INCLUDE='/CPPFLAGS = /a\\CPPFLAGS += -I../include -I$(HOME_INC) -I.'
 sed --in-place "${CXXFLAGS_DEBUG_MODE}" ./Makefile 
 sed --in-place "${LDFLAGS_DEBUG_MODE}" ./Makefile
 sed --in-place "${ADD_INCLUDE}" ./Makefile
+# Update clean clause
+CLEAN_LINE='s/$(RM) $(EXECUTABLE)/$(RM) ..\/bin\/$(EXECUTABLE)/g'
+sed --in-place "${CLEAN_LINE}" ./Makefile
 # Move binary file command
-export EXECUTABLE=MyExample
+EXECUTABLE=MyExample
 MV_CMD='s/all: $(TARGET) ;/all: $(TARGET) ; @if [ -f ..\/objs\/$(EXECUTABLE) ]; then mv ..\/objs\/$(EXECUTABLE) ..\/bin; fi ;/g'
 sed --in-place "${MV_CMD}" ./Makefile 
 # Add run command
@@ -138,8 +141,12 @@ ADD_HOST='/PLATFORM = /aHOST=127.0.0.1'
 ADD_PORT='/PLATFORM = /aPORT=12000'
 sed --in-place "${ADD_PORT}" ./Makefile
 sed --in-place "${ADD_HOST}" ./Makefile
-ADD_RUN_LINE_1='$arun: $(EXECUTABLE)'
-ADD_RUN_LINE_2='$a\\t@$(PWD)/$(EXECUTABLE) $(HOST) $(PORT)'
+ADD_RUN_LINE_1='$arun: all'
+ADD_RUN_LINE_2='$a\\t@$(PWD)/../bin/$(EXECUTABLE) $(HOST) $(PORT)'
+sed --in-place "${ADD_RUN_LINE_1}" ./Makefile 
+sed --in-place "${ADD_RUN_LINE_2}" ./Makefile 
+ADD_RUN_LINE_1='$arun_d: all_d'
+ADD_RUN_LINE_2='$a\\t@gdb $(PWD)/../bin/$(EXECUTABLE) $(HOST) $(PORT)'
 sed --in-place "${ADD_RUN_LINE_1}" ./Makefile 
 sed --in-place "${ADD_RUN_LINE_2}" ./Makefile 
 

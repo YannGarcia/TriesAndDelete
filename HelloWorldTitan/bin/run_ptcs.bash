@@ -14,14 +14,13 @@ then
     fi
 fi
 
-#cd ~/repo/dev/ttcn-3/AtsGtpv2C
-
 make all
-if [ "${OSTYPE}" == "cygwin" ]
-then
-    ../bin/SIPmsg.exe 127.0.0.1 12000
-else
-    ../bin/SIPmsg 127.0.0.1 12000
-fi
+make run
+#if [ "${OSTYPE}" == "cygwin" ]
+#then
+#    ../bin/SIPmsg.exe 127.0.0.1 12000
+#else
+#    ../bin/SIPmsg 127.0.0.1 12000
+#fi
 
 cd ${CURPWD}

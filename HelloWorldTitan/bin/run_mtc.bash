@@ -1,8 +1,9 @@
 #/bin/bash
-#set -x
+set -x
 
 clear
 
+TITAN_LOG_DIR=../log
 CURPWD=`pwd`
 if [ ! "${PWD##*/}" == "objs" ]
 then
@@ -15,8 +16,12 @@ then
 fi
 
 export CFG_FILES=`find .. -name '*.cfg'`
-export LOG_FILES=`find .. -name '*.log'`
-#rm ${LOG_FILES} /tmp/internal_tri.log
+if [ ! -d ../logs ]
+then
+    mkdir ../logs
+fi
+LOG_FILES=`find ${TITAN_LOG_DIR} -name '*.log'`
+mv ${LOG_FILES} ../logs
 
 #if [ "${OSTYPE}" == "cygwin" ]
 #then
@@ -33,9 +38,9 @@ export LOG_FILES=`find .. -name '*.log'`
 echo "> cmtc: to create the MTC server"
 echo "> smtc [module_name[[.control]|.testcase_name|.*]: when MyExample is connected, run the TCs in [EXECUTE] section"
 echo "> emtc: Terminate MTC."
-mctr ${CFG_FILES} 2>&1 3>&1 | tee ./console.log
+mctr ${CFG_FILES}
 
-export LOG_FILES=`find .. -name '*.log'`
-tcn3_logmerge -o merged.log ${LOG_FILES} # /tmp/internal_tri.log
+LOG_FILES=`find ${TITAN_LOG_DIR} -name '*.log'`
+ttcn3_logmerge -o ${TITAN_LOG_DIR}/merged.log ${LOG_FILES}
 
 cd ${CURPWD}
