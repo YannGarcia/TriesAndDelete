@@ -9,6 +9,7 @@ function f_exit {
     unset TTCN_FILES
     unset CC_FILES
     unset CFG_FILES
+    unset EXECUTABLE
     echo $1
     exit $2
 }
@@ -24,7 +25,11 @@ then
     fi
 fi
 # Remove everything
-rm -fr ../objs/*
+rm -fr ../objs/*.hh
+rm -fr ../objs/*.cc
+rm -fr ../objs/*.log
+rm -fr ../objs/*.o
+rm -fr ../objs/Makefile
 
 # Remove useless files
 find .. -type f -name "*~" -exec rm {} \;
@@ -73,6 +78,10 @@ done
 #do
 #    ln -sf $i ../src/`basename $i`
 #done
+
+# Generate the list of the TTCN-3 files
+export TTCN_FILES=`find .. -name '*.ttcn*'`
+
 # Sart ATS generation - Step 1
 if [ "${OSTYPE}" == "cygwin" ]
 then
@@ -91,9 +100,6 @@ else
 fi
 
 # Sart ATS generation - Step 2
-# Remove ovewritten source files
-rm ../objs/PCOType.cc
-rm ../objs/PCOType.hh
 # Create working variables
 export CC_FILES=`find ../src -name '*.c*'`
 export CFG_FILES=`find ../etc -name '*.cfg'`
@@ -124,9 +130,9 @@ sed --in-place "${CXXFLAGS_DEBUG_MODE}" ./Makefile
 sed --in-place "${LDFLAGS_DEBUG_MODE}" ./Makefile
 sed --in-place "${ADD_INCLUDE}" ./Makefile
 # Move binary file command
-#EXECUTABLE=MyExample
-#MV_CMD='s/ $(TARGET) ;/ $(TARGET) ; @if [ -f ../objs/$(EXECUTABLE) ]; then mv ../objs/$(EXECUTABLE) ../bin; fi ;'
-#sed --in-place "${MV_CMD}" ./Makefile 
+export EXECUTABLE=MyExample
+MV_CMD='s/all: $(TARGET) ;/all: $(TARGET) ; @if [ -f ..\/objs\/$(EXECUTABLE) ]; then mv ..\/objs\/$(EXECUTABLE) ..\/bin; fi ;/g'
+sed --in-place "${MV_CMD}" ./Makefile 
 # Add run command
 ADD_HOST='/PLATFORM = /aHOST=127.0.0.1'
 ADD_PORT='/PLATFORM = /aPORT=12000'
@@ -143,6 +149,4 @@ if [ "$?" == "1" ]
 then
     f_exit "Failed to generate ATS source code" 8
 fi
-EXECUTABLE=MyExample
-mv ../objs/$(EXECUTABLE) ../bin
 f_exit "Build done successfully" 0
