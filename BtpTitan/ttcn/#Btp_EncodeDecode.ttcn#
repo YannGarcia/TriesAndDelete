@@ -1,0 +1,11 @@
+module Btp_EncodeDecode {
+
+    import from Btp_TypesAndValues all;
+    
+    external function fx_enc_BtpPayload (BtpPayload p) return bitstring
+/        with {extension "prototype(convert)"}
+//    
+//    external function fx_dec_BtpPayload (inout bitstring b, out BtpPayload p) return integer
+//        with {extension "prototype(sliding)"}
+//        
+//}

@@ -1,9 +1,9 @@
-#/bin/bash
+#!/bin/bash
 set -x
 
 clear
 
-TITAN_LOG_DIR=../log
+TITAN_LOG_DIR=../logs
 CURPWD=`pwd`
 if [ ! "${PWD##*/}" == "objs" ]
 then
@@ -41,7 +41,10 @@ echo "> emtc: Terminate MTC."
 mctr ${CFG_FILES}
 
 LOG_FILES=`find ${TITAN_LOG_DIR} -name '*.log'`
-ttcn3_logmerge -o ${TITAN_LOG_DIR}/merged.log ${LOG_FILES}
-echo "log files were merged into ${TITAN_LOG_DIR}/merged.log"
+if [ "${TITAN_LOG_DIR}" != "" ]
+then
+    ttcn3_logmerge -o ${TITAN_LOG_DIR}/merged.log ${LOG_FILES}
+    echo "log files were merged into ${TITAN_LOG_DIR}/merged.log"
+fi
 
 cd ${CURPWD}

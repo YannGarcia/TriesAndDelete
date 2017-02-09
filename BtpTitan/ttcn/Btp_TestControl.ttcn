@@ -1,0 +1,10 @@
+module Btp_TestControl {
+    
+    import from Btp_TestCases all;
+    
+    control {
+        
+        execute(TC_BTP_PGA_BV_01());
+        
+    }
+}

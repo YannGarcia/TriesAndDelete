@@ -1,0 +1,48 @@
+module Btp_TestCases {
+    
+  import from Btp_TypesAndValues all;
+  import from Btp_Templates all;
+  import from Btp_TestSystem all;
+  //import from Btp_EncodeDecode all;
+  
+  external function fx_decvalue(in bitstring p_raw, out Frame p_frame) return integer;
+
+  testcase TC_BTP_PGA_BV_01() runs on ItsBtp system ItsBtpSystem {
+    var BtpInd v_btp_ind;
+
+    timer tc_ac := 15.0;
+        
+    map(mtc:btpPort, system:btpPort);
+        
+    tc_ac.start;
+    alt {
+      [] btpPort.receive(
+			 mw_btpInd(
+				   mw_btpA (
+					    ?,
+					    ?,
+					    ?
+					    ))) -> value v_btp_ind { 
+	tc_ac.stop; 
+	/*if (ischosen(v_btp_ind.msgIn.payload.decodedPayload.field1)) {
+	  var Frame v_frame;
+
+	  fx_decvalue(oct2bit(v_btp_ind.msgIn.payload.decodedPayload.field1), v_frame);
+	  log(match(v_frame, mw_frame));
+	  }*/
+	setverdict(pass); 
+      }
+      [] btpPort.receive { 
+	tc_ac.stop; 
+	setverdict(fail); 
+      }
+      [] tc_ac.timeout { setverdict(inconc); 
+	setverdict(fail);
+      }
+    } // End of 'alt' statement
+
+    unmap(mtc:btpPort, system:btpPort);
+        
+  } // End of TC_BTP_PGA_BV_01
+    
+} // End of module Btp_TestCases

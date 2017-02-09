@@ -1,205 +1,322 @@
 // TTCN-3 version of "Hello, world!"
 module MyExample
 {
-    // Libcommon
-    import from LibCommon_BasicTypesAndValues all;
-    import from LibCommon_DataStrings all;
-    import from LibCommon_Time all;
-    import from LibCommon_VerdictControl all;
-    import from LibCommon_Sync all;
-    
+  // Libcommon
+  import from LibCommon_BasicTypesAndValues all;
+  import from LibCommon_DataStrings all;
+  import from LibCommon_Time all;
+  import from LibCommon_VerdictControl all;
+  import from LibCommon_Sync all;
+
+  group ut {
+
     /**
      * @desc Upper Tester message to initialize IUT 
      * @member hashedId8 In case of secured mode set, hashedId8 indicate which certificate the IUT shall use
      */
     type record UtInitialize {
-        Oct8 hashedId8 
-    } with {
-        encode "UpperTester"
-    }
-    
+      Oct8 hashedId8 
+      } with {
+      encode "UpperTester"
+      }
+      
     template (value) UtInitialize m_utInitialize(
-                                                 in Oct8 p_hashedId8  := '0102030405060708'O
-    ) := {
-        hashedId8 := p_hashedId8
+						 in Oct8 p_hashedId8  := '0102030405060708'O
+						 ) := {
+    hashedId8 := p_hashedId8
     }
     
-    type port PCOType message
-    {
-        inout charstring, UtInitialize;
+  } // End of group ut
+
+  group gn {
+
+    type enumerated TypeOfAddress {
+      e_manual(1),
+      e_initial(0)
+      } with {
+      variant "1 bit"
+      }
+
+    type enumerated StationType {
+      e_unknown(0),
+      e_pedestrian(1),
+      e_cyclist(2),
+      e_moped(3),
+      e_motorcycle(4),
+      e_passengerCar(5),
+      e_bus(6),
+      e_lightTruck(7),
+      e_heavyTruck(8),
+      e_trailer(9),
+      e_specialVehicle(10),
+      e_tram(11),
+      e_roadSideUnit(15)
+      } with {
+      variant "5 bit"
+      }
+      
+    type record GN_Address {
+      TypeOfAddress   typeOfAddress,
+      StationType     stationType,
+      UInt10          stationCountryCode,
+      Oct6            mid
+      }
+
+    template (value) GN_Address m_gnAddress := {
+    typeOfAddress      := e_initial,
+    stationType        := e_bus,
+    stationCountryCode := 0,
+    mid                := 'AABBCCDDEEFF'O
     }
     
-    type component MTCType
-    {
-        port PCOType MyPCO_PT;
-    }
+  } with { 
+    encode "LibItsGeoNetworking"
+  } // End of group gn
+
+  type port PCOType message
+  {
+    inout charstring, UtInitialize;
+  }
     
-    type component MTCTypeMtc extends ServerSyncComp, SelfSyncComp
-    {
-    }
+  type component MTCType
+  {
+    port PCOType MyPCO_PT;
+  }
     
-    type component MTCTypeExt extends MTCType, SelfSyncComp
-    {
-        timer tc_wait := PX_TWAIT;
-        timer tc_ac := PX_TAC;
-        timer tc_noac := PX_TNOAC;
-    }
+  type component MTCTypeMtc extends ServerSyncComp, SelfSyncComp
+  {
+  }
     
-    group testCodec {
+  type component MTCTypeExt extends MTCType, SelfSyncComp
+  {
+    timer tc_wait := PX_TWAIT;
+    timer tc_ac := PX_TAC;
+    timer tc_noac := PX_TNOAC;
+  }
+    
+  group testCodec {
         
-        type component TCType { }
-        type record TestRecord {
-            bitstring bs optional
-        }
-        testcase tc_encdec_UtCamInitialize() runs on TCType system TCType 
-        {
-            TestUtInitialize(m_utInitialize, true, oct2bit('00'O & valueof(m_utInitialize.hashedId8)));
-        }
-        external function fx_encvalue_UtInitialize(in UtInitialize p_utInitialize) return bitstring with {extension "prototype(convert) encode(UpperTester)"};
-        external function fx_decvalue_UtInitialize(inout bitstring p_bitstring, out UtInitialize p_utInitialize) return integer with {extension "prototype(sliding) decode(UpperTester)"};
-        function TestUtInitialize(
-                                  in template (value) UtInitialize p_utInitialize,
-                                  in boolean p_decode := true, 
-                                  in template (omit) bitstring p_expEncMsg := omit 
-        ) runs on TCType {
-            var bitstring v_encMsg;
-            var template (omit) TestRecord v_tr := { bs := p_expEncMsg };
-            var UtInitialize v_decMsg;
-            var integer v_res := 0;
+    type component TCType { }
+    type record TestRecord {
+      bitstring bs optional
+      }
+
+    group ut {
+
+      testcase tc_encdec_UtCamInitialize() runs on TCType system TCType 
+      {
+	TestUtInitialize(m_utInitialize, true, oct2bit('00'O & valueof(m_utInitialize.hashedId8)));
+      }
+      external function fx_encvalue_UtInitialize(in UtInitialize p_utInitialize) return bitstring with {extension "prototype(convert) encode(UpperTester)"};
+      external function fx_decvalue_UtInitialize(inout bitstring p_bitstring, out UtInitialize p_utInitialize) return integer with {extension "prototype(sliding) decode(UpperTester)"};
+      function TestUtInitialize(
+				in template (value) UtInitialize p_utInitialize,
+				in boolean p_decode := true, 
+				in template (omit) bitstring p_expEncMsg := omit 
+				) runs on TCType {
+	var bitstring v_encMsg;
+	var template (omit) TestRecord v_tr := { bs := p_expEncMsg };
+	var UtInitialize v_decMsg;
+	var integer v_res := 0;
     
-            // Encode template
-            log("Encode template ", valueof(p_utInitialize));
-            v_encMsg := fx_encvalue_UtInitialize(valueof(p_utInitialize));
-            log("Encoded message: ", bit2oct(v_encMsg));
-            // Check result
-            if (v_encMsg == ''B) {
-                setverdict(fail, "Encoding failed!");
-                stop;
-            }
-            if (ispresent(v_tr.bs)) {
-                if (not match(v_encMsg, p_expEncMsg)) {
-                    log("Expected message: ", p_expEncMsg);
-                    setverdict(fail, "Encoding failed, not the expected result!");
-                    stop;
-                }
-            }
-            setverdict(pass, "Encoding passed.");
+	// Encode template
+	log("Encode template ", valueof(p_utInitialize));
+      v_encMsg := fx_encvalue_UtInitialize(valueof(p_utInitialize));
+	log("Encoded message: ", bit2oct(v_encMsg));
+	// Check result
+	if (v_encMsg == ''B) {
+	  setverdict(fail, "Encoding failed!");
+	  stop;
+	}
+	if (ispresent(v_tr.bs)) {
+	  if (not match(v_encMsg, p_expEncMsg)) {
+	    log("Expected message: ", p_expEncMsg);
+	    setverdict(fail, "Encoding failed, not the expected result!");
+	    stop;
+	  }
+	}
+	setverdict(pass, "Encoding passed.");
     
-            // Check decoding
-            if (p_decode == true) {
-                v_res := fx_decvalue_UtInitialize(v_encMsg, v_decMsg);
-                log("Decoded message: ", v_decMsg);
-                select (v_res) {
-                    case (0) {
-                        if(match(v_decMsg, p_utInitialize)) {
-                            setverdict(pass);
-                        } else {
-                            setverdict(fail);
-                        }
-                    }
-                    case (1) {
-                        setverdict(fail, "Decoding failed.");
-                    }
-                    case (2) {
-                        setverdict(fail, "Not enough bits.");
-                    }
-                }
-            }
+	// Check decoding
+	if (p_decode == true) {
+	v_res := fx_decvalue_UtInitialize(v_encMsg, v_decMsg);
+	  log("Decoded message: ", v_decMsg);
+	  select (v_res) {
+	  case (0) {
+	    if(match(v_decMsg, p_utInitialize)) {
+	      setverdict(pass);
+	    } else {
+	      setverdict(fail);
+	    }
+	  }
+	  case (1) {
+	    setverdict(fail, "Decoding failed.");
+	  }
+	  case (2) {
+	    setverdict(fail, "Not enough bits.");
+	  }
+	  }
+	}
             
-        } // End of function TestUtInitialize
-        
-    } // End of group testCodec
+      } // End of function TestUtInitialize
+
+    } // End of group ut
+
+    group gn {
+
+      testcase tc_encdec_gnAddress() runs on TCType system TCType 
+      {
+	TestGnAddress(m_gnAddress, false/*, oct2bit(valueof(m_gnAddress))*/);
+      }
+
+      external function fx_encvalue_GnAddress(in GN_Address p_gnAddress) return bitstring with {extension "prototype(convert) encode(LibItsGeoNetworking)"};
+      external function fx_decvalue_GnAddress(inout bitstring p_bitstring, out GN_Address p_gnAddress) return integer with {extension "prototype(sliding) decode(LibItsGeoNetworking)" };
+
+      function TestGnAddress(
+			     in template (value) GN_Address p_gnAddress,
+			     in boolean p_decode := true, 
+			     in template (omit) bitstring p_expEncMsg := omit 
+			     ) runs on TCType {
+	var bitstring v_encMsg;
+	var template (omit) TestRecord v_tr := { bs := p_expEncMsg };
+	var GN_Address v_decMsg;
+	var integer v_res := 0;
     
-    testcase tc_HelloW() runs on MTCType system MTCType
-    {
-        map(mtc:MyPCO_PT, system:MyPCO_PT);
+	// Encode template
+	log("Encode template ", valueof(p_gnAddress));
+      v_encMsg := fx_encvalue_GnAddress(valueof(p_gnAddress));
+	log("Encoded message: ", bit2oct(v_encMsg));
+	// Check result
+	if (v_encMsg == ''B) {
+	  setverdict(fail, "Encoding failed!");
+	  stop;
+	}
+	if (ispresent(v_tr.bs)) {
+	  if (not match(v_encMsg, p_expEncMsg)) {
+	    log("Expected message: ", p_expEncMsg);
+	    setverdict(fail, "Encoding failed, not the expected result!");
+	    stop;
+	  }
+	}
+	setverdict(pass, "Encoding passed.");
+    
+	// Check decoding
+	if (p_decode == true) {
+	v_res := fx_decvalue_GnAddress(v_encMsg, v_decMsg);
+	  log("Decoded message: ", v_decMsg);
+	  select (v_res) {
+	  case (0) {
+	    if(match(v_decMsg, p_gnAddress)) {
+	      setverdict(pass);
+	    } else {
+	      setverdict(fail);
+	    }
+	  }
+	  case (1) {
+	    setverdict(fail, "Decoding failed.");
+	  }
+	  case (2) {
+	    setverdict(fail, "Not enough bits.");
+	  }
+	  }
+	}
+            
+      } // End of function TestGnAddress
+
+    } // End of group gn
         
-        MyPCO_PT.send("Hello, world!");
-        setverdict(pass);
+  } // End of group testCodec
+	
+  testcase tc_HelloW() runs on MTCType system MTCType
+  {
+    map(mtc:MyPCO_PT, system:MyPCO_PT);
+        
+    MyPCO_PT.send("Hello, world!");
+    setverdict(pass);
+  }
+    
+  testcase tc_HelloW2() runs on MTCType system MTCType
+  {
+    timer TL_T := 15.0;
+    map(mtc:MyPCO_PT, system:MyPCO_PT);
+    MyPCO_PT.send("Hello, world!");
+    TL_T.start;
+    alt {
+      [] MyPCO_PT.receive("Hello, TTCN-3!") { TL_T.stop; setverdict(pass); }
+      [] TL_T.timeout { setverdict(inconc); }
+      [] MyPCO_PT.receive { TL_T.stop; setverdict(fail); }
     }
+  }
     
-    testcase tc_HelloW2() runs on MTCType system MTCType
-    {
-        timer TL_T := 15.0;
-        map(mtc:MyPCO_PT, system:MyPCO_PT);
-        MyPCO_PT.send("Hello, world!");
-        TL_T.start;
-        alt {
-            [] MyPCO_PT.receive("Hello, TTCN-3!") { TL_T.stop; setverdict(pass); }
-            [] TL_T.timeout { setverdict(inconc); }
-            [] MyPCO_PT.receive { TL_T.stop; setverdict(fail); }
-        }
-    }
-    
-    testcase tc_HelloW3() runs on MTCTypeMtc system MTCType
-    {
-        var MTCTypeExt v_node1;
-        var MTCTypeExt v_node2;
+  testcase tc_HelloW3() runs on MTCTypeMtc system MTCType
+  {
+    var MTCTypeExt v_node1;
+    var MTCTypeExt v_node2;
         
-        v_node1 := MTCTypeExt.create("v_node1");
-        v_node2 := MTCTypeExt.create("v_node2");
-        map(v_node1:MyPCO_PT, system:MyPCO_PT);
-        map(v_node2:MyPCO_PT, system:MyPCO_PT);
-        connect(self:syncPort, mtc:syncPort);
-        connect(v_node1:syncPort, self:syncPort);
-        connect(v_node2:syncPort, self:syncPort);
+  v_node1 := MTCTypeExt.create("v_node1");
+  v_node2 := MTCTypeExt.create("v_node2");
+    map(v_node1:MyPCO_PT, system:MyPCO_PT);
+    map(v_node2:MyPCO_PT, system:MyPCO_PT);
+    connect(self:syncPort, mtc:syncPort);
+    connect(v_node1:syncPort, self:syncPort);
+    connect(v_node2:syncPort, self:syncPort);
         
-        activate(a_cf02Down());
+    activate(a_cf02Down());
         
-        v_node1.start(f_tc_HelloW3_node1());
-        v_node2.start(f_tc_HelloW3_node2());
+    v_node1.start(f_tc_HelloW3_node1());
+    v_node2.start(f_tc_HelloW3_node2());
                     
-        // Synchronization
-        f_serverSync2ClientsAndStop({c_prDone, c_tbDone});
+    // Synchronization
+    f_serverSync2ClientsAndStop({c_prDone, c_tbDone});
         
-        unmap(v_node1:MyPCO_PT, system:MyPCO_PT);
-        unmap(v_node2:MyPCO_PT, system:MyPCO_PT);
-        disconnect(self:syncPort, mtc:syncPort);
-        disconnect(v_node1:syncPort, self:syncPort);
-        disconnect(v_node2:syncPort, self:syncPort);
+    unmap(v_node1:MyPCO_PT, system:MyPCO_PT);
+    unmap(v_node2:MyPCO_PT, system:MyPCO_PT);
+    disconnect(self:syncPort, mtc:syncPort);
+    disconnect(v_node1:syncPort, self:syncPort);
+    disconnect(v_node2:syncPort, self:syncPort);
         
-    }
+  }
     
-    function f_tc_HelloW3_node1() runs on MTCTypeExt
-    {
-        f_selfOrClientSyncAndVerdict(c_prDone, e_success);
+  function f_tc_HelloW3_node1() runs on MTCTypeExt
+  {
+    f_selfOrClientSyncAndVerdict(c_prDone, e_success);
         
-        timer TL_T := 15.0;
-        MyPCO_PT.send("Hello, world!");
-        TL_T.start;
-        alt {
-            [] MyPCO_PT.receive("Hello, TTCN-3!") { TL_T.stop; f_selfOrClientSyncAndVerdict(c_tbDone, e_success); }
-            [] TL_T.timeout {  f_selfOrClientSyncAndVerdict(c_tbDone, e_timeout); }
-            [] MyPCO_PT.receive { TL_T.stop; f_selfOrClientSyncAndVerdict(c_tbDone, e_error); }
-        }
-        
+    timer TL_T := 15.0;
+    MyPCO_PT.send("Hello, world!");
+    TL_T.start;
+    alt {
+      [] MyPCO_PT.receive("Hello, TTCN-3!") { TL_T.stop; f_selfOrClientSyncAndVerdict(c_tbDone, e_success); }
+      [] TL_T.timeout {  f_selfOrClientSyncAndVerdict(c_tbDone, e_timeout); }
+      [] MyPCO_PT.receive { TL_T.stop; f_selfOrClientSyncAndVerdict(c_tbDone, e_error); }
     }
+        
+  }
     
-    function f_tc_HelloW3_node2() runs on MTCTypeExt
-    {
-        f_selfOrClientSyncAndVerdict(c_prDone, e_success);
+  function f_tc_HelloW3_node2() runs on MTCTypeExt
+  {
+    f_selfOrClientSyncAndVerdict(c_prDone, e_success);
         
-        timer TL_T := 15.0;
-        MyPCO_PT.send("Hello, world!");
-        TL_T.start;
-        alt {
-            [] MyPCO_PT.receive("Hello, TTCN-3!") { TL_T.stop; f_selfOrClientSyncAndVerdict(c_tbDone, e_success); }
-            [] TL_T.timeout {  f_selfOrClientSyncAndVerdict(c_tbDone, e_timeout); }
-            [] MyPCO_PT.receive { TL_T.stop; f_selfOrClientSyncAndVerdict(c_tbDone, e_error); }
-        }
+    timer TL_T := 15.0;
+    MyPCO_PT.send("Hello, world!");
+    TL_T.start;
+    alt {
+      [] MyPCO_PT.receive("Hello, TTCN-3!") { TL_T.stop; f_selfOrClientSyncAndVerdict(c_tbDone, e_success); }
+      [] TL_T.timeout {  f_selfOrClientSyncAndVerdict(c_tbDone, e_timeout); }
+      [] MyPCO_PT.receive { TL_T.stop; f_selfOrClientSyncAndVerdict(c_tbDone, e_error); }
+    }
         
-    }
+  }
     
-    altstep a_cf02Down() runs on MTCTypeMtc {
-        [] a_shutdown() {
-            log("*** a_cf02Down: INFO: TEST COMPONENT NOW STOPPING ITSELF! ***");
-            stop;
-        }
+  altstep a_cf02Down() runs on MTCTypeMtc {
+    [] a_shutdown() {
+      log("*** a_cf02Down: INFO: TEST COMPONENT NOW STOPPING ITSELF! ***");
+      stop;
     }
+  }
     
-    control
-    {
-        execute(tc_HelloW());
-        execute(tc_HelloW2());
-    }
-}
+  control
+  {
+    execute(tc_HelloW());
+    execute(tc_HelloW2());
+  }
+} // End of module MyExemple
