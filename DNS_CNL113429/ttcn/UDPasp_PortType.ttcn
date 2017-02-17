@@ -1,0 +1,36 @@
+/******************************************************************************
+* Copyright (c) 2004, 2014  Ericsson AB
+* All rights reserved. This program and the accompanying materials
+* are made available under the terms of the Eclipse Public License v1.0
+* which accompanies this distribution, and is available at
+* http://www.eclipse.org/legal/epl-v10.html
+*
+* Contributors:
+*   Jozsef Gyurusi - initial implementation and initial documentation
+*   Csaba Bela Koppany
+*   Gabor Szalai
+*   Peter Kremer
+*   Tamas Buti
+*   Zoltan Jasz
+******************************************************************************/
+//
+//  File:               UDPasp_PortType.ttcn
+//  Description:        UDP testport port definition file
+//  Rev:                R8A
+//  Prodnr:             CNL 113 346
+//
+
+module UDPasp_PortType
+{
+import from UDPasp_Types all;
+
+  type port UDPasp_PT message
+  {
+    inout ASP_UDP;
+    inout ASP_UDP_message;
+	out   ASP_UDP_open;
+    out   ASP_UDP_close;
+	in    ASP_UDP_open_result;
+  } with { extension "provider" }
+
+}
