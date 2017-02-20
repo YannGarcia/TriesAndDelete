@@ -120,17 +120,33 @@ else
     fi
 fi
 
+# Remove port skeletons to use src/<port skeletons>
+for i in `ls ../include/*.hh`
+do
+    rm ./`basename $i`
+done
+for i in `ls ../src/*.cc`
+do
+    rm ./`basename $i`
+done
+
 # Patch ATS generated files
 #./bin/patch.bash 2>&1 3>&1 | tee --append build.log
 # Add compiler/linker options
-CXXFLAGS_DEBUG_MODE='s/-Wall/-g -Wall -std=c++11/g'
-LDFLAGS_DEBUG_MODE='s/LDFLAGS = /LDFLAGS = -g /g'
+if [ "$1" == "prof" ]
+then
+    CXXFLAGS_DEBUG_MODE='s/-Wall/-pg -Wall -std=c++11/g'
+    LDFLAGS_DEBUG_MODE='s/LDFLAGS = /LDFLAGS = -pg /g'
+else
+    CXXFLAGS_DEBUG_MODE='s/-Wall/-g -Wall -std=c++11/g'
+    LDFLAGS_DEBUG_MODE='s/LDFLAGS = /LDFLAGS = -g /g'
+fi
 ADD_INCLUDE='/CPPFLAGS = /a\\CPPFLAGS += -I../include -I$(HOME_INC) -I.'
 sed --in-place "${CXXFLAGS_DEBUG_MODE}" ./Makefile 
 sed --in-place "${LDFLAGS_DEBUG_MODE}" ./Makefile
 sed --in-place "${ADD_INCLUDE}" ./Makefile
 # Update clean clause
-CLEAN_LINE='s/$(RM) $(EXECUTABLE)/$(RM) ..\/bin\/$(EXECUTABLE)/g'
+CLEAN_LINE='s/$(RM) $(EXECUTABLE)/$(RM) ..\/bin\/$(EXECUTABLE) ..\/src\/*.o/g'
 sed --in-place "${CLEAN_LINE}" ./Makefile
 # Move binary file command
 EXECUTABLE=MyExample

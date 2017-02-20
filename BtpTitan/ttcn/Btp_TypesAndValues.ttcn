@@ -2,7 +2,7 @@ module Btp_TypesAndValues {
 
   const integer c_uInt16Max := 65535;
   type integer  UInt16 (0 .. c_uInt16Max) with {variant "unsigned 16 bit"};
-  type octetstring  Oct2  length(2) with {encode "length(2)"};
+  type octetstring  Oct2  length(2) with { variant "" };
 	
   group btpPdus {
      
@@ -15,7 +15,7 @@ module Btp_TypesAndValues {
     type record BtpPacket {
       BtpHeader      header,
       BtpPayload     payload optional
-      }
+      }with { variant ""; } // Yann: Mandatory!
         
   } // end btpPdus
     
@@ -30,7 +30,7 @@ module Btp_TypesAndValues {
     type union BtpHeader {
       BtpAHeader btpAHeader,
 	BtpBHeader btpBHeader 
-      }
+      }with { variant ""; } // Yann: Mandatory!
 
     /**
      * @desc BTP-A Header
@@ -41,7 +41,7 @@ module Btp_TypesAndValues {
     type record BtpAHeader {
       BtpPortId destinationPort,
       BtpPortId sourcePort   
-      } 
+      } with { variant ""; } // Yann: Mandatory!
 
     /**
      * @desc BTP-B Header
@@ -52,8 +52,8 @@ module Btp_TypesAndValues {
     type record BtpBHeader {
       BtpPortId destinationPort,
       BtpPortInfo destinationPortInfo   
-      }
-        
+    } with { variant ""; } // Yann: Mandatory!
+    
     /**
      * @desc BTP Port ID
      * @see ETSI TS 102 636-5-1 chapter 7.3.2
@@ -80,13 +80,13 @@ module Btp_TypesAndValues {
     type record BtpPayload {
       DecodedBtpPayload decodedPayload optional,
       BtpRawPayload rawPayload
-      }
-        
+    } with { variant ""; } // Yann: Mandatory!
+    
     type record Frame
     {
       Oct2 data_length,
       octetstring data_stream
-      }
+    } with { variant ""; } // Yann: Mandatory!
         
     /**
      * @desc The decoded payload of the BTP packet
@@ -99,12 +99,12 @@ module Btp_TypesAndValues {
      * @member seemPacket
      */
     type union DecodedBtpPayload {
-      octetstring field1,
-	anytype field2  
-      } with { 
-      extension "anytype integer, Frame";
-      encode "RAW"
-      }
+      octetstring raw_payload,
+      anytype payload  
+    } with { 
+      extension "anytype octetstring, Frame";
+      variant "" // Yann: Mandatory!
+    }
         
   } //end btpPayload
 

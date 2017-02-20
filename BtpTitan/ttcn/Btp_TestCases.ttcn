@@ -3,10 +3,8 @@ module Btp_TestCases {
   import from Btp_TypesAndValues all;
   import from Btp_Templates all;
   import from Btp_TestSystem all;
-  //import from Btp_EncodeDecode all;
+  import from Btp_EncodeDecode all;
   
-  external function fx_decvalue(in bitstring p_raw, out Frame p_frame) return integer;
-
   testcase TC_BTP_PGA_BV_01() runs on ItsBtp system ItsBtpSystem {
     var BtpInd v_btp_ind;
 

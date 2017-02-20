@@ -34,9 +34,7 @@ namespace MyExample
     for (int field_id = 0; field_id < p_gnAddress.get_count(); field_id++)
       {
 	const Base_Type * bt = p_gnAddress.get_at(field_id);
-	TTCN_Buffer b;
-	bt.encode_raw(b);
-	buffer += b;
+	bt->encode(*bt->get_descriptor(), buffer, TTCN_EncDec::CT_RAW);
       }
     OCTETSTRING encvalue(buffer.get_len(), buffer.get_data());
     return oct2bit(encvalue);

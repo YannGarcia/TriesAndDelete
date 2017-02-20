@@ -15,7 +15,12 @@ then
 fi
 
 make all
-make run
+if [ "$1" == "d" ]
+then 
+    make run_d
+else
+    make run
+fi
 #if [ "${OSTYPE}" == "cygwin" ]
 #then
 #    ../bin/SIPmsg.exe 127.0.0.1 12000
