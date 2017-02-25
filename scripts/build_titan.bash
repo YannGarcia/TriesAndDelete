@@ -66,6 +66,11 @@ else
 fi
 
 # Build TITAN core
+if [ -d ${TTCN3_DIR} ]
+then
+    rm -fr ${TTCN3_DIR}
+fi
+mkdir ${TTCN3_DIR}
 cd ./titan.core
 echo "Starting build..."
 make clean
