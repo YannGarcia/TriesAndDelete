@@ -1,7 +1,7 @@
 
 #pragma once
 
-#include <TTCN3.h>
+#include <TTCN3.hh>
 
 namespace Btp__EncodeDecode {
 //  INTEGER fx_encvalue(const Btp__TypesAndValues::anytype p_any, BITSTRING& p_raw);

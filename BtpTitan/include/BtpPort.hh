@@ -17,6 +17,8 @@
 #include <netinet/in.h>
 #include <arpa/inet.h>
 
+#include "channel_manager.h"
+
 namespace Btp__TestSystem {
 
     class BtpPort: public BtpPort_BASE {
@@ -42,6 +44,7 @@ namespace Btp__TestSystem {
             void outgoing_send(const BtpReq& send_par);
 
         private:
+            int32_t comm_id;
             bool is_port_mapped;
             bool debugging;
             int target_fd;
