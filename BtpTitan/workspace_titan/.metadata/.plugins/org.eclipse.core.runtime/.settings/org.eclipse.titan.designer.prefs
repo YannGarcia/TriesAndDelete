@@ -1,2 +1,12 @@
 eclipse.preferences.version=1
 org.eclipse.titan.designer.TTCN3_INSTALL_DIR=C\:\\Users\\yann\\Documents\\wireshark\\cygwin64\\home\\yann\\frameworks\\titan\\titan.core\\Install
+org.eclipse.titan.designer.automaticExport=true
+org.eclipse.titan.designer.foldingEnabledPreference=false
+org.eclipse.titan.designer.packAllProjectsIntoOne=true
+org.eclipse.titan.designer.reportNamingConventionAltstep=a_.*
+org.eclipse.titan.designer.reportNamingConventionExternalFunction=fx_.*
+org.eclipse.titan.designer.reportNamingConventionGlobalTemplate=mw{0,1}_.*
+org.eclipse.titan.designer.reportNamingConventionGroup=[a-z].*
+org.eclipse.titan.designer.reportNamingConventionTestcase=TC_.*
+org.eclipse.titan.designer.requestLocation=true
+org.eclipse.titan.designer.saveDefaultValues=true

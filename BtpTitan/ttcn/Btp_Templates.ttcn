@@ -56,11 +56,15 @@ module Btp_Templates {
     }
 
     template (present) Frame mw_frame(
-                                      template (present) Oct2 p_data_length := ?,
+                                      template (present) Oct1 p_protocol_version := ?,
+                                      template (present) Oct1 p_message_id := ?,
+                                      template (present) Oct4 p_station_id := ?,
                                       template (present) octetstring p_data_stream := ?
     ) := {
-      data_length := p_data_length,
-      data_stream := p_data_stream
+      protocol_version  := p_protocol_version,
+      message_id        := p_message_id,
+      station_id        := p_station_id,
+      data_stream       := p_data_stream
     }
 
   } // end btpPduTemplates

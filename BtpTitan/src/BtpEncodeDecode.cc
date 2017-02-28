@@ -10,5 +10,12 @@ namespace Btp__EncodeDecode {
 //INTEGER fx__decvalue(const BITSTRING& p__raw, Btp__TypesAndValues::Frame& p__frame) {
 //  return -1;
 //}
+//INTEGER fx_encvalue(const Btp__TypesAndValues::anytype p_any, BITSTRING& p_raw) {
+//
+//}
+//
+//INTEGER fx_decvalue(const BITSTRING& p_raw, out anytype p_any) {
+//
+//}
 
 } // end namespace

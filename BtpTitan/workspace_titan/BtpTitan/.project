@@ -17,6 +17,11 @@
 	</natures>
 	<linkedResources>
 		<link>
+			<name>src/etc</name>
+			<type>2</type>
+			<locationURI>PARENT-2-PROJECT_LOC/etc</locationURI>
+		</link>
+		<link>
 			<name>src/include</name>
 			<type>2</type>
 			<locationURI>PARENT-2-PROJECT_LOC/include</locationURI>
