@@ -3,10 +3,14 @@
   <ProjectName>BtpTitan</ProjectName>
   <Folders>
     <FolderResource projectRelativePath="src" relativeURI="src"/>
+    <FolderResource projectRelativePath="src/etc" rawURI="PARENT-2-PROJECT_LOC/etc"/>
     <FolderResource projectRelativePath="src/include" rawURI="PARENT-2-PROJECT_LOC/include"/>
     <FolderResource projectRelativePath="src/src" rawURI="PARENT-2-PROJECT_LOC/src"/>
     <FolderResource projectRelativePath="src/ttcn" rawURI="PARENT-2-PROJECT_LOC/ttcn"/>
   </Folders>
+  <Files>
+    <FileResource projectRelativePath="BtpTitan.tpd" relativeURI="BtpTitan.tpd"/>
+  </Files>
   <ActiveConfiguration>Default</ActiveConfiguration>
   <Configurations>
     <Configuration name="Default">
@@ -152,6 +156,39 @@
           </FolderProperties>
         </FolderResource>
         <FolderResource>
+          <FolderPath>src/etc</FolderPath>
+          <FolderProperties>
+            <ExcludeFromBuild>false</ExcludeFromBuild>
+            <centralStorage>false</centralStorage>
+            <NamingCoventions>
+              <enableFolderSpecificSettings></enableFolderSpecificSettings>
+              <TTCN3ModuleName>.*</TTCN3ModuleName>
+              <ASN1ModuleName>.*</ASN1ModuleName>
+              <altstep>as_.*</altstep>
+              <globalConstant>cg_.*</globalConstant>
+              <externalConstant>ec_.*</externalConstant>
+              <function>f_.*</function>
+              <externalFunction>ef_.*</externalFunction>
+              <moduleParameter>m.*</moduleParameter>
+              <globalPort>.*_PT</globalPort>
+              <globalTemplate>t.*</globalTemplate>
+              <testcase>tc_.*</testcase>
+              <globalTimer>T.*</globalTimer>
+              <type>.*</type>
+              <group>[A-Z].*</group>
+              <localConstant>cl.*</localConstant>
+              <localVariable>vl.*</localVariable>
+              <localTemplate>t.*</localTemplate>
+              <localVariableTemplate>vt.*</localVariableTemplate>
+              <localTimer>TL_.*</localTimer>
+              <formalParameter>pl_.*</formalParameter>
+              <componentConstant>c_.*</componentConstant>
+              <componentVariable>v_.*</componentVariable>
+              <componentTimer>T_.*</componentTimer>
+            </NamingCoventions>
+          </FolderProperties>
+        </FolderResource>
+        <FolderResource>
           <FolderPath>src/src</FolderPath>
           <FolderProperties>
             <ExcludeFromBuild>false</ExcludeFromBuild>
@@ -218,6 +255,14 @@
           </FolderProperties>
         </FolderResource>
       </FolderProperties>
+      <FileProperties>
+        <FileResource>
+          <FilePath>BtpTitan.tpd</FilePath>
+          <FileProperties>
+            <ExcludeFromBuild>false</ExcludeFromBuild>
+          </FileProperties>
+        </FileResource>
+      </FileProperties>
     </Configuration>
   </Configurations>
 </TITAN_Project_File_Information>
