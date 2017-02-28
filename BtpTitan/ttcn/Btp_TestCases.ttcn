@@ -16,7 +16,7 @@ module Btp_TestCases {
     alt {
       [] btpPort.receive(
 			 mw_btpInd(
-				   mw_btpA (
+				   mw_btpB (
 					    ?,
 					    ?,
 					    ?
