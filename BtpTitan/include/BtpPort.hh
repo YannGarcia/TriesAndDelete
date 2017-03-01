@@ -44,7 +44,7 @@ namespace Btp__TestSystem {
             void outgoing_send(const BtpReq& send_par);
 
         private:
-            int32_t comm_id;
+            int32_t comm_fd;
             bool is_port_mapped;
             bool debugging;
             int target_fd;

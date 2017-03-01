@@ -18,7 +18,7 @@ namespace Btp__TestSystem {
 
   BtpPort::BtpPort(const char *par_port_name) :
     BtpPort_BASE(par_port_name), 
-    comm_id(-1),
+    comm_fd(-1),
     is_port_mapped(false), 
     debugging(true), 
     target_fd(-1) {
@@ -88,16 +88,18 @@ namespace Btp__TestSystem {
   /*void BtpPort::Handle_Timeout(double time_since_last_call) {}*/
 
   void BtpPort::user_map(const char * /*system_port*/) {
-    if (comm_id == -1) {
-      socket_address addr(std::string("localhost"), static_cast<const uint16_t>(12346));
-      comm_id = comm::channel_manager::get_instance().create_channel(comm::channel_type::udp, addr);
-      channel_manager::get_instance().get_channel(comm_id).connect();
-    }
     if (!is_port_mapped) {
-      init_socket();
+      socket_address addr_local(std::string("localhost"), static_cast<const uint16_t>(12345)); // TODO Use parameters instead of 12345
+      socket_address addr_remote(std::string("0.0.0.0"), static_cast<const uint16_t>(-1)); // TODO Use parameters instead of 12345
+      comm_fd = comm::channel_manager::get_instance().create_channel(comm::channel_type::udp, addr_local, addr_remote);
+      log("The channel id:      %d", comm_fd);
+      log("The socket listener: %d", comm::channel_manager::get_instance().get_channel(comm_fd).get_fd());
+      //channel_manager::get_instance().get_channel(comm_fd).listen();
+      //init_socket();
       fd_set readfds;
       FD_ZERO(&readfds);
-      FD_SET(target_fd, &readfds);
+      //FD_SET(target_fd, &readfds);
+      FD_SET(comm::channel_manager::get_instance().get_channel(comm_fd).get_fd(), &readfds);
       Install_Handler(&readfds, NULL, NULL, 0.0);
       is_port_mapped = true;
     }
@@ -105,10 +107,11 @@ namespace Btp__TestSystem {
 
   void BtpPort::user_unmap(const char * /*system_port*/) {
     is_port_mapped = false;
-    close_socket();
+    //close_socket();
     Uninstall_Handler();
-    if (comm_id != -1) {
-      comm::channel_manager::get_instance().remove_channel(comm_id);
+    if (comm_fd != -1) {
+      comm::channel_manager::get_instance().remove_channel(comm_fd);
+      comm_fd = -1;
     }
   }
 
