@@ -1,8 +1,6 @@
 #!/bin/bash
 set -x
 
-clear
-
 function f_exit {
     cd ${CURPWD}
     
@@ -13,6 +11,20 @@ function f_exit {
     echo $1
     exit $2
 }
+
+function f_usage {
+    echo "build.bash: This script import from External Disk the "
+    echo "Optional arguments:"
+    echo "  prof: Generate a makefile including profiling options (e.g. ./build.bash prof)"
+    exit 0
+}
+
+clear
+
+if [ "$1" == "help" ]
+then
+    f_usage
+fi
 
 CURPWD=`pwd`
 if [ ! "${PWD##*/}" == "objs" ]
