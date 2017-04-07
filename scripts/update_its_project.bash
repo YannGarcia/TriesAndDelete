@@ -16,7 +16,7 @@ else
 fi
 if [ "${PATH_DEV_ITS}" == "" ]
 then
-    PATH_DEV_ITS=`pwd`/../ets_its
+    PATH_DEV_ITS=`pwd`/../etsi_its
 fi
 
 # Check if target directory exist
@@ -52,7 +52,7 @@ for i in ${TTCN_3_ATS_LIST}
 do
     if [ ! -d ${TTCN_3_DST_PATH}/$i ]
     then
-	mkdir -p ${TTCN_3_DST_PATH}/$i/bin ${TTCN_3_DST_PATH}/$i/lib ${TTCN_3_DST_PATH}/$i/include ${TTCN_3_DST_PATH}/$i/ttcn ${TTCN_3_DST_PATH}/$i/docs
+	mkdir -p ${TTCN_3_DST_PATH}/$i/bin ${TTCN_3_DST_PATH}/$i/lib ${TTCN_3_DST_PATH}/$i/include ${TTCN_3_DST_PATH}/$i/ttcn ${TTCN_3_DST_PATH}/$i/objs ${TTCN_3_DST_PATH}/$i/cfg ${TTCN_3_DST_PATH}/$i/docs
 	chmod -R 775 ${TTCN_3_DST_PATH}/$i
     fi
     cp ${TTCN_3_ORG_PATH}/$i/*.ttcn ${TTCN_3_DST_PATH}/$i/ttcn
@@ -65,7 +65,7 @@ for i in ${TTCN_3_LIB_LIST}
 do
     if [ ! -d ${TTCN_3_DST_PATH}/LibIts/$i ]
     then
-	mkdir -p ${TTCN_3_DST_PATH}/LibIts/$i/bin ${TTCN_3_DST_PATH}/LibIts/$i/docs ${TTCN_3_DST_PATH}/LibIts/$i/lib ${TTCN_3_DST_PATH}/LibIts/$i/src ${TTCN_3_DST_PATH}/LibIts/$i/include ${TTCN_3_DST_PATH}/LibIts/$i/ttcn
+	mkdir -p ${TTCN_3_DST_PATH}/LibIts/$i/bin ${TTCN_3_DST_PATH}/LibIts/$i/docs ${TTCN_3_DST_PATH}/LibIts/$i/lib ${TTCN_3_DST_PATH}/LibIts/$i/src ${TTCN_3_DST_PATH}/LibIts/$i/include ${TTCN_3_DST_PATH}/LibIts/$i/ttcn ${TTCN_3_DST_PATH}/$i/objs
     fi
     cp ${TTCN_3_ORG_PATH}/LibIts/$i/*.ttcn ${TTCN_3_DST_PATH}/LibIts/$i/ttcn
     # Update CC files
@@ -115,7 +115,16 @@ do
     fi
 done
 
+# Apply patches
+PATH_PATCHES=`pwd`/etsi_its_patches
+if [ -d ${PATH_PATCHES} ]
+then
+    cp ${PATH_PATCHES}/LibCommon_build.bash ${TTCN_3_DST_PATH}/LibCommon/bin
+    cp ${PATH_PATCHES}/LibItsCommon_build.bash ${TTCN_3_DST_PATH}/LibIts/Common/bin
+fi
+
 # Set rights
 find ${PATH_DEV_ITS} -type f -exec chmod 664 {} \;
+find ${PATH_DEV_ITS} -name "*.bash" -type f -exec chmod 775 {} \;
 find ${PATH_DEV_ITS} -type d -exec chmod 775 {} \;
 chown -R ${CHOWN_USER_GROUP} ${PATH_DEV_ITS}
