@@ -25,14 +25,14 @@ then
     fi
     cd ${TITAN_DIR}
     # Clone all TITAN repositories
-    if [ ! -f ${HOME_BIN}/titan_repos.txt ]
+    if [ ! -f ${CURDIR}/titan_repos.txt ]
     then
         echo "${HOME_BIN}/titan_repos.txt file does not exist, exit"
         rm -fr ${TOP}
         rm -fr ${TOP}/..
         exit 3
     fi
-    TITAN_REPOS=`cat ${HOME_BIN}/titan_repos.txt`
+    TITAN_REPOS=`cat ${CURDIR}/titan_repos.txt`
     for i in ${TITAN_REPOS};
     do
         git clone $i
@@ -66,6 +66,10 @@ else
 fi
 
 # Build TITAN core
+export JNI=no
+export GUI=no
+export DEBUG=no
+export GEN_PDF=no
 if [ -d ${TTCN3_DIR} ]
 then
     rm -fr ${TTCN3_DIR}
