@@ -84,7 +84,7 @@ then
     fi
 fi
 
-REFERENCES="LibCommon LibIts/Common LibIts/CAM LibIts/Security LibIts/GeoNetworking"
+REFERENCES="LibCommon LibIts/Common LibIts/BTP LibIts/GeoNetworking LibIts/GeoNetworking LibIts/Ipv6OverGeoNetworking LibIts/Security LibIts/CAM"
 for i in ${REFERENCES}
 do
     # TTCN code
@@ -93,17 +93,17 @@ do
 	ln -sf $j ../ttcn/`basename $j`
     done
     # Include code
-    if [ "`ls ${PATH_DEV_ITS}/src/$i/include`" != " " ]
-    then
-	for j in `find ${PATH_DEV_ITS}/src/$i/include -type f -name "*.hh"`;
-	do
-	    ln -sf $j ../include/`basename $j`
-	done
-    fi
+#    if [ "`ls ${PATH_DEV_ITS}/src/$i/include`" != " " ]
+#    then
+#	for j in `find ${PATH_DEV_ITS}/src/$i/include -type f`;
+#	do
+#	    ln -sf $j ../include/`basename $j`
+#	done
+#    fi
     # CC source code
     if [ "`ls ${PATH_DEV_ITS}/src/$i/src`" != " " ]
     then
-	for j in `find ${PATH_DEV_ITS}/src/$i/src -type f -name "*.cc"`;
+	for j in `find ${PATH_DEV_ITS}/src/$i/src -type f"`;
 	do
 	    ln -sf $j ../src/`basename $j`
 	done
@@ -172,7 +172,7 @@ else
     CXXFLAGS_DEBUG_MODE='s/-Wall/-g -Wall -std=c++11/g'
     LDFLAGS_DEBUG_MODE='s/LDFLAGS = /LDFLAGS = -g /g'
 fi
-ADD_INCLUDE='/CPPFLAGS = /a\\CPPFLAGS += -I../include -I$(HOME_INC) -I.'
+ADD_INCLUDE='/CPPFLAGS = /a\\CPPFLAGS += -I../include -I../../LibIts/Common/include -I../../LibIts/BTP/include -I../../LibIts/CAM/include -I../../LibIts/DENM/include -I$(HOME_INC) -I.'
 sed --in-place "${CXXFLAGS_DEBUG_MODE}" ./Makefile 
 sed --in-place "${LDFLAGS_DEBUG_MODE}" ./Makefile
 sed --in-place "${ADD_INCLUDE}" ./Makefile

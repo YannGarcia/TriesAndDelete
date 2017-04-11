@@ -5,6 +5,7 @@ set -evx
 
 # Usage: sudo ./update_project.bash
 # TODO Use git clone in temporary directory
+
 UNAME=`uname -n`
 if [ "${UNAME}" == "Ubuntu64" ]
 then
@@ -52,7 +53,7 @@ for i in ${TTCN_3_ATS_LIST}
 do
     if [ ! -d ${TTCN_3_DST_PATH}/$i ]
     then
-	mkdir -p ${TTCN_3_DST_PATH}/$i/bin ${TTCN_3_DST_PATH}/$i/lib ${TTCN_3_DST_PATH}/$i/include ${TTCN_3_DST_PATH}/$i/ttcn ${TTCN_3_DST_PATH}/$i/objs ${TTCN_3_DST_PATH}/$i/cfg ${TTCN_3_DST_PATH}/$i/docs
+	mkdir -p ${TTCN_3_DST_PATH}/$i/bin ${TTCN_3_DST_PATH}/$i/lib ${TTCN_3_DST_PATH}/$i/src ${TTCN_3_DST_PATH}/$i/include ${TTCN_3_DST_PATH}/$i/ttcn ${TTCN_3_DST_PATH}/$i/objs ${TTCN_3_DST_PATH}/$i/cfg ${TTCN_3_DST_PATH}/$i/docs
 	chmod -R 775 ${TTCN_3_DST_PATH}/$i
     fi
     cp ${TTCN_3_ORG_PATH}/$i/*.ttcn ${TTCN_3_DST_PATH}/$i/ttcn
@@ -65,7 +66,7 @@ for i in ${TTCN_3_LIB_LIST}
 do
     if [ ! -d ${TTCN_3_DST_PATH}/LibIts/$i ]
     then
-	mkdir -p ${TTCN_3_DST_PATH}/LibIts/$i/bin ${TTCN_3_DST_PATH}/LibIts/$i/docs ${TTCN_3_DST_PATH}/LibIts/$i/lib ${TTCN_3_DST_PATH}/LibIts/$i/src ${TTCN_3_DST_PATH}/LibIts/$i/include ${TTCN_3_DST_PATH}/LibIts/$i/ttcn ${TTCN_3_DST_PATH}/$i/objs
+	mkdir -p ${TTCN_3_DST_PATH}/LibIts/$i/docs ${TTCN_3_DST_PATH}/LibIts/$i/src ${TTCN_3_DST_PATH}/LibIts/$i/include ${TTCN_3_DST_PATH}/LibIts/$i/ttcn
     fi
     cp ${TTCN_3_ORG_PATH}/LibIts/$i/*.ttcn ${TTCN_3_DST_PATH}/LibIts/$i/ttcn
     # Update CC files
@@ -78,21 +79,21 @@ do
     then
 	cp ${CC_SRC_PATH}/EncDec/LibItsBtp_Encdec.cc ${TTCN_3_DST_PATH}/LibIts/$i/src
 	cp ${CC_SRC_PATH}/Ports/LibIts_ports/BTP_ports/*.cc ${TTCN_3_DST_PATH}/LibIts/$i/src
-	cp ${CC_SRC_PATH}/Ports/LibIts_ports/*.hh ${TTCN_3_DST_PATH}/LibIts/$i/include
+	cp ${CC_SRC_PATH}/Ports/LibIts_ports/BTP_ports/*.hh ${TTCN_3_DST_PATH}/LibIts/$i/include
 	cp ${CC_SRC_PATH}/Ports/LibIts_ports/BTP_ports/*.partC ${TTCN_3_DST_PATH}/LibIts/$i/src
 	cp ${CC_SRC_PATH}/Ports/LibIts_ports/BTP_ports/*.partH ${TTCN_3_DST_PATH}/LibIts/$i/include
     elif [ "$i" == "CAM" ]
     then
 	cp ${CC_SRC_PATH}/EncDec/LibItsCam_Encdec.cc ${TTCN_3_DST_PATH}/LibIts/$i/src
 	cp ${CC_SRC_PATH}/Ports/LibIts_ports/CAM_ports/*.cc ${TTCN_3_DST_PATH}/LibIts/$i/src
-	cp ${CC_SRC_PATH}/Ports/LibIts_ports/*.hh ${TTCN_3_DST_PATH}/LibIts/$i/include
+	cp ${CC_SRC_PATH}/Ports/LibIts_ports/CAM_ports/*.hh ${TTCN_3_DST_PATH}/LibIts/$i/include
 	cp ${CC_SRC_PATH}/Ports/LibIts_ports/CAM_ports/*.partC ${TTCN_3_DST_PATH}/LibIts/$i/src
 	cp ${CC_SRC_PATH}/Ports/LibIts_ports/CAM_ports/*.partH ${TTCN_3_DST_PATH}/LibIts/$i/include
     elif [ "$i" == "DENM" ]
     then
 	cp ${CC_SRC_PATH}/EncDec/LibItsDenm_Encdec.cc ${TTCN_3_DST_PATH}/LibIts/$i/src
 	cp ${CC_SRC_PATH}/Ports/LibIts_ports/DENM_ports/*.cc ${TTCN_3_DST_PATH}/LibIts/$i/src
-	cp ${CC_SRC_PATH}/Ports/LibIts_ports/*.hh ${TTCN_3_DST_PATH}/LibIts/$i/include
+	cp ${CC_SRC_PATH}/Ports/LibIts_ports/DENM_ports/*.hh ${TTCN_3_DST_PATH}/LibIts/$i/include
 	cp ${CC_SRC_PATH}/Ports/LibIts_ports/DENM_ports/*.partC ${TTCN_3_DST_PATH}/LibIts/$i/src
 	cp ${CC_SRC_PATH}/Ports/LibIts_ports/DENM_ports/*.partH ${TTCN_3_DST_PATH}/LibIts/$i/include
     elif [ "$i" == "GeoNetworking" ]
@@ -100,7 +101,7 @@ do
 	cp ${CC_SRC_PATH}/EncDec/LibItsGeoNetworking_Encdec.cc ${TTCN_3_DST_PATH}/LibIts/$i/src
 	cp ${CC_SRC_PATH}/Externals/LibItsGeoNetworking_externals.cc ${TTCN_3_DST_PATH}/LibIts/$i/src
 	cp ${CC_SRC_PATH}/Ports/LibIts_ports/GN_ports/*.cc ${TTCN_3_DST_PATH}/LibIts/$i/src
-	cp ${CC_SRC_PATH}/Ports/LibIts_ports/*.hh ${TTCN_3_DST_PATH}/LibIts/$i/include
+	cp ${CC_SRC_PATH}/Ports/LibIts_ports/GN_ports/*.hh ${TTCN_3_DST_PATH}/LibIts/$i/include
 	cp ${CC_SRC_PATH}/Ports/LibIts_ports/GN_ports/*.partC ${TTCN_3_DST_PATH}/LibIts/$i/src
 	cp ${CC_SRC_PATH}/Ports/LibIts_ports/GN_ports/*.partH ${TTCN_3_DST_PATH}/LibIts/$i/include
     elif [ "$i" == "Ipv6OverGeoNetworking" ]
@@ -119,8 +120,7 @@ done
 PATH_PATCHES=`pwd`/etsi_its_patches
 if [ -d ${PATH_PATCHES} ]
 then
-    cp ${PATH_PATCHES}/LibCommon_build.bash ${TTCN_3_DST_PATH}/LibCommon/bin
-    cp ${PATH_PATCHES}/LibItsCommon_build.bash ${TTCN_3_DST_PATH}/LibIts/Common/bin
+    cp ${PATH_PATCHES}/cam_generate_makefile.bash ${PATH_DEV_ITS}/src/AtsCAM/bin
 fi
 
 # Set rights
