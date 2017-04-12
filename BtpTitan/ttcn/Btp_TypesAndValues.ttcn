@@ -17,9 +17,9 @@ module Btp_TypesAndValues {
     type record BtpPacket {
       BtpHeader      header,
       BtpPayload     payload optional
-      }with { variant ""; } // Yann: Mandatory!
+      }
         
-  } // end btpPdus
+  } // End of group btpPdus
     
   group btpHeaders {
         
@@ -32,7 +32,7 @@ module Btp_TypesAndValues {
     type union BtpHeader {
       BtpAHeader btpAHeader,
       BtpBHeader btpBHeader 
-      }with { variant ""; } // Yann: Mandatory!
+    }
 
     /**
      * @desc BTP-A Header
@@ -43,7 +43,7 @@ module Btp_TypesAndValues {
     type record BtpAHeader {
       BtpPortId destinationPort,
       BtpPortId sourcePort   
-      } with { variant ""; } // Yann: Mandatory!
+    } 
 
     /**
      * @desc BTP-B Header
@@ -54,7 +54,7 @@ module Btp_TypesAndValues {
     type record BtpBHeader {
       BtpPortId destinationPort,
       BtpPortInfo destinationPortInfo   
-    } with { variant ""; } // Yann: Mandatory!
+    } 
     
     /**
      * @desc BTP Port ID
@@ -68,7 +68,7 @@ module Btp_TypesAndValues {
      */ 
     type UInt16 BtpPortInfo;
         
-  } // end btpHeaders
+  } // End of group btpHeaders
     
   group btpPayload {
         
@@ -82,7 +82,7 @@ module Btp_TypesAndValues {
     type record BtpPayload {
       DecodedBtpPayload decoded_payload optional,
       BtpRawPayload raw_payload
-    } with { variant ""; } // Yann: Mandatory!
+    }
     
     type record Frame
     {
@@ -90,7 +90,7 @@ module Btp_TypesAndValues {
       Oct1 message_id,
       Oct4 station_id,
       octetstring data_stream
-    } with { variant ""; } // Yann: Mandatory!
+    }
         
     /**
      * @desc The decoded payload of the BTP packet
@@ -103,13 +103,12 @@ module Btp_TypesAndValues {
      * @member seemPacket
      */
     type union DecodedBtpPayload {
-      octetstring raw_payload,
-      anytype payload  
-    } with { 
-      extension "anytype octetstring, Frame";
-      variant "" // Yann: Mandatory!
+      octetstring raw_payload
     }
-        
-  } //end btpPayload
+     
+  } // End of btpPayload
 
-} with { encode "RAW"}
+} with { 
+    variant ""; // Yann: Mandatory!
+    encode "RAW" 
+}

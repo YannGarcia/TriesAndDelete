@@ -5,6 +5,8 @@ module Btp_TestControl {
     control {
         
         execute(TC_BTP_PGA_BV_01());
+        execute(TC_BTP_PGA_BV_02());
+        execute(TC_BTP_PGA_BV_03());
         
     }
 }

@@ -7,8 +7,8 @@
 // You may modify this file. Add your attributes and prototypes of your
 // member functions here.
 
-#ifndef BtpPort_HH
-#define BtpPort_HH
+#ifndef UtPort_HH
+#define UtPort_HH
 
 #include "Btp_TestSystem.hh"
 
@@ -19,10 +19,10 @@
 
 namespace Btp__TestSystem {
 
-  class BtpPort: public BtpPort_BASE {
+  class UtPort: public UtPort_BASE {
     public:
-      BtpPort(const char *par_port_name = NULL);
-      ~BtpPort();
+      UtPort(const char *par_port_name = NULL);
+      ~UtPort();
 
       void set_parameter(const char *parameter_name, const char *parameter_value);
       void Event_Handler(const fd_set *read_fds, const fd_set */*write_fds*/, const fd_set */*error_fds*/, double /*time_since_last_call*/);
@@ -39,7 +39,7 @@ namespace Btp__TestSystem {
       void user_start();
       void user_stop();
 
-      void outgoing_send(const BtpReq& send_par);
+      void outgoing_send(const Ut__TypesAndValues::UtInitialize& send_par);
 
     private:
       bool is_port_mapped;

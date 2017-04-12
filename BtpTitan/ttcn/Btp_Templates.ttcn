@@ -1,14 +1,15 @@
 module Btp_Templates {
-	
+  
   import from Btp_TypesAndValues all;
+  import from Ut_TypesAndValues all;
   import from Btp_TestSystem all;
-	
+  
   group btpPrimitivesTemplates {
 
     template BtpInd mw_btpInd(
-			      template (present) BtpPacket p_btpPkt
-			      ) := {
-    msgIn := p_btpPkt
+                              template (present) BtpPacket p_btpPkt
+    ) := {
+      msgIn := p_btpPkt
     }
     
   } // btpPrimitivesTemplates
@@ -22,17 +23,17 @@ module Btp_Templates {
      * @param   p_payload   Payload
      */
     template BtpPacket mw_btpA (
-				template (present) BtpPortId   p_destPort,
-				template (present) BtpPortId   p_srcPort,
-				template BtpPayload  p_payload
-				) := {
-    header := { 
-      btpAHeader := {
-	destinationPort := p_destPort, 
-	sourcePort := p_srcPort
-      }
-    }, 
-    payload := p_payload
+                                template (present) BtpPortId   p_destPort,
+                                template (present) BtpPortId   p_srcPort,
+                                template BtpPayload  p_payload
+    ) := {
+      header := { 
+        btpAHeader := {
+          destinationPort := p_destPort, 
+          sourcePort := p_srcPort
+        }
+      }, 
+      payload := p_payload
     }
 
     /**
@@ -41,18 +42,18 @@ module Btp_Templates {
      * @param   p_destPortInfo  Destination port information
      * @param   p_payload       Payload
      */
-    template BtpPacket mw_btpB (	
-				template (present) BtpPortId   p_destPort,
-				template (present) BtpPortInfo p_destPortInfo,
-				template BtpPayload  p_payload
-					) := {
-    header := { 
-      btpBHeader := {
-	destinationPort := p_destPort, 
-	destinationPortInfo := p_destPortInfo
-      }
-    }, 
-    payload := p_payload
+    template BtpPacket mw_btpB (  
+                                template (present) BtpPortId   p_destPort,
+                                template (present) BtpPortInfo p_destPortInfo,
+                                template BtpPayload  p_payload
+     ) := {
+       header := { 
+         btpBHeader := {
+           destinationPort := p_destPort, 
+           destinationPortInfo := p_destPortInfo
+        }
+      }, 
+      payload := p_payload
     }
 
     template (present) Frame mw_frame(
@@ -67,6 +68,12 @@ module Btp_Templates {
       data_stream       := p_data_stream
     }
 
-  } // end btpPduTemplates
-    
+  } // End of btpPduTemplates
+  
+  template (value) UtInitialize m_utInitialize(
+                                               in Oct8 p_hashedId8  := '0102030405060708'O
+  ) := {
+      hashedId8 := p_hashedId8
+  }
+  
 }

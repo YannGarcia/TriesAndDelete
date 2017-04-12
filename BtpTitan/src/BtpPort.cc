@@ -17,11 +17,7 @@
 namespace Btp__TestSystem {
 
   BtpPort::BtpPort(const char *par_port_name) :
-    BtpPort_BASE(par_port_name), 
-    comm_fd(-1),
-    is_port_mapped(false), 
-    debugging(true), 
-    target_fd(-1) {
+      BtpPort_BASE(par_port_name), is_port_mapped(false), debugging(true), target_fd(-1) {
 
   }
 
@@ -38,7 +34,7 @@ namespace Btp__TestSystem {
     local_address.sin_addr.s_addr = INADDR_ANY;
     if (!strcmp(parameter_name, "debugging")) {
       if (!strcmp(parameter_value, "YES") || !strcmp(parameter_value, "yes"))
-	debugging = true;
+        debugging = true;
     } else if (!strcmp(parameter_name, "localPort")) {
       local_address.sin_port = htons(atoi(parameter_value));
     } else {
@@ -50,7 +46,7 @@ namespace Btp__TestSystem {
   void BtpPort::Event_Handler(const fd_set *read_fds, const fd_set */*write_fds*/, const fd_set */*error_fds*/, double /*time_since_last_call*/) {
 
     log("entering BtpPort::Event_Handler()");
-    unsigned char msg[65535];       // Allocate memory for possible messages
+    unsigned char msg[65535];     // Allocate memory for possible messages
     int msgLength;
     struct sockaddr_in remoteAddr;
     socklen_t addr_length = sizeof(remoteAddr);
@@ -59,9 +55,9 @@ namespace Btp__TestSystem {
       TTCN_error("Error when reading the received UDP PDU.");
 
     logHex("Message received:  ", OCTETSTRING(msgLength, msg));
-    log("The remote port:          %d", remoteAddr.sin_port);
+    log("The remote port:      %d", remoteAddr.sin_port);
     char *remote_address = inet_ntoa(remoteAddr.sin_addr);
-    log("The remote address:       %s", remote_address);
+    log("The remote address:     %s", remote_address);
 
     logHex("Received PDU   ", OCTETSTRING(msgLength, msg));
 
@@ -89,17 +85,10 @@ namespace Btp__TestSystem {
 
   void BtpPort::user_map(const char * /*system_port*/) {
     if (!is_port_mapped) {
-      socket_address addr_local(std::string("localhost"), static_cast<const uint16_t>(12345)); // TODO Use parameters instead of 12345
-      socket_address addr_remote(std::string("0.0.0.0"), static_cast<const uint16_t>(-1)); // TODO Use parameters instead of 12345
-      comm_fd = comm::channel_manager::get_instance().create_channel(comm::channel_type::udp, addr_local, addr_remote);
-      log("The channel id:      %d", comm_fd);
-      log("The socket listener: %d", comm::channel_manager::get_instance().get_channel(comm_fd).get_fd());
-      //channel_manager::get_instance().get_channel(comm_fd).listen();
-      //init_socket();
+      init_socket();
       fd_set readfds;
       FD_ZERO(&readfds);
-      //FD_SET(target_fd, &readfds);
-      FD_SET(comm::channel_manager::get_instance().get_channel(comm_fd).get_fd(), &readfds);
+      FD_SET(target_fd, &readfds);
       Install_Handler(&readfds, NULL, NULL, 0.0);
       is_port_mapped = true;
     }
@@ -107,12 +96,8 @@ namespace Btp__TestSystem {
 
   void BtpPort::user_unmap(const char * /*system_port*/) {
     is_port_mapped = false;
-    //close_socket();
+    close_socket();
     Uninstall_Handler();
-    if (comm_fd != -1) {
-      comm::channel_manager::get_instance().remove_channel(comm_fd);
-      comm_fd = -1;
-    }
   }
 
   void BtpPort::user_start() {
@@ -131,7 +116,7 @@ namespace Btp__TestSystem {
     log("entering BtpPort::init_socket()");
 
     /* socket creation */
-    if ((target_fd = ::socket(AF_INET, SOCK_DGRAM, 0)) < 0) {
+    if ((target_fd = socket(AF_INET, SOCK_DGRAM, 0)) < 0) {
       TTCN_error("Cannot open socket \n");
     }
 
@@ -145,7 +130,7 @@ namespace Btp__TestSystem {
 
   void BtpPort::close_socket() {
     log("entering BtpPort::close_socket()");
-    ::close(target_fd);
+    close(target_fd);
     target_fd = -1;
     log("entering BtpPort::close_socket()");
   }
@@ -155,9 +140,9 @@ namespace Btp__TestSystem {
       TTCN_Logger::begin_event (TTCN_DEBUG);
       TTCN_Logger::log_event("UDP test port (%s): ", get_name());
       va_list args;
-      ::va_start(args, fmt);
+      va_start(args, fmt);
       TTCN_Logger::log_event_va_list(fmt, args);
-      ::va_end(args);
+      va_end(args);
       TTCN_Logger::end_event();
     }
   }
@@ -169,7 +154,7 @@ namespace Btp__TestSystem {
       TTCN_Logger::log_event("Size: %d,\nMsg: ", msg.lengthof());
 
       for (int i = 0; i < msg.lengthof(); i++)
-	TTCN_Logger::log_event(" %02x", ((const unsigned char*) msg)[i]);
+        TTCN_Logger::log_event(" %02x", ((const unsigned char*) msg)[i]);
       TTCN_Logger::log_event("\n");
       TTCN_Logger::end_event();
     }
@@ -179,24 +164,24 @@ namespace Btp__TestSystem {
     log("BtpPort::get_host_id called");
     unsigned long ipAddress = 0;
 
-    if (::strcmp(host_name, "255.255.255.255") == 0) {
+    if (strcmp(host_name, "255.255.255.255") == 0) {
       ipAddress = 0xffffffff;
     } else {
-      in_addr_t addr = ::inet_addr(host_name);
-      if (addr != (in_addr_t) - 1) {     // host name in XX:XX:XX:XX form
-	ipAddress = addr;
-      } else {                             // host name in domain.com form
-	struct hostent* hptr;
-	if ((hptr = ::gethostbyname(host_name)) == 0)
-	  TTCN_error("The host name %s is not valid.", host_name);
-	ipAddress = *((unsigned long*) hptr->h_addr_list[0]);
+      in_addr_t addr = inet_addr(host_name);
+      if (addr != (in_addr_t) - 1) {   // host name in XX:XX:XX:XX form
+        ipAddress = addr;
+      } else {               // host name in domain.com form
+        struct hostent* hptr;
+        if ((hptr = gethostbyname(host_name)) == 0)
+          TTCN_error("The host name %s is not valid.", host_name);
+        ipAddress = *((unsigned long*) hptr->h_addr_list[0]);
       }
     }
 
     log("Host name: %s, Host address: %u", (const char*) host_name, ipAddress);
     log("BtpPort::get_host_id exited");
 
-    return ::htonl(ipAddress);
+    return htonl(ipAddress);
   }
 
 } /* end of namespace */

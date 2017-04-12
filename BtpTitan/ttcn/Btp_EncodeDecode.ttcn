@@ -1,23 +1,11 @@
 module Btp_EncodeDecode {
 
+  import from Ut_TypesAndValues all;
   import from Btp_TypesAndValues all;
-  import from Btp_TestSystem all;
   
-  external function fx_enc_BtpReq(in BtpReq pdu) return octetstring
-  with { extension "prototype(convert) encode(RAW)" };
-  external function fx_dec_BtpInd(in octetstring stream) return BtpInd
-  with { extension "prototype(convert) decode(RAW)" };
-  external function fx_dec_BtpInd_backtrack(in octetstring stream, out BtpInd pdu) return integer
-  with { extension "prototype(backtrack) decode(RAW)" }
-
-//  external function fx_encvalue(in anytype p_any, out bitstring p_raw) return integer;
-//  with { extension "prototype(backtrack) decode(RAW)" };
-//  external function fx_decvalue(in bitstring p_raw, out anytype p_any) return integer;
-//  with { extension "prototype(backtrack) decode(RAW)" };
-
-//    external function fx_enc_BtpPayload (BtpPayload p) return bitstring
-//        with {extension "prototype(convert)"}
-//    
+  external function fx_enc_UtInitialize (UtInitialize p) return bitstring with {extension "prototype(convert) encode(UpperTester)"}
+  external function fx_dec_UtInitialize (inout bitstring b, out UtInitialize p) return integer with {extension "prototype(sliding) decode(UpperTester)"}
+  
   external function fx_dec_Frame(in octetstring b, out Frame p_btpPayload) return integer
   with { extension "prototype(backtrack) decode(RAW)" }
   

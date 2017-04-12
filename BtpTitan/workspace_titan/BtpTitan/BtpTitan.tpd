@@ -2,6 +2,7 @@
 <TITAN_Project_File_Information version="1.0">
   <ProjectName>BtpTitan</ProjectName>
   <Folders>
+    <FolderResource projectRelativePath="logs" relativeURI="logs"/>
     <FolderResource projectRelativePath="src" relativeURI="src"/>
     <FolderResource projectRelativePath="src/etc" rawURI="PARENT-2-PROJECT_LOC/etc"/>
     <FolderResource projectRelativePath="src/include" rawURI="PARENT-2-PROJECT_LOC/include"/>
@@ -10,6 +11,8 @@
   </Folders>
   <Files>
     <FileResource projectRelativePath="BtpTitan.tpd" relativeURI="BtpTitan.tpd"/>
+    <FileResource projectRelativePath="logs/BtpTitan.yann-FSCOM-hc.log" relativeURI="logs/BtpTitan.yann-FSCOM-hc.log"/>
+    <FileResource projectRelativePath="logs/BtpTitan.yann-FSCOM-mtc.log" relativeURI="logs/BtpTitan.yann-FSCOM-mtc.log"/>
   </Files>
   <ActiveConfiguration>Default</ActiveConfiguration>
   <Configurations>
@@ -254,10 +257,55 @@
             </NamingCoventions>
           </FolderProperties>
         </FolderResource>
+        <FolderResource>
+          <FolderPath>logs</FolderPath>
+          <FolderProperties>
+            <ExcludeFromBuild>false</ExcludeFromBuild>
+            <centralStorage>false</centralStorage>
+            <NamingCoventions>
+              <enableFolderSpecificSettings></enableFolderSpecificSettings>
+              <TTCN3ModuleName>.*</TTCN3ModuleName>
+              <ASN1ModuleName>.*</ASN1ModuleName>
+              <altstep>as_.*</altstep>
+              <globalConstant>cg_.*</globalConstant>
+              <externalConstant>ec_.*</externalConstant>
+              <function>f_.*</function>
+              <externalFunction>ef_.*</externalFunction>
+              <moduleParameter>m.*</moduleParameter>
+              <globalPort>.*_PT</globalPort>
+              <globalTemplate>t.*</globalTemplate>
+              <testcase>tc_.*</testcase>
+              <globalTimer>T.*</globalTimer>
+              <type>.*</type>
+              <group>[A-Z].*</group>
+              <localConstant>cl.*</localConstant>
+              <localVariable>vl.*</localVariable>
+              <localTemplate>t.*</localTemplate>
+              <localVariableTemplate>vt.*</localVariableTemplate>
+              <localTimer>TL_.*</localTimer>
+              <formalParameter>pl_.*</formalParameter>
+              <componentConstant>c_.*</componentConstant>
+              <componentVariable>v_.*</componentVariable>
+              <componentTimer>T_.*</componentTimer>
+            </NamingCoventions>
+          </FolderProperties>
+        </FolderResource>
       </FolderProperties>
       <FileProperties>
         <FileResource>
           <FilePath>BtpTitan.tpd</FilePath>
+          <FileProperties>
+            <ExcludeFromBuild>false</ExcludeFromBuild>
+          </FileProperties>
+        </FileResource>
+        <FileResource>
+          <FilePath>logs/BtpTitan.yann-FSCOM-hc.log</FilePath>
+          <FileProperties>
+            <ExcludeFromBuild>false</ExcludeFromBuild>
+          </FileProperties>
+        </FileResource>
+        <FileResource>
+          <FilePath>logs/BtpTitan.yann-FSCOM-mtc.log</FilePath>
           <FileProperties>
             <ExcludeFromBuild>false</ExcludeFromBuild>
           </FileProperties>

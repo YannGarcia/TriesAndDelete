@@ -4,6 +4,6 @@
 #include <TTCN3.hh>
 
 namespace Btp__EncodeDecode {
-//  INTEGER fx_encvalue(const Btp__TypesAndValues::anytype p_any, BITSTRING& p_raw);
-//  INTEGER fx_decvalue(const BITSTRING& p_raw, out anytype p_any);
-}
+  INTEGER fx__dec__UtInitialize(BITSTRING&, Ut__TypesAndValues::UtInitialize&);
+  BITSTRING fx__enc__UtInitialize(Ut__TypesAndValues::UtInitialize const&);
+} / End of namespace Btp__EncodeDecode

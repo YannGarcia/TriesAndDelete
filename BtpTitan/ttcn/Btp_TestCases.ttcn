@@ -1,46 +1,92 @@
 module Btp_TestCases {
-
-import from Btp_TypesAndValues all;
-import from Btp_Templates all;
-import from Btp_TestSystem all;
-import from Btp_EncodeDecode all;
-
-testcase TC_BTP_PGA_BV_01() runs on ItsBtp system ItsBtpSystem {
-  var BtpInd v_btp_ind;
-
-  timer tc_ac := 15.0;
-
-  map(mtc:btpPort, system:btpPort);
-
-  tc_ac.start;
-  alt {
-    [] btpPort.receive(
-      mw_btpInd(
-        mw_btpB (
-          ?,
-          ?,
-          ?
-        ))) -> value v_btp_ind { 
-      tc_ac.stop; 
-      if (ischosen(v_btp_ind.msgIn.payload.decoded_payload.raw_payload)) {
-        //var anytype v_decoded;
-        var Frame v_frame;
-        fx_dec_Frame(v_btp_ind.msgIn.payload.decoded_payload.raw_payload, v_frame);
-        log(match(v_frame, mw_frame));
+  
+  import from Btp_TypesAndValues all;
+  import from Ut_TypesAndValues all;
+  import from Btp_Templates all;
+  import from Btp_TestSystem all;
+  import from Btp_EncodeDecode all;
+  
+  testcase TC_BTP_PGA_BV_01() runs on ItsBtp system ItsBtpSystem {
+    var BtpInd v_btp_ind;
+  
+    timer tc_ac := 30.0;
+  
+    map(mtc:utPort, system:utPort);
+    map(mtc:btpPort, system:btpPort);
+  
+    action("echo '07d10000010200008235c92a4056b49d200d693a401ffffffc2030d41e00000fc0007e83109d0737530f1fffb0000000' | xxd -r -p | nc -u localhost 12345");
+    tc_ac.start;
+    alt {
+      [] btpPort.receive(
+        mw_btpInd(
+          mw_btpB (
+            ?,
+            ?,
+            ?
+          ))) -> value v_btp_ind { 
+        tc_ac.stop; 
+        if (ischosen(v_btp_ind.msgIn.payload.decoded_payload.raw_payload)) {
+          //var anytype v_decoded;
+          var Frame v_frame;
+          var integer v_result;
+          
+          v_result := fx_dec_Frame(v_btp_ind.msgIn.payload.decoded_payload.raw_payload, v_frame);
+          log(match(v_frame, mw_frame));
+        }
+        setverdict(pass); 
       }
-      setverdict(pass); 
-    }
-    [] btpPort.receive { 
-      tc_ac.stop; 
-      setverdict(fail); 
-    }
-    [] tc_ac.timeout { setverdict(inconc); 
+      [] btpPort.receive { 
+        tc_ac.stop; 
+        setverdict(fail); 
+      }
+      [] tc_ac.timeout { setverdict(inconc); 
+        setverdict(fail);
+      }
+    } // End of 'alt' statement
+  
+    unmap(mtc:utPort, system:utPort);
+    unmap(mtc:btpPort, system:btpPort);
+  
+  } // End of TC_BTP_PGA_BV_01
+  
+  testcase TC_BTP_PGA_BV_02() runs on ItsBtp system ItsBtpSystem {
+    var BtpPacket v_btp_packet;
+    var bitstring v_payload := oct2bit('07DC0000123456789A'O);
+    var bitstring v_decpayload;
+    var integer v_result := -1;
+    
+    v_result := decvalue(v_payload, v_btp_packet);
+    log(v_btp_packet);
+    
+    v_decpayload := encvalue(v_btp_packet);
+    log(bit2oct(v_payload));
+    log(bit2oct(v_decpayload));
+    if (v_decpayload != oct2bit('07DC0000123456789A'O)) {
       setverdict(fail);
+    } else {
+      setverdict(pass);
     }
-  } // End of 'alt' statement
-
-  unmap(mtc:btpPort, system:btpPort);
-
-} // End of TC_BTP_PGA_BV_01
-
+    
+  } // End of TC_BTP_PGA_BV_02
+  
+  testcase TC_BTP_PGA_BV_03() runs on ItsBtp system ItsBtpSystem {
+    var UtInitialize v_utInitialize;
+    var bitstring v_payload := oct2bit('000102030405060708'O);
+    var bitstring v_decpayload;
+    var integer v_result := -1;
+    
+    v_result := decvalue(v_payload, v_utInitialize); // Not generted by TITAN, need to declared the enc/dec external function
+    log(v_utInitialize);
+    
+    v_decpayload := encvalue(valueof(m_utInitialize)); // Not generted by TITAN, need to declared the enc/dec external function
+    log(bit2oct(v_payload));
+    log(bit2oct(v_decpayload));
+    if (v_decpayload != oct2bit('0102030405060708'O)) {
+      setverdict(fail);
+    } else {
+      setverdict(pass);
+    }
+    
+  } // End of TC_BTP_PGA_BV_03
+  
 } // End of module Btp_TestCases
