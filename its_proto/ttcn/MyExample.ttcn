@@ -1,0 +1,60 @@
+// TTCN-3 version of "Hello, world!"
+module MyExample
+{
+type port PCOType1 message
+{
+  inout charstring;
+}
+
+type port PCOType2 message
+{
+  inout charstring;
+}
+
+type component MTCTypesSystem
+{
+  port PCOType1 MyPCO1_PT;
+  port PCOType2 MyPCO2_PT;
+}
+
+type component MTCTypes
+{
+  port PCOType1 MyPCO1_PT;
+  port PCOType2 MyPCO2_PT;
+}
+
+testcase tc_HelloW() runs on MTCTypes system MTCTypesSystem
+{
+  map(mtc:MyPCO1_PT, system:MyPCO1_PT);
+  map(mtc:MyPCO2_PT, system:MyPCO2_PT);
+  MyPCO1_PT.send("MyPCO1_PT: Hello, world!");
+  MyPCO2_PT.send("MyPCO2_PT: Hello, world!");
+  setverdict(pass);
+}
+
+testcase tc_HelloW2() runs on MTCTypes system MTCTypesSystem
+{
+  timer TL_T := 15.0;
+  map(mtc:MyPCO1_PT, system:MyPCO1_PT);
+  map(mtc:MyPCO2_PT, system:MyPCO2_PT);
+  MyPCO1_PT.send("MyPCO1_PT: Hello, world!");
+  TL_T.start;
+  alt {
+    [] MyPCO1_PT.receive("MyPCO1_PT: Hello, world!") { TL_T.stop; setverdict(pass); }
+    [] MyPCO2_PT.receive("MyPCO2_PT: Hello, world!") { TL_T.stop; setverdict(pass); }
+    [] TL_T.timeout { setverdict(inconc); }
+    [] MyPCO1_PT.receive { TL_T.stop; setverdict(fail); }
+    [] MyPCO2_PT.receive { TL_T.stop; setverdict(fail); }
+  }
+}
+
+control
+{
+  execute(tc_HelloW());
+  execute(tc_HelloW2());
+}
+} with {
+    variant""
+    encode "RAW"
+}
+
