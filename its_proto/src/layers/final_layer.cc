@@ -4,26 +4,22 @@
 #include "PCOCommon_layer.hh"
 #include "logger.hh"
 
-#include </home/ubuntu/frameworks/titan/titan.core/core/Fd_And_Timeout_User.hh>
-
 namespace layers {
 
-	final_layer::final_layer() : /*PORT(NULL),*/Fd_Event_Handler(), layer_interface(), _udp(*(new udp()))
+	final_layer::final_layer() : PORT("final_layer"), layer_interface(), _udp(*(new udp()))
 	{
 		logger::logger::log("final_layer::final_layer");
 		_name = "final_layer::final_layer";
-		Fd_And_Timeout_User::add_fd(_udp.get_socket(), this, FD_EVENT_RD);
+                Handler_Add_Fd_Read(_udp.get_socket());
 	}
 
 	final_layer::~final_layer()
 	{
 		logger::logger::log("final_layer::~final_layer");
-		Fd_And_Timeout_User::remove_fd(_udp.get_socket(), this,
-		    static_cast<fd_event_type_enum>(
-		    static_cast<int>(FD_EVENT_RD | FD_EVENT_WR | FD_EVENT_ERR)));
+                Handler_Remove_Fd_Read(_udp.get_socket());
 	}
 
-	void final_layer::Handle_Fd_Event(int fd, boolean is_readable, boolean is_writable, boolean is_error)
+        void final_layer::Handle_Fd_Event_Readable(int fd)
 	{
 		logger::logger::log("final_layer::Handle_Fd_Event");
 		std::vector<unsigned char> buffer;

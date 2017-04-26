@@ -17,6 +17,16 @@ type component MTCTypesSystem
   port PCOType2 MyPCO2_PT;
 }
 
+type component MTCTypePCO1
+{
+  port PCOType1 MyPCO1_PT;
+}
+
+type component MTCTypePCO2
+{
+  port PCOType2 MyPCO2_PT;
+}
+
 type component MTCTypes
 {
   port PCOType1 MyPCO1_PT;
@@ -47,6 +57,21 @@ testcase tc_HelloW2() runs on MTCTypes system MTCTypesSystem
     [] MyPCO2_PT.receive { TL_T.stop; setverdict(fail); }
   }
 }
+
+/*testcase tc_HelloW3() runs on MTCTypePCOs system MTCTypesSystem
+{
+  var MTCTypePCO1 v_pco1;
+  var PTCTypePCO2 v_pco2;
+
+  vpco_1 := PTCTypePCO1.create("PCO1_component", alive);
+  vpco_2 := PTCTypePCO2.create("PCO2_component", alive);
+
+  v_pco1.start(f_tc_HelloW3_pco1());
+  v_pco2.start(f_tc_HelloW3_pco2());
+
+  v_pco1.done;
+  v_pco2.done; 
+}*/
 
 control
 {

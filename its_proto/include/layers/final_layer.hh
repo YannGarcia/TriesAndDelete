@@ -5,10 +5,11 @@
 
 namespace layers {
 
-	class final_layer : public Fd_Event_Handler,/*public PORT,*/ public layer_interface {
+  class final_layer : public PORT, public layer_interface {
 		udp & _udp;
 
-		void Handle_Fd_Event(int fd, boolean is_readable, boolean is_writeable, boolean is_error);
+                void Handle_Fd_Event_Readable(int fd);
+ 
 	public:
 		final_layer();
 		~final_layer();
