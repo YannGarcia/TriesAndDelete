@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="ASCII"?>
 <application:Application xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:advanced="http://www.eclipse.org/ui/2010/UIModel/application/ui/advanced" xmlns:application="http://www.eclipse.org/ui/2010/UIModel/application" xmlns:basic="http://www.eclipse.org/ui/2010/UIModel/application/ui/basic" xmlns:menu="http://www.eclipse.org/ui/2010/UIModel/application/ui/menu" xmi:id="_SCSyYB-HEeenK5uRJcRnRA" elementId="org.eclipse.e4.legacy.ide.application" contributorURI="platform:/plugin/org.eclipse.platform" selectedElement="_SCSyYR-HEeenK5uRJcRnRA" bindingContexts="_SCUBwB-HEeenK5uRJcRnRA">
-  <persistedState key="memento" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xD;&#xA;&lt;workbench>&#xD;&#xA;&lt;mruList>&#xD;&#xA;&lt;file factoryID=&quot;org.eclipse.ui.part.FileEditorInputFactory&quot; id=&quot;org.eclipse.cdt.ui.editor.CEditor&quot; name=&quot;UtPort.cc&quot; tooltip=&quot;BtpTitan/src/src/UtPort.cc&quot;>&#xD;&#xA;&lt;persistable path=&quot;/BtpTitan/src/src/UtPort.cc&quot;/>&#xD;&#xA;&lt;/file>&#xD;&#xA;&lt;file factoryID=&quot;org.eclipse.ui.part.FileEditorInputFactory&quot; id=&quot;org.eclipse.titan.designer.editors.configeditor.ConfigEditor&quot; name=&quot;Btp_TestCases.cfg&quot; tooltip=&quot;BtpTitan/src/etc/Btp_TestCases.cfg&quot;>&#xD;&#xA;&lt;persistable path=&quot;/BtpTitan/src/etc/Btp_TestCases.cfg&quot;/>&#xD;&#xA;&lt;/file>&#xD;&#xA;&lt;file factoryID=&quot;org.eclipse.ui.part.FileEditorInputFactory&quot; id=&quot;org.eclipse.cdt.ui.editor.CEditor&quot; name=&quot;BtpPort.cc&quot; tooltip=&quot;BtpTitan/src/src/BtpPort.cc&quot;>&#xD;&#xA;&lt;persistable path=&quot;/BtpTitan/src/src/BtpPort.cc&quot;/>&#xD;&#xA;&lt;/file>&#xD;&#xA;&lt;file factoryID=&quot;org.eclipse.ui.part.FileEditorInputFactory&quot; id=&quot;org.eclipse.cdt.ui.editor.CEditor&quot; name=&quot;BtpEncodeDecode.cc&quot; tooltip=&quot;BtpTitan/src/src/BtpEncodeDecode.cc&quot;>&#xD;&#xA;&lt;persistable path=&quot;/BtpTitan/src/src/BtpEncodeDecode.cc&quot;/>&#xD;&#xA;&lt;/file>&#xD;&#xA;&lt;file factoryID=&quot;org.eclipse.ui.part.FileEditorInputFactory&quot; id=&quot;org.eclipse.titan.designer.editors.ttcn3editor.TTCN3Editor&quot; name=&quot;Btp_TestSystem.ttcn&quot; tooltip=&quot;BtpTitan/src/ttcn/Btp_TestSystem.ttcn&quot;>&#xD;&#xA;&lt;persistable path=&quot;/BtpTitan/src/ttcn/Btp_TestSystem.ttcn&quot;/>&#xD;&#xA;&lt;/file>&#xD;&#xA;&lt;file factoryID=&quot;org.eclipse.ui.part.FileEditorInputFactory&quot; id=&quot;org.eclipse.titan.designer.editors.ttcn3editor.TTCN3Editor&quot; name=&quot;Btp_EncodeDecode.ttcn&quot; tooltip=&quot;BtpTitan/src/ttcn/Btp_EncodeDecode.ttcn&quot;>&#xD;&#xA;&lt;persistable path=&quot;/BtpTitan/src/ttcn/Btp_EncodeDecode.ttcn&quot;/>&#xD;&#xA;&lt;/file>&#xD;&#xA;&lt;file factoryID=&quot;org.eclipse.ui.part.FileEditorInputFactory&quot; id=&quot;org.eclipse.titan.designer.editors.ttcn3editor.TTCN3Editor&quot; name=&quot;Btp_TestCases.ttcn&quot; tooltip=&quot;BtpTitan/src/ttcn/Btp_TestCases.ttcn&quot;>&#xD;&#xA;&lt;persistable path=&quot;/BtpTitan/src/ttcn/Btp_TestCases.ttcn&quot;/>&#xD;&#xA;&lt;/file>&#xD;&#xA;&lt;file factoryID=&quot;org.eclipse.ui.part.FileEditorInputFactory&quot; id=&quot;org.eclipse.ui.DefaultTextEditor&quot; name=&quot;BtpTitan.yann-FSCOM-hc.log&quot; tooltip=&quot;BtpTitan/logs/BtpTitan.yann-FSCOM-hc.log&quot;>&#xD;&#xA;&lt;persistable path=&quot;/BtpTitan/logs/BtpTitan.yann-FSCOM-hc.log&quot;/>&#xD;&#xA;&lt;/file>&#xD;&#xA;&lt;file factoryID=&quot;org.eclipse.ui.part.FileEditorInputFactory&quot; id=&quot;org.eclipse.cdt.ui.editor.CEditor&quot; name=&quot;Btp_EncodeDecode.hh&quot; tooltip=&quot;BtpTitan/src/include/Btp_EncodeDecode.hh&quot;>&#xD;&#xA;&lt;persistable path=&quot;/BtpTitan/src/include/Btp_EncodeDecode.hh&quot;/>&#xD;&#xA;&lt;/file>&#xD;&#xA;&lt;file factoryID=&quot;org.eclipse.ui.part.FileEditorInputFactory&quot; id=&quot;org.eclipse.titan.designer.editors.ttcn3editor.TTCN3Editor&quot; name=&quot;Ut_TypesAndValues.ttcn&quot; tooltip=&quot;BtpTitan/src/ttcn/Ut_TypesAndValues.ttcn&quot;>&#xD;&#xA;&lt;persistable path=&quot;/BtpTitan/src/ttcn/Ut_TypesAndValues.ttcn&quot;/>&#xD;&#xA;&lt;/file>&#xD;&#xA;&lt;file factoryID=&quot;org.eclipse.ui.part.FileEditorInputFactory&quot; id=&quot;org.eclipse.titan.designer.editors.ttcn3editor.TTCN3Editor&quot; name=&quot;Btp_TestControl.ttcn&quot; tooltip=&quot;BtpTitan/src/ttcn/Btp_TestControl.ttcn&quot;>&#xD;&#xA;&lt;persistable path=&quot;/BtpTitan/src/ttcn/Btp_TestControl.ttcn&quot;/>&#xD;&#xA;&lt;/file>&#xD;&#xA;&lt;file factoryID=&quot;org.eclipse.ui.part.FileEditorInputFactory&quot; id=&quot;org.eclipse.titan.designer.editors.ttcn3editor.TTCN3Editor&quot; name=&quot;Btp_Templates.ttcn&quot; tooltip=&quot;BtpTitan/src/ttcn/Btp_Templates.ttcn&quot;>&#xD;&#xA;&lt;persistable path=&quot;/BtpTitan/src/ttcn/Btp_Templates.ttcn&quot;/>&#xD;&#xA;&lt;/file>&#xD;&#xA;&lt;file factoryID=&quot;org.eclipse.ui.part.FileEditorInputFactory&quot; id=&quot;org.eclipse.cdt.ui.editor.CEditor&quot; name=&quot;Btp_TestSystem.hh&quot; tooltip=&quot;BtpTitan/bin/Btp_TestSystem.hh&quot;>&#xD;&#xA;&lt;persistable path=&quot;/BtpTitan/bin/Btp_TestSystem.hh&quot;/>&#xD;&#xA;&lt;/file>&#xD;&#xA;&lt;file factoryID=&quot;org.eclipse.ui.part.FileEditorInputFactory&quot; id=&quot;org.eclipse.cdt.ui.editor.CEditor&quot; name=&quot;UtPort.hh&quot; tooltip=&quot;BtpTitan/src/include/UtPort.hh&quot;>&#xD;&#xA;&lt;persistable path=&quot;/BtpTitan/src/include/UtPort.hh&quot;/>&#xD;&#xA;&lt;/file>&#xD;&#xA;&lt;file factoryID=&quot;org.eclipse.ui.part.FileEditorInputFactory&quot; id=&quot;org.eclipse.cdt.ui.editor.CEditor&quot; name=&quot;Btp_TypesAndValues.cc&quot; tooltip=&quot;BtpTitan/Btp_TypesAndValues.cc&quot;>&#xD;&#xA;&lt;persistable path=&quot;/BtpTitan/Btp_TypesAndValues.cc&quot;/>&#xD;&#xA;&lt;/file>&#xD;&#xA;&lt;/mruList>&#xD;&#xA;&lt;/workbench>"/>
+  <persistedState key="memento" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xD;&#xA;&lt;workbench>&#xD;&#xA;&lt;mruList>&#xD;&#xA;&lt;file factoryID=&quot;org.eclipse.ui.ide.FileStoreEditorInputFactory&quot; id=&quot;org.eclipse.titan.designer.editors.ttcn3editor.TTCN3Editor&quot; name=&quot;TELNETasp_PortType.ttcn&quot; tooltip=&quot;C:\Users\yann\Documents\wireshark\cygwin64\home\yann\frameworks\titan\titan.TestPorts.TELNETasp\src\TELNETasp_PortType.ttcn&quot;>&#xD;&#xA;&lt;persistable uri=&quot;file:/C:/Users/yann/Documents/wireshark/cygwin64/home/yann/frameworks/titan/titan.TestPorts.TELNETasp/src/TELNETasp_PortType.ttcn&quot;/>&#xD;&#xA;&lt;/file>&#xD;&#xA;&lt;file factoryID=&quot;org.eclipse.ui.ide.FileStoreEditorInputFactory&quot; id=&quot;org.eclipse.cdt.ui.editor.CEditor&quot; name=&quot;TELNETasp_PT.cc&quot; tooltip=&quot;C:\Users\yann\Documents\wireshark\cygwin64\home\yann\frameworks\titan\titan.TestPorts.TELNETasp\src\TELNETasp_PT.cc&quot;>&#xD;&#xA;&lt;persistable uri=&quot;file:/C:/Users/yann/Documents/wireshark/cygwin64/home/yann/frameworks/titan/titan.TestPorts.TELNETasp/src/TELNETasp_PT.cc&quot;/>&#xD;&#xA;&lt;/file>&#xD;&#xA;&lt;file factoryID=&quot;org.eclipse.ui.part.FileEditorInputFactory&quot; id=&quot;org.eclipse.titan.designer.editors.ttcn3editor.TTCN3Editor&quot; name=&quot;Btp_TestCases.ttcn&quot; tooltip=&quot;BtpTitan/src/ttcn/Btp_TestCases.ttcn&quot;>&#xD;&#xA;&lt;persistable path=&quot;/BtpTitan/src/ttcn/Btp_TestCases.ttcn&quot;/>&#xD;&#xA;&lt;/file>&#xD;&#xA;&lt;file factoryID=&quot;org.eclipse.ui.part.FileEditorInputFactory&quot; id=&quot;org.eclipse.cdt.ui.editor.CEditor&quot; name=&quot;UtPort.cc&quot; tooltip=&quot;BtpTitan/src/src/UtPort.cc&quot;>&#xD;&#xA;&lt;persistable path=&quot;/BtpTitan/src/src/UtPort.cc&quot;/>&#xD;&#xA;&lt;/file>&#xD;&#xA;&lt;file factoryID=&quot;org.eclipse.ui.part.FileEditorInputFactory&quot; id=&quot;org.eclipse.titan.designer.editors.configeditor.ConfigEditor&quot; name=&quot;Btp_TestCases.cfg&quot; tooltip=&quot;BtpTitan/src/etc/Btp_TestCases.cfg&quot;>&#xD;&#xA;&lt;persistable path=&quot;/BtpTitan/src/etc/Btp_TestCases.cfg&quot;/>&#xD;&#xA;&lt;/file>&#xD;&#xA;&lt;file factoryID=&quot;org.eclipse.ui.part.FileEditorInputFactory&quot; id=&quot;org.eclipse.cdt.ui.editor.CEditor&quot; name=&quot;BtpPort.cc&quot; tooltip=&quot;BtpTitan/src/src/BtpPort.cc&quot;>&#xD;&#xA;&lt;persistable path=&quot;/BtpTitan/src/src/BtpPort.cc&quot;/>&#xD;&#xA;&lt;/file>&#xD;&#xA;&lt;file factoryID=&quot;org.eclipse.ui.part.FileEditorInputFactory&quot; id=&quot;org.eclipse.cdt.ui.editor.CEditor&quot; name=&quot;BtpEncodeDecode.cc&quot; tooltip=&quot;BtpTitan/src/src/BtpEncodeDecode.cc&quot;>&#xD;&#xA;&lt;persistable path=&quot;/BtpTitan/src/src/BtpEncodeDecode.cc&quot;/>&#xD;&#xA;&lt;/file>&#xD;&#xA;&lt;file factoryID=&quot;org.eclipse.ui.part.FileEditorInputFactory&quot; id=&quot;org.eclipse.titan.designer.editors.ttcn3editor.TTCN3Editor&quot; name=&quot;Btp_TestSystem.ttcn&quot; tooltip=&quot;BtpTitan/src/ttcn/Btp_TestSystem.ttcn&quot;>&#xD;&#xA;&lt;persistable path=&quot;/BtpTitan/src/ttcn/Btp_TestSystem.ttcn&quot;/>&#xD;&#xA;&lt;/file>&#xD;&#xA;&lt;file factoryID=&quot;org.eclipse.ui.part.FileEditorInputFactory&quot; id=&quot;org.eclipse.titan.designer.editors.ttcn3editor.TTCN3Editor&quot; name=&quot;Btp_EncodeDecode.ttcn&quot; tooltip=&quot;BtpTitan/src/ttcn/Btp_EncodeDecode.ttcn&quot;>&#xD;&#xA;&lt;persistable path=&quot;/BtpTitan/src/ttcn/Btp_EncodeDecode.ttcn&quot;/>&#xD;&#xA;&lt;/file>&#xD;&#xA;&lt;file factoryID=&quot;org.eclipse.ui.part.FileEditorInputFactory&quot; id=&quot;org.eclipse.ui.DefaultTextEditor&quot; name=&quot;BtpTitan.yann-FSCOM-hc.log&quot; tooltip=&quot;BtpTitan/logs/BtpTitan.yann-FSCOM-hc.log&quot;>&#xD;&#xA;&lt;persistable path=&quot;/BtpTitan/logs/BtpTitan.yann-FSCOM-hc.log&quot;/>&#xD;&#xA;&lt;/file>&#xD;&#xA;&lt;file factoryID=&quot;org.eclipse.ui.part.FileEditorInputFactory&quot; id=&quot;org.eclipse.cdt.ui.editor.CEditor&quot; name=&quot;Btp_EncodeDecode.hh&quot; tooltip=&quot;BtpTitan/src/include/Btp_EncodeDecode.hh&quot;>&#xD;&#xA;&lt;persistable path=&quot;/BtpTitan/src/include/Btp_EncodeDecode.hh&quot;/>&#xD;&#xA;&lt;/file>&#xD;&#xA;&lt;file factoryID=&quot;org.eclipse.ui.part.FileEditorInputFactory&quot; id=&quot;org.eclipse.titan.designer.editors.ttcn3editor.TTCN3Editor&quot; name=&quot;Ut_TypesAndValues.ttcn&quot; tooltip=&quot;BtpTitan/src/ttcn/Ut_TypesAndValues.ttcn&quot;>&#xD;&#xA;&lt;persistable path=&quot;/BtpTitan/src/ttcn/Ut_TypesAndValues.ttcn&quot;/>&#xD;&#xA;&lt;/file>&#xD;&#xA;&lt;file factoryID=&quot;org.eclipse.ui.part.FileEditorInputFactory&quot; id=&quot;org.eclipse.titan.designer.editors.ttcn3editor.TTCN3Editor&quot; name=&quot;Btp_TestControl.ttcn&quot; tooltip=&quot;BtpTitan/src/ttcn/Btp_TestControl.ttcn&quot;>&#xD;&#xA;&lt;persistable path=&quot;/BtpTitan/src/ttcn/Btp_TestControl.ttcn&quot;/>&#xD;&#xA;&lt;/file>&#xD;&#xA;&lt;file factoryID=&quot;org.eclipse.ui.part.FileEditorInputFactory&quot; id=&quot;org.eclipse.titan.designer.editors.ttcn3editor.TTCN3Editor&quot; name=&quot;Btp_Templates.ttcn&quot; tooltip=&quot;BtpTitan/src/ttcn/Btp_Templates.ttcn&quot;>&#xD;&#xA;&lt;persistable path=&quot;/BtpTitan/src/ttcn/Btp_Templates.ttcn&quot;/>&#xD;&#xA;&lt;/file>&#xD;&#xA;&lt;file factoryID=&quot;org.eclipse.ui.part.FileEditorInputFactory&quot; id=&quot;org.eclipse.cdt.ui.editor.CEditor&quot; name=&quot;Btp_TestSystem.hh&quot; tooltip=&quot;BtpTitan/bin/Btp_TestSystem.hh&quot;>&#xD;&#xA;&lt;persistable path=&quot;/BtpTitan/bin/Btp_TestSystem.hh&quot;/>&#xD;&#xA;&lt;/file>&#xD;&#xA;&lt;/mruList>&#xD;&#xA;&lt;/workbench>"/>
   <tags>activeSchemeId:org.eclipse.ui.defaultAcceleratorConfiguration</tags>
   <tags>ModelMigrationProcessor.001</tags>
   <children xsi:type="basic:TrimmedWindow" xmi:id="_SCSyYR-HEeenK5uRJcRnRA" elementId="IDEWindow" contributorURI="platform:/plugin/org.eclipse.platform" selectedElement="_SCSyYh-HEeenK5uRJcRnRA" label="%trimmedwindow.label.eclipseSDK" x="0" y="0" width="1024" height="768">
@@ -13,7 +13,7 @@
     <tags>topLevel</tags>
     <tags>shellMaximized</tags>
     <children xsi:type="basic:PartSashContainer" xmi:id="_SCSyYh-HEeenK5uRJcRnRA" selectedElement="_SCSyYx-HEeenK5uRJcRnRA" horizontal="true">
-      <children xsi:type="advanced:PerspectiveStack" xmi:id="_SCSyYx-HEeenK5uRJcRnRA" elementId="org.eclipse.ui.ide.perspectivestack" containerData="7500" selectedElement="_SCSymR-HEeenK5uRJcRnRA">
+      <children xsi:type="advanced:PerspectiveStack" xmi:id="_SCSyYx-HEeenK5uRJcRnRA" elementId="org.eclipse.ui.ide.perspectivestack" containerData="7500" selectedElement="_SCSyeB-HEeenK5uRJcRnRA">
         <children xsi:type="advanced:Perspective" xmi:id="_SCSyZB-HEeenK5uRJcRnRA" elementId="org.eclipse.cdt.ui.CPerspective" selectedElement="_SCSyZR-HEeenK5uRJcRnRA" label="C/C++" iconURI="platform:/plugin/org.eclipse.cdt.ui/icons/view16/c_pers.gif">
           <persistedState key="persp.hiddenItems" value="persp.hideToolbarSC:org.eclipse.debug.ui.commands.RunToLine,persp.hideToolbarSC:org.eclipse.jdt.ui.actions.OpenProjectWizard,persp.hideMenuSC:org.eclipse.tcf.te.tcf.ui.main.menu.system,persp.hideToolbarSC:print,persp.hideToolbarSC:org.eclipse.ui.edit.text.toggleShowSelectedElementOnly,"/>
           <tags>persp.actionSet:org.eclipse.ui.externaltools.ExternalToolsSet</tags>
@@ -125,12 +125,12 @@
           <tags>persp.viewSC:org.eclipse.ui.navigator.ProjectExplorer</tags>
           <tags>persp.viewSC:org.eclipse.pde.runtime.LogView</tags>
           <tags>persp.showIn:org.eclipse.tm.terminal.view.ui.TerminalsView</tags>
-          <children xsi:type="basic:PartSashContainer" xmi:id="_SCSyeR-HEeenK5uRJcRnRA" selectedElement="_SCSyeh-HEeenK5uRJcRnRA" horizontal="true">
+          <children xsi:type="basic:PartSashContainer" xmi:id="_SCSyeR-HEeenK5uRJcRnRA" selectedElement="_SCSyfR-HEeenK5uRJcRnRA" horizontal="true">
             <children xsi:type="basic:PartStack" xmi:id="_SCSyeh-HEeenK5uRJcRnRA" elementId="org.eclipse.titan.designer.mainFolder" containerData="2000" selectedElement="_SCSyex-HEeenK5uRJcRnRA">
               <children xsi:type="advanced:Placeholder" xmi:id="_SCSyex-HEeenK5uRJcRnRA" elementId="org.eclipse.ui.navigator.ProjectExplorer" ref="_SCTaVh-HEeenK5uRJcRnRA"/>
               <children xsi:type="advanced:Placeholder" xmi:id="_SCSyfB-HEeenK5uRJcRnRA" elementId="org.eclipse.ui.views.ContentOutline" toBeRendered="false" ref="_SCTarx-HEeenK5uRJcRnRA"/>
             </children>
-            <children xsi:type="basic:PartSashContainer" xmi:id="_SCSyfR-HEeenK5uRJcRnRA" containerData="8000" selectedElement="_SCSyfx-HEeenK5uRJcRnRA">
+            <children xsi:type="basic:PartSashContainer" xmi:id="_SCSyfR-HEeenK5uRJcRnRA" containerData="8000" selectedElement="_SCSyfh-HEeenK5uRJcRnRA">
               <children xsi:type="advanced:Placeholder" xmi:id="_SCSyfh-HEeenK5uRJcRnRA" elementId="org.eclipse.ui.editorss" containerData="6472" ref="_SCTaRx-HEeenK5uRJcRnRA"/>
               <children xsi:type="basic:PartStack" xmi:id="_SCSyfx-HEeenK5uRJcRnRA" elementId="org.eclipse.titan.designer.bottomFolder" containerData="3528" selectedElement="_SCSygB-HEeenK5uRJcRnRA">
                 <tags>Titanium</tags>
@@ -208,14 +208,13 @@
           <tags>persp.actionSet:org.eclipse.ui.actionSet.openFiles</tags>
           <tags>persp.actionSet:org.eclipse.titan.log.viewer.search.SearchActionSet</tags>
           <tags>persp.showIn:org.eclipse.tm.terminal.view.ui.TerminalsView</tags>
-          <children xsi:type="basic:PartSashContainer" xmi:id="_SCSymh-HEeenK5uRJcRnRA" selectedElement="_SCSymx-HEeenK5uRJcRnRA" horizontal="true">
-            <children xsi:type="basic:PartSashContainer" xmi:id="_SCSymx-HEeenK5uRJcRnRA" containerData="7000" selectedElement="_SCSynh-HEeenK5uRJcRnRA" horizontal="true">
-              <children xsi:type="basic:PartStack" xmi:id="_SCSynB-HEeenK5uRJcRnRA" elementId="org.eclipse.titan.log.viewer.perspective.LEFT" containerData="2500" selectedElement="_SCSynR-HEeenK5uRJcRnRA">
+          <children xsi:type="basic:PartSashContainer" xmi:id="_SCSymh-HEeenK5uRJcRnRA" selectedElement="_SCSyrx-HEeenK5uRJcRnRA" horizontal="true">
+            <children xsi:type="basic:PartSashContainer" xmi:id="_SCSymx-HEeenK5uRJcRnRA" containerData="7000" selectedElement="_SCSynB-HEeenK5uRJcRnRA" horizontal="true">
+              <children xsi:type="basic:PartStack" xmi:id="_SCSynB-HEeenK5uRJcRnRA" elementId="org.eclipse.titan.log.viewer.perspective.LEFT" containerData="2173" selectedElement="_SCSynR-HEeenK5uRJcRnRA">
                 <children xsi:type="advanced:Placeholder" xmi:id="_SCSynR-HEeenK5uRJcRnRA" elementId="org.eclipse.ui.navigator.ProjectExplorer" ref="_SCTaVh-HEeenK5uRJcRnRA"/>
               </children>
-              <children xsi:type="basic:PartSashContainer" xmi:id="_SCSynh-HEeenK5uRJcRnRA" containerData="7500" selectedElement="_SCSynx-HEeenK5uRJcRnRA">
+              <children xsi:type="basic:PartSashContainer" xmi:id="_SCSynh-HEeenK5uRJcRnRA" containerData="7827" selectedElement="_SCSyrB-HEeenK5uRJcRnRA">
                 <children xsi:type="basic:PartStack" xmi:id="_SCSynx-HEeenK5uRJcRnRA" elementId="org.eclipse.titan.log.viewer.perspective.TOP" containerData="7500" selectedElement="_SCSypR-HEeenK5uRJcRnRA">
-                  <tags>active</tags>
                   <children xsi:type="advanced:Placeholder" xmi:id="_SCSyoB-HEeenK5uRJcRnRA" elementId="org.eclipse.titan.log.viewer.views.MSCView" toBeRendered="false" ref="_SCTa1R-HEeenK5uRJcRnRA"/>
                   <children xsi:type="advanced:Placeholder" xmi:id="_SCSyoR-HEeenK5uRJcRnRA" elementId="org.eclipse.titan.log.viewer.views.MSCView:TC_BTP_PGA_BV_022file_/C_/Users/yann/Documents/wireshark/cygwin64/home/yann/tmp/TriesAndDelete/BtpTitan/workspace_titan/BtpTitan/logs/BtpTitan.yann-FSCOM-mtc.log\BtpTitan\logs\BtpTitan.yann-FSCOM-mtc.log" toBeRendered="false" ref="_SCTa2x-HEeenK5uRJcRnRA"/>
                   <children xsi:type="advanced:Placeholder" xmi:id="_SCSyoh-HEeenK5uRJcRnRA" elementId="org.eclipse.titan.log.viewer.views.MSCView:TC_BTP_PGA_BV_023file_/C_/Users/yann/Documents/wireshark/cygwin64/home/yann/tmp/TriesAndDelete/BtpTitan/workspace_titan/BtpTitan/logs/BtpTitan.yann-FSCOM-mtc.log\BtpTitan\logs\BtpTitan.yann-FSCOM-mtc.log" toBeRendered="false" ref="_SCTa5R-HEeenK5uRJcRnRA"/>
@@ -229,16 +228,14 @@
                   <children xsi:type="advanced:Placeholder" xmi:id="_SCSyqh-HEeenK5uRJcRnRA" elementId="org.eclipse.titan.log.viewer.views.MSCView:controlpart 11file_/C_/Users/yann/Documents/wireshark/cygwin64/home/yann/tmp/TriesAndDelete/BtpTitan/workspace_titan/BtpTitan/logs/BtpTitan.yann-FSCOM-mtc.log\BtpTitan\logs\BtpTitan.yann-FSCOM-mtc.log" toBeRendered="false" ref="_SCTa8B-HEeenK5uRJcRnRA"/>
                   <children xsi:type="advanced:Placeholder" xmi:id="_SCSyqx-HEeenK5uRJcRnRA" elementId="org.eclipse.titan.log.viewer.views.text.table.TextTableView:\BtpTitan\logs\BtpTitan.yann-FSCOM-hc.log" toBeRendered="false" ref="_SCTa8x-HEeenK5uRJcRnRA"/>
                 </children>
-                <children xsi:type="basic:PartStack" xmi:id="_SCSyrB-HEeenK5uRJcRnRA" elementId="org.eclipse.titan.log.viewer.perspective.BOTTOM" containerData="2500" selectedElement="_SCSyrh-HEeenK5uRJcRnRA">
+                <children xsi:type="basic:PartStack" xmi:id="_SCSyrB-HEeenK5uRJcRnRA" elementId="org.eclipse.titan.log.viewer.perspective.BOTTOM" containerData="2500" selectedElement="_SCSyrR-HEeenK5uRJcRnRA">
                   <tags>TITAN Log Viewer</tags>
-                  <children xsi:type="advanced:Placeholder" xmi:id="_SCSyrR-HEeenK5uRJcRnRA" elementId="org.eclipse.ui.console.ConsoleView" toBeRendered="false" ref="_SCTagh-HEeenK5uRJcRnRA"/>
+                  <children xsi:type="advanced:Placeholder" xmi:id="_SCSyrR-HEeenK5uRJcRnRA" elementId="org.eclipse.ui.console.ConsoleView" ref="_SCTagh-HEeenK5uRJcRnRA"/>
                   <children xsi:type="advanced:Placeholder" xmi:id="_SCSyrh-HEeenK5uRJcRnRA" elementId="org.eclipse.titan.log.viewer.views.DetailsView" ref="_SCTa6B-HEeenK5uRJcRnRA"/>
                 </children>
               </children>
             </children>
-            <children xsi:type="advanced:Placeholder" xmi:id="_SCSyrx-HEeenK5uRJcRnRA" elementId="org.eclipse.ui.editorss" visible="false" containerData="3000" ref="_SCTaRx-HEeenK5uRJcRnRA">
-              <tags>Minimized</tags>
-            </children>
+            <children xsi:type="advanced:Placeholder" xmi:id="_SCSyrx-HEeenK5uRJcRnRA" elementId="org.eclipse.ui.editorss" containerData="3000" ref="_SCTaRx-HEeenK5uRJcRnRA"/>
           </children>
         </children>
       </children>
@@ -272,14 +269,29 @@
       <toolbar xmi:id="_SCTaRh-HEeenK5uRJcRnRA" elementId="org.eclipse.ui.internal.introview" visible="false"/>
     </sharedElements>
     <sharedElements xsi:type="advanced:Area" xmi:id="_SCTaRx-HEeenK5uRJcRnRA" elementId="org.eclipse.ui.editorss" selectedElement="_SCTaSB-HEeenK5uRJcRnRA">
-      <children xsi:type="basic:PartStack" xmi:id="_SCTaSB-HEeenK5uRJcRnRA" elementId="org.eclipse.e4.primaryDataStack" selectedElement="_bKFEAB-MEeehepssfJLtQA">
+      <children xsi:type="basic:PartStack" xmi:id="_SCTaSB-HEeenK5uRJcRnRA" elementId="org.eclipse.e4.primaryDataStack" selectedElement="_XDSZECAhEeemNPwTRZ0ZtQ">
         <tags>org.eclipse.e4.primaryDataStack</tags>
         <tags>EditorStack</tags>
+        <tags>active</tags>
         <children xsi:type="basic:Part" xmi:id="_bKFEAB-MEeehepssfJLtQA" elementId="org.eclipse.e4.ui.compatibility.editor" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityEditor" label="UtPort.cc" iconURI="platform:/plugin/org.eclipse.cdt.ui/icons/obj16/c_file_obj.gif" closeable="true">
-          <persistedState key="memento" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xD;&#xA;&lt;editor id=&quot;org.eclipse.cdt.ui.editor.CEditor&quot; name=&quot;UtPort.cc&quot; partName=&quot;UtPort.cc&quot; title=&quot;UtPort.cc&quot; tooltip=&quot;BtpTitan/src/src/UtPort.cc&quot;>&#xD;&#xA;&lt;input factoryID=&quot;org.eclipse.ui.part.FileEditorInputFactory&quot; path=&quot;/BtpTitan/src/src/UtPort.cc&quot;/>&#xD;&#xA;&lt;editorState selectionHorizontalPixel=&quot;0&quot; selectionLength=&quot;0&quot; selectionOffset=&quot;1698&quot; selectionTopPixel=&quot;2027&quot;/>&#xD;&#xA;&lt;/editor>"/>
+          <persistedState key="memento" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xD;&#xA;&lt;editor id=&quot;org.eclipse.cdt.ui.editor.CEditor&quot; name=&quot;UtPort.cc&quot; partName=&quot;UtPort.cc&quot; title=&quot;UtPort.cc&quot; tooltip=&quot;BtpTitan/src/src/UtPort.cc&quot;>&#xD;&#xA;&lt;input factoryID=&quot;org.eclipse.ui.part.FileEditorInputFactory&quot; path=&quot;/BtpTitan/src/src/UtPort.cc&quot;/>&#xD;&#xA;&lt;editorState selectionHorizontalPixel=&quot;0&quot; selectionLength=&quot;0&quot; selectionOffset=&quot;1698&quot; selectionTopPixel=&quot;2010&quot;/>&#xD;&#xA;&lt;/editor>"/>
           <tags>Editor</tags>
           <tags>org.eclipse.cdt.ui.editor.CEditor</tags>
           <tags>removeOnHide</tags>
+        </children>
+        <children xsi:type="basic:Part" xmi:id="_uQMPcCAfEeemNPwTRZ0ZtQ" elementId="org.eclipse.e4.ui.compatibility.editor" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityEditor" label="Btp_TestCases.ttcn" iconURI="platform:/plugin/org.eclipse.titan.designer/icons/ttcn.gif" closeable="true">
+          <persistedState key="memento" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xD;&#xA;&lt;editor id=&quot;org.eclipse.titan.designer.editors.ttcn3editor.TTCN3Editor&quot; name=&quot;Btp_TestCases.ttcn&quot; partName=&quot;Btp_TestCases.ttcn&quot; title=&quot;Btp_TestCases.ttcn&quot; tooltip=&quot;BtpTitan/src/ttcn/Btp_TestCases.ttcn&quot;>&#xD;&#xA;&lt;input factoryID=&quot;org.eclipse.ui.part.FileEditorInputFactory&quot; path=&quot;/BtpTitan/src/ttcn/Btp_TestCases.ttcn&quot;/>&#xD;&#xA;&lt;editorState selectionHorizontalPixel=&quot;0&quot; selectionLength=&quot;0&quot; selectionOffset=&quot;0&quot; selectionTopPixel=&quot;0&quot;/>&#xD;&#xA;&lt;/editor>"/>
+          <tags>Editor</tags>
+          <tags>org.eclipse.titan.designer.editors.ttcn3editor.TTCN3Editor</tags>
+          <tags>removeOnHide</tags>
+        </children>
+        <children xsi:type="basic:Part" xmi:id="_XDSZECAhEeemNPwTRZ0ZtQ" elementId="org.eclipse.e4.ui.compatibility.editor" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityEditor" label="TELNETasp_PT.cc" iconURI="platform:/plugin/org.eclipse.cdt.ui/icons/obj16/c_file_obj.gif" closeable="true">
+          <persistedState key="memento" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xD;&#xA;&lt;editor id=&quot;org.eclipse.cdt.ui.editor.CEditor&quot; name=&quot;TELNETasp_PT.cc&quot; partName=&quot;TELNETasp_PT.cc&quot; title=&quot;TELNETasp_PT.cc&quot; tooltip=&quot;C:\Users\yann\Documents\wireshark\cygwin64\home\yann\frameworks\titan\titan.TestPorts.TELNETasp\src\TELNETasp_PT.cc&quot;>&#xD;&#xA;&lt;input factoryID=&quot;org.eclipse.ui.ide.FileStoreEditorInputFactory&quot; uri=&quot;file:/C:/Users/yann/Documents/wireshark/cygwin64/home/yann/frameworks/titan/titan.TestPorts.TELNETasp/src/TELNETasp_PT.cc&quot;/>&#xD;&#xA;&lt;editorState selectionHorizontalPixel=&quot;0&quot; selectionLength=&quot;0&quot; selectionOffset=&quot;0&quot; selectionTopPixel=&quot;0&quot;/>&#xD;&#xA;&lt;/editor>"/>
+          <tags>Editor</tags>
+          <tags>org.eclipse.cdt.ui.editor.CEditor</tags>
+          <tags>removeOnHide</tags>
+          <tags>active</tags>
+          <tags>activeOnClose</tags>
         </children>
       </children>
     </sharedElements>
@@ -369,7 +381,6 @@
       <persistedState key="memento" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xD;&#xA;&lt;view/>"/>
       <tags>View</tags>
       <tags>categoryTag:General</tags>
-      <tags>highlighted</tags>
       <menus xmi:id="_SCTagx-HEeenK5uRJcRnRA" elementId="org.eclipse.ui.console.ConsoleView">
         <tags>ViewMenu</tags>
         <tags>menuContribution:menu</tags>
@@ -606,11 +617,9 @@
     <sharedElements xsi:type="basic:Part" xmi:id="_SCTa3h-HEeenK5uRJcRnRA" elementId="org.eclipse.titan.log.viewer.views.text.table.TextTableView:\BtpTitan\logs\BtpTitan.yann-FSCOM-mtc.log" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView" label="BtpTitan.yann-FSCOM-mtc.log" iconURI="platform:/plugin/org.eclipse.titan.log.viewer/icons/table_view.gif" tooltip="" closeable="true">
       <persistedState key="originalCompatibilityViewBundle" value="org.eclipse.titan.log.viewer"/>
       <persistedState key="originalCompatibilityViewClass" value="org.eclipse.titan.log.viewer.views.text.table.TextTableView"/>
-      <persistedState key="memento" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xD;&#xA;&lt;view>&#xD;&#xA;&lt;selection>&#xD;&#xA;&lt;viewAttributes fileModification=&quot;1492007458199&quot; fileSize=&quot;17540&quot; projectName=&quot;BtpTitan&quot; propertyFile=&quot;C:\Users\yann\Documents\wireshark\cygwin64\home\yann\tmp\TriesAndDelete\BtpTitan\workspace_titan\BtpTitan\.cache\logs\BtpTitan.yann-FSCOM-mtc.log.property&quot; selectedRow=&quot;48&quot; viewWidth=&quot;961&quot;/>&#xD;&#xA;&lt;/selection>&#xD;&#xA;&lt;/view>"/>
+      <persistedState key="memento" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xD;&#xA;&lt;view>&#xD;&#xA;&lt;selection>&#xD;&#xA;&lt;viewAttributes fileModification=&quot;1492007458199&quot; fileSize=&quot;17540&quot; projectName=&quot;BtpTitan&quot; propertyFile=&quot;C:\Users\yann\Documents\wireshark\cygwin64\home\yann\tmp\TriesAndDelete\BtpTitan\workspace_titan\BtpTitan\.cache\logs\BtpTitan.yann-FSCOM-mtc.log.property&quot; selectedRow=&quot;48&quot; viewWidth=&quot;710&quot;/>&#xD;&#xA;&lt;/selection>&#xD;&#xA;&lt;/view>"/>
       <tags>View</tags>
       <tags>categoryTag:TITAN Log Viewer</tags>
-      <tags>active</tags>
-      <tags>activeOnClose</tags>
       <menus xmi:id="_SCTa3x-HEeenK5uRJcRnRA" elementId="org.eclipse.titan.log.viewer.views.text.table.TextTableView">
         <tags>ViewMenu</tags>
         <tags>menuContribution:menu</tags>
@@ -639,7 +648,7 @@
         <tags>ViewMenu</tags>
         <tags>menuContribution:menu</tags>
       </menus>
-      <toolbar xmi:id="_SCTa6h-HEeenK5uRJcRnRA" elementId="org.eclipse.titan.log.viewer.views.DetailsView"/>
+      <toolbar xmi:id="_SCTa6h-HEeenK5uRJcRnRA" elementId="org.eclipse.titan.log.viewer.views.DetailsView" visible="false"/>
     </sharedElements>
     <sharedElements xsi:type="basic:Part" xmi:id="_SCTa7R-HEeenK5uRJcRnRA" elementId="org.eclipse.titan.log.viewer.views.MSCView:controlpart 11file_/C_/Users/yann/Documents/wireshark/cygwin64/home/yann/tmp/TriesAndDelete/BtpTitan/workspace_titan/BtpTitan/logs/BtpTitan.yann-FSCOM-hc.log\BtpTitan\logs\BtpTitan.yann-FSCOM-hc.log" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView" label="controlpart 1" iconURI="platform:/plugin/org.eclipse.titan.log.viewer/icons/msc.gif" tooltip="" closeable="true">
       <persistedState key="originalCompatibilityViewBundle" value="org.eclipse.titan.log.viewer"/>
@@ -682,7 +691,7 @@
       </children>
       <children xsi:type="menu:ToolBar" xmi:id="_SCTa_R-HEeenK5uRJcRnRA" elementId="org.eclipse.ui.workbench.file">
         <tags>Draggable</tags>
-        <children xsi:type="menu:HandledToolItem" xmi:id="_PPmrgB-LEeehepssfJLtQA" elementId="print" visible="false" iconURI="platform:/plugin/org.eclipse.ui/icons/full/etool16/print_edit.png" tooltip="Print" command="_SCWfsB-HEeenK5uRJcRnRA"/>
+        <children xsi:type="menu:HandledToolItem" xmi:id="_ivUcACAZEeemNPwTRZ0ZtQ" elementId="print" visible="false" iconURI="platform:/plugin/org.eclipse.ui/icons/full/etool16/print_edit.png" tooltip="Print" command="_SCWfsB-HEeenK5uRJcRnRA"/>
       </children>
       <children xsi:type="menu:ToolBar" xmi:id="_SCTbFR-HEeenK5uRJcRnRA" elementId="additions" toBeRendered="false">
         <tags>toolbarSeparator</tags>
@@ -709,7 +718,10 @@
       </children>
       <children xsi:type="menu:ToolBar" xmi:id="_SCTbcR-HEeenK5uRJcRnRA" elementId="org.eclipse.ui.workbench.navigate">
         <tags>Draggable</tags>
-        <children xsi:type="menu:HandledToolItem" xmi:id="_PPmrih-LEeehepssfJLtQA" elementId="org.eclipse.ui.window.pinEditor" visible="false" iconURI="platform:/plugin/org.eclipse.ui/icons/full/etool16/pin_editor.png" tooltip="Pin Editor" type="Check" command="_SCWfVR-HEeenK5uRJcRnRA"/>
+        <children xsi:type="menu:HandledToolItem" xmi:id="_ivYtcCAZEeemNPwTRZ0ZtQ" elementId="org.eclipse.ui.window.pinEditor" visible="false" iconURI="platform:/plugin/org.eclipse.ui/icons/full/etool16/pin_editor.png" tooltip="Pin Editor" type="Check" command="_SCWfVR-HEeenK5uRJcRnRA"/>
+      </children>
+      <children xsi:type="menu:ToolBar" xmi:id="_uRmksCAfEeemNPwTRZ0ZtQ" elementId="org.eclipse.titan.designer.editors.ttcn3editor.TTCN3Editor" visible="false">
+        <tags>Draggable</tags>
       </children>
       <children xsi:type="menu:ToolBar" xmi:id="_SCTbfR-HEeenK5uRJcRnRA" elementId="group.editor" toBeRendered="false">
         <tags>toolbarSeparator</tags>
@@ -754,8 +766,8 @@
         <tags>Draggable</tags>
       </children>
     </trimBars>
-    <trimBars xmi:id="_SCTbnR-HEeenK5uRJcRnRA" elementId="org.eclipse.ui.trim.vertical2" side="Right">
-      <children xsi:type="menu:ToolControl" xmi:id="_SCTbnh-HEeenK5uRJcRnRA" elementId="org.eclipse.ui.editorss(IDEWindow).(org.eclipse.titan.log.viewer.factories.PerspectiveFactory)" contributionURI="bundleclass://org.eclipse.e4.ui.workbench.addons.swt/org.eclipse.e4.ui.workbench.addons.minmax.TrimStack">
+    <trimBars xmi:id="_SCTbnR-HEeenK5uRJcRnRA" elementId="org.eclipse.ui.trim.vertical2" toBeRendered="false" side="Right">
+      <children xsi:type="menu:ToolControl" xmi:id="_SCTbnh-HEeenK5uRJcRnRA" elementId="org.eclipse.ui.editorss(IDEWindow).(org.eclipse.titan.log.viewer.factories.PerspectiveFactory)" toBeRendered="false" contributionURI="bundleclass://org.eclipse.e4.ui.workbench.addons.swt/org.eclipse.e4.ui.workbench.addons.minmax.TrimStack">
         <tags>TrimStack</tags>
         <tags>Draggable</tags>
       </children>
@@ -3355,7 +3367,7 @@
   <addons xmi:id="_SCWhIh-HEeenK5uRJcRnRA" elementId="MinMax Addon" contributorURI="platform:/plugin/org.eclipse.platform" contributionURI="bundleclass://org.eclipse.e4.ui.workbench.addons.swt/org.eclipse.e4.ui.workbench.addons.minmax.MinMaxAddon"/>
   <addons xmi:id="_SCWhIx-HEeenK5uRJcRnRA" elementId="org.eclipse.ui.workbench.addon.0" contributorURI="platform:/plugin/org.eclipse.platform" contributionURI="bundleclass://org.eclipse.e4.ui.workbench/org.eclipse.e4.ui.internal.workbench.addons.HandlerProcessingAddon"/>
   <addons xmi:id="_SCWhJB-HEeenK5uRJcRnRA" elementId="SplitterAddon" contributionURI="bundleclass://org.eclipse.e4.ui.workbench.addons.swt/org.eclipse.e4.ui.workbench.addons.splitteraddon.SplitterAddon"/>
-  <addons xmi:id="_OjtO0R-LEeehepssfJLtQA" elementId="org.eclipse.ui.ide.addon.0" contributionURI="bundleclass://org.eclipse.ui.ide/org.eclipse.ui.internal.ide.addons.SaveAllDirtyPartsAddon"/>
+  <addons xmi:id="_IYS0IKimEeS11vbz3f9ezw" elementId="org.eclipse.ui.ide.addon.0" contributorURI="platform:/plugin/org.eclipse.ui.ide" contributionURI="bundleclass://org.eclipse.ui.ide/org.eclipse.ui.internal.ide.addons.SaveAllDirtyPartsAddon"/>
   <addons xmi:id="_SCWhJh-HEeenK5uRJcRnRA" elementId="org.eclipse.ui.ide.application.addon.0" contributorURI="platform:/plugin/org.eclipse.ui.ide.application" contributionURI="bundleclass://org.eclipse.ui.ide.application/org.eclipse.ui.internal.ide.application.addons.ModelCleanupAddon"/>
   <categories xmi:id="_SCWhJx-HEeenK5uRJcRnRA" elementId="org.eclipse.ui.category.edit" name="Edit"/>
   <categories xmi:id="_SCWhKB-HEeenK5uRJcRnRA" elementId="org.eclipse.mylyn.wikitext.ui.editor.category" name="WikiText Markup Editing Commands" description="commands for editing lightweight markup"/>

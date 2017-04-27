@@ -17,7 +17,7 @@ namespace layers {
 		virtual inline void register_layer(layer_interface * p_layer) { _registered_layers.push_back(p_layer); };
 		virtual int send_message(OCTETSTRING & p_payload) = 0;
 		virtual int recv_message(const OCTETSTRING & p_payload) = 0;
-
+  
 		virtual inline void apply_incoming_message(const OCTETSTRING & p_payload) {
 			for (std::vector<layer_interface *>::iterator it = _registered_layers.begin(); it != _registered_layers.end(); ++it) {
 				(*it)->recv_message(p_payload);

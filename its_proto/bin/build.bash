@@ -153,7 +153,7 @@ else
     CXXFLAGS_DEBUG_MODE='s/-Wall/-O0 -ggdb -Wall -std=c++11/g'
     LDFLAGS_DEBUG_MODE='s/LDFLAGS = /LDFLAGS = -ggdb /g'
 fi
-ADD_INCLUDE='/CPPFLAGS = /a\\CPPFLAGS += -I../include -I../include/ports -I../include/layers -I../include/comm -I. -I$(HOME_INC)'
+ADD_INCLUDE='/CPPFLAGS = /a\\CPPFLAGS += -I../include -I../include/ports -I../include/layers -I../include/comm -I../include/codec -I../include/logger -I. -I$(HOME_INC)'
 sed --in-place "${CXXFLAGS_DEBUG_MODE}" ./Makefile 
 sed --in-place "${LDFLAGS_DEBUG_MODE}" ./Makefile
 sed --in-place "${ADD_INCLUDE}" ./Makefile

@@ -1,6 +1,6 @@
 #include "PCOType1_layer.hh"
 #include "PCOCommon_layer.hh"
-#include "logger.hh"
+#include "logger/logger.hh"
 
 namespace layers {
 

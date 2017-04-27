@@ -8,7 +8,7 @@
 // add your member functions here.
 
 #include "PCOType2.hh"
-#include "logger.hh"
+#include "logger/logger.hh"
 
 namespace MyExample {
 
