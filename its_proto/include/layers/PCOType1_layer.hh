@@ -1,10 +1,12 @@
 #pragma once
 
 #include "layer_interface.hh"
+#include "codec_interface.hh"
 
 namespace layers {
 
 	class PCOType1_layer : public layer_interface {
+		codec_interface & _codec;
 	public:
 		PCOType1_layer();
 		~PCOType1_layer() {};

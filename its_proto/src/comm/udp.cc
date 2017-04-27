@@ -4,14 +4,14 @@
 
 #include "udp.hh"
 
-#include "logger/logger.hh"
+#include "loggers.hh"
 
 
 namespace comm {
 
 	udp::udp() : _socket(-1)
 	{
-		logger::logger::log("udp::udp");
+		loggers::loggers::log("udp::udp");
 		_local_addr.sin_family = AF_INET;
 		_local_addr.sin_addr.s_addr = htonl(get_host_id("localhost"));
 		_local_addr.sin_port = htons(12345);
@@ -25,14 +25,14 @@ namespace comm {
 
 	udp::~udp()
 	{
-		logger::logger::log("udp::~udp");
+		loggers::loggers::log("udp::~udp");
 		close(_socket);
 		_socket = -1;
 	}
 
 	int udp::send(std::vector<unsigned char> & p_buffer)
 	{
-		logger::logger::log("udp::send");
+		loggers::loggers::log("udp::send");
 		_remote_addr.sin_family = AF_INET;
 		_remote_addr.sin_addr.s_addr = htonl(get_host_id("localhost"));
 		_remote_addr.sin_port = htons(12346);
@@ -43,13 +43,13 @@ namespace comm {
 
 	int udp::recv(std::vector<unsigned char> & p_buffer)
 	{
-		logger::logger::log("udp::recv");
+		loggers::loggers::log("udp::recv");
 		unsigned char msg[65535];        // Allocate memory for possible messages
 		int msg_length;
 		socklen_t addr_length = sizeof(_remote_addr);
 		msg_length = recvfrom(_socket, (char*)msg, sizeof(msg), 0, (struct sockaddr*)&_remote_addr, &addr_length);
 		p_buffer.assign(msg, msg + msg_length);
-		logger::logger::log("udp::recv: received %d bytes", p_buffer.size());
+		loggers::loggers::log("udp::recv: received %d bytes", p_buffer.size());
 		return 0;
 	}
 
