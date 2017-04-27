@@ -8,14 +8,14 @@
 // add your member functions here.
 
 #include "PCOType1.hh"
-#include "logger/logger.hh"
+#include "loggers.hh"
 
 namespace MyExample {
 
 PCOType1::PCOType1(const char *par_port_name)
 	: PCOType1_BASE(par_port_name), layer_interface(), _layer(NULL)
 {
-	logger::logger::log("PCOType1::PCOType1");
+	loggers::loggers::log("PCOType1::PCOType1");
 	_name = "PCOType1::PCOType1";
 }
 
@@ -28,7 +28,7 @@ PCOType1::~PCOType1()
 
 void PCOType1::set_parameter(const char * parameter_name, const char * parameter_value)
 {
-	logger::logger::log("PCOType1::set_parameter (%s, %s)", parameter_name, parameter_value);
+	loggers::loggers::log("PCOType1::set_parameter (%s, %s)", parameter_name, parameter_value);
 
 }
 
@@ -54,14 +54,14 @@ void PCOType1::Handle_Fd_Event_Readable(int /*fd*/)
 
 void PCOType1::user_map(const char * system_port)
 {
-	logger::logger::log("PCOType1::user_map %s", system_port);
+	loggers::loggers::log("PCOType1::user_map %s", system_port);
 	_layer = new PCOType1_layer();
 	_layer->register_layer(this);
 }
 
 void PCOType1::user_unmap(const char * system_port)
 {
-	logger::logger::log("PCOType1::user_unmap %s", system_port);
+	loggers::loggers::log("PCOType1::user_unmap %s", system_port);
 	// TODO unregister_layer(this);
 	if (_layer != NULL) {
 		delete _layer;
@@ -81,7 +81,7 @@ void PCOType1::user_stop()
 
 void PCOType1::outgoing_send(const CHARSTRING& send_par)
 {
-	logger::logger::log("PCOType1::outgoing_send");
+	loggers::loggers::log("PCOType1::outgoing_send");
 	// TODO encode
 	OCTETSTRING os(send_par.lengthof(), (const unsigned char*)(const char *)send_par);
 	send_message(os/*additional params*/);
@@ -89,13 +89,13 @@ void PCOType1::outgoing_send(const CHARSTRING& send_par)
 
 int PCOType1::send_message(OCTETSTRING & p_payload)
 {
-	logger::logger::log("PCOType1::send");
+	loggers::loggers::log("PCOType1::send");
 	return _layer->send_message(p_payload/*additional params*/);
 }
 
 int PCOType1::recv_message(const OCTETSTRING & p_payload)
 {
-	logger::logger::log("PCOType1::recv");
+	loggers::loggers::log("PCOType1::recv");
 	// TODO decode
 	CHARSTRING cs(p_payload.lengthof(), (const char *)(const unsigned char*)p_payload);
 	incoming_message(cs);

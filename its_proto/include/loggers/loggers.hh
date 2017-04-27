@@ -2,16 +2,16 @@
 
 #include <TTCN3.hh>
 
-namespace logger {
+namespace loggers {
 
-	class logger {
+	class loggers {
 	public:
 		inline static void log_to_hexa(TTCN_Buffer * buffer);
 		inline static void log_to_hexa(const char *prompt, const OCTETSTRING& msg);
 		inline static void log(const char *fmt, ...);
 	};
 
-	void logger::log_to_hexa(TTCN_Buffer* buffer)
+	void loggers::log_to_hexa(TTCN_Buffer* buffer)
 	{
 		int len = buffer->get_read_len();
 		const unsigned char* ptr = buffer->get_read_data();
@@ -21,7 +21,7 @@ namespace logger {
 		}
 	}
 
-	void logger::log_to_hexa(const char *prompt, const OCTETSTRING& msg)
+	void loggers::log_to_hexa(const char *prompt, const OCTETSTRING& msg)
 	{
 	  TTCN_Logger::begin_event(TTCN_DEBUG);
 	  TTCN_Logger::log_event_str(prompt);
@@ -33,7 +33,7 @@ namespace logger {
 	  TTCN_Logger::end_event();
 	}
 
-	void logger::log(const char *fmt, ...)
+	void loggers::log(const char *fmt, ...)
 	{
 		TTCN_Logger::begin_event(TTCN_DEBUG);
 		va_list args;
@@ -45,4 +45,4 @@ namespace logger {
 
 }
 
-using namespace logger;
+using namespace loggers;

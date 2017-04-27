@@ -1,11 +1,11 @@
 #include "PCOCommon_codec.hh"
-#include "logger/logger.hh"
+#include "loggers.hh"
 
 namespace codecs {
 
 	PCOCommon_codec::PCOCommon_codec() : codec_interface()
 	{
-		logger::logger::log("PCOCommon_codec::PCOCommon_codec");
+		loggers::loggers::log("PCOCommon_codec::PCOCommon_codec");
 		_name = "PCOCommon_codec::PCOCommon_codec";
 	}
 

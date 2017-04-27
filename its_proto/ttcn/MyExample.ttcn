@@ -17,20 +17,31 @@ type component MTCTypesSystem
   port PCOType2 MyPCO2_PT;
 }
 
-type component MTCTypePCO1
+type component PTCTypePCO1
 {
   port PCOType1 MyPCO1_PT;
 }
 
-type component MTCTypePCO2
+type component PTCTypePCO2
 {
   port PCOType2 MyPCO2_PT;
 }
 
+/**
+ * @desc MTC component description in case of mono component 
+ */
 type component MTCTypes
 {
   port PCOType1 MyPCO1_PT;
   port PCOType2 MyPCO2_PT;
+}
+
+/**
+ * @desc MTC component description in case of multi component 
+ */
+type component MTCTypePCOs
+{
+  timer tc_sync := 30.0;
 }
 
 testcase tc_HelloW() runs on MTCTypes system MTCTypesSystem
@@ -56,22 +67,68 @@ testcase tc_HelloW2() runs on MTCTypes system MTCTypesSystem
     [] MyPCO1_PT.receive { TL_T.stop; setverdict(fail); }
     [] MyPCO2_PT.receive { TL_T.stop; setverdict(fail); }
   }
+  unmap(mtc:MyPCO1_PT, system:MyPCO1_PT);
+  unmap(mtc:MyPCO2_PT, system:MyPCO2_PT);
 }
 
-/*testcase tc_HelloW3() runs on MTCTypePCOs system MTCTypesSystem
+testcase tc_HelloW3() runs on MTCTypePCOs system MTCTypesSystem
 {
-  var MTCTypePCO1 v_pco1;
+  var PTCTypePCO1 v_pco1;
   var PTCTypePCO2 v_pco2;
 
-  vpco_1 := PTCTypePCO1.create("PCO1_component", alive);
-  vpco_2 := PTCTypePCO2.create("PCO2_component", alive);
+  v_pco1 := PTCTypePCO1.create("PCO1_component");
+  v_pco2 := PTCTypePCO2.create("PCO2_component");
+
+  map(v_pco1:MyPCO1_PT, system:MyPCO1_PT);
+  map(v_pco2:MyPCO2_PT, system:MyPCO2_PT);
 
   v_pco1.start(f_tc_HelloW3_pco1());
   v_pco2.start(f_tc_HelloW3_pco2());
-
+  
+  tc_sync.start;
+  alt {
+    [] all component.done {
+        tc_sync.stop;
+        log("**** tc_HelloW3: All sync clients have finished their execution. Sync server now terminating test case. ****") ;
+      }
+    [] tc_sync.timeout {
+        log("**** tc_HelloW3: Not all sync clients have finshed execution within the sync time limit. Sync server will stop test case! ****") ;
+        stop;
+      }
+  }
+  
   v_pco1.done;
   v_pco2.done; 
-}*/
+  
+  unmap(v_pco1:MyPCO1_PT, system:MyPCO1_PT);
+  unmap(v_pco2:MyPCO2_PT, system:MyPCO2_PT);
+}
+
+function f_tc_HelloW3_pco1() runs on PTCTypePCO1
+{
+  log("f_tc_HelloW3_pco1");
+  timer TL_T := 15.0;
+  MyPCO1_PT.send("MyPCO1_PT: Hello, world!");
+  TL_T.start;
+  alt {
+    [] MyPCO1_PT.receive("MyPCO1_PT: Hello, world!") { TL_T.stop; setverdict(pass); }
+    [] TL_T.timeout { setverdict(inconc); }
+    [] MyPCO1_PT.receive { TL_T.stop; setverdict(fail); }
+  }
+}
+
+function f_tc_HelloW3_pco2() runs on PTCTypePCO2
+{
+  log("f_tc_HelloW3_pco2");
+  timer TL_T := 15.0;
+  MyPCO2_PT.send("MyPCO2_PT: Hello, world!");
+  TL_T.start;
+  alt {
+    [] MyPCO2_PT.receive("MyPCO2_PT: Hello, world!") { TL_T.stop; setverdict(pass); }
+    [] TL_T.timeout { setverdict(inconc); }
+    [] MyPCO2_PT.receive { TL_T.stop; setverdict(fail); }
+  }
+}
 
 control
 {
