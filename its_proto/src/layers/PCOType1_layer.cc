@@ -1,10 +1,7 @@
 #include "PCOType1_layer.hh"
 #include "PCOCommon_layer.hh"
-<<<<<<< HEAD
 #include "PCOType1_codec.hh"
 
-=======
->>>>>>> 003fccd81355db525e16e7175d4878b2af1bda0b
 #include "loggers.hh"
 
 namespace layers {
