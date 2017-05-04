@@ -5,12 +5,10 @@
 #include "layer_interface.hh"
 #include "codec_interface.hh"
 
-#include "final_layer.hh"
-
 namespace layers {
 
 	class PCOCommon_layer : public layer_interface {
-		final_layer * _final_layer;
+		layer_interface * _final_layer;
 		codec_interface & _codec;
 		static PCOCommon_layer * _PCOCommon_layer;
 

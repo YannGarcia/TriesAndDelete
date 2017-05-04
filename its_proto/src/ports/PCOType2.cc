@@ -13,27 +13,27 @@
 namespace MyExample {
 
 PCOType2::PCOType2(const char *par_port_name)
-	: PCOType2_BASE(par_port_name), layer_interface(), _layer(NULL)
+    : PCOType2_BASE(par_port_name), layer_interface(), _layer(NULL), _parms()
 {
-	loggers::loggers::log("PCOType2::PCOType2");
-	_name = "PCOType2::PCOType2";
+    loggers::loggers::log("PCOType2::PCOType2");
+    _name = "PCOType2::PCOType2";
 }
 
 PCOType2::~PCOType2()
 {
-	if (_layer != NULL) {
-		delete _layer;
-	}
+    if (_layer != NULL) {
+        delete _layer;
+    }
 }
 
 void PCOType2::set_parameter(const char * parameter_name, const char * parameter_value)
 {
-	loggers::loggers::log("PCOType2::set_parameter (%s, %s)", parameter_name, parameter_value);
-
+    loggers::loggers::log("PCOType2::set_parameter (%s, %s)", parameter_name, parameter_value);
+    _parms.insert(std::pair<std::string, std::string>(std::string(parameter_name), std::string(parameter_value)));
 }
 
 /*void PCOType2::Handle_Fd_Event(int fd, boolean is_readable,
-	boolean is_writable, boolean is_error) {}*/
+    boolean is_writable, boolean is_error) {}*/
 
 void PCOType2::Handle_Fd_Event_Error(int /*fd*/)
 {
@@ -54,19 +54,19 @@ void PCOType2::Handle_Fd_Event_Readable(int /*fd*/)
 
 void PCOType2::user_map(const char * system_port)
 {
-	loggers::loggers::log("PCOType2::user_map %s", system_port);
-	_layer = new PCOType2_layer();
-	_layer->register_layer(this);
+    loggers::loggers::log("PCOType2::user_map %s", system_port);
+    _layer = new PCOType2_layer();
+    _layer->register_layer(this);
 }
 
 void PCOType2::user_unmap(const char * system_port)
 {
-	loggers::loggers::log("PCOType2::user_unmap %s", system_port);
-	// TODO unregister_layer(this);
-	if (_layer != NULL) {
-		delete _layer;
-		_layer = NULL;
-	}
+    loggers::loggers::log("PCOType2::user_unmap %s", system_port);
+    // TODO unregister_layer(this);
+    if (_layer != NULL) {
+        delete _layer;
+        _layer = NULL;
+    }
 }
 
 void PCOType2::user_start()
@@ -81,25 +81,25 @@ void PCOType2::user_stop()
 
 void PCOType2::outgoing_send(const CHARSTRING& send_par)
 {
-	loggers::loggers::log("PCOType2::outgoing_send");
-	// TODO encode
-	OCTETSTRING os(send_par.lengthof(), (const unsigned char*)(const char *)send_par);
-	send_message(os/*additional params*/);
+    loggers::loggers::log("PCOType2::outgoing_send");
+    // TODO encode
+    OCTETSTRING os(send_par.lengthof(), (const unsigned char*)(const char *)send_par);
+    send_message(os/*additional params*/);
 }
 
 int PCOType2::send_message(OCTETSTRING & p_payload)
 {
-	loggers::loggers::log("PCOType2::send");
-	return _layer->send_message(p_payload/*additional params*/);
+    loggers::loggers::log("PCOType2::send");
+    return _layer->send_message(p_payload/*additional params*/);
 }
 
 int PCOType2::recv_message(const OCTETSTRING & p_payload)
 {
-	loggers::loggers::log("PCOType2::recv");
-	// TODO decode
-	CHARSTRING cs(p_payload.lengthof(), (const char *)(const unsigned char*)p_payload);
-	incoming_message(cs);
-	return 0;
+    loggers::loggers::log("PCOType2::recv");
+    // TODO decode
+    CHARSTRING cs(p_payload.lengthof(), (const char *)(const unsigned char*)p_payload);
+    incoming_message(cs);
+    return 0;
 }
 
 } /* end of namespace */
