@@ -151,11 +151,15 @@ then
     LDFLAGS_DEBUG_MODE='s/LDFLAGS = /LDFLAGS = -pg /g'
 else
     CXXFLAGS_DEBUG_MODE='s/-Wall/-O0 -ggdb -Wall -std=c++11/g'
-    LDFLAGS_DEBUG_MODE='s/LDFLAGS = /LDFLAGS = -ggdb /g'
+    LDFLAGS_DEBUG_MODE='s/LDFLAGS = /LDFLAGS = -ggdb/g'
 fi
-ADD_INCLUDE='/CPPFLAGS = /a\\CPPFLAGS += -I../include -I../include/ports -I../include/layers -I../include/codec -I../include/loggers -I. -I$(HOME_INC)'
+LINUX_LIBS='s/LINUX_LIBS = -lxml2/LINUX_LIBS = -lxml2 -L\/usr\/lib\/x86_64-linux-gnu\/ -lpcap/g'
+WIN32_LIBS='s/WIN32_LIBS = -lxml2/WIN32_LIBS = -lxml2 -L\/usr\/lib\/x86_64-linux-gnu\/ -lpcap/g'
+ADD_INCLUDE='/CPPFLAGS = /a\\CPPFLAGS += -I../include -I../include/ports -I../include/layers -I../include/codec -I../include/loggers -I. -I$(HOME_INC) -I/usr/incude/pcap'
 sed --in-place "${CXXFLAGS_DEBUG_MODE}" ./Makefile 
 sed --in-place "${LDFLAGS_DEBUG_MODE}" ./Makefile
+sed --in-place "${LINUX_LIBS}" ./Makefile
+sed --in-place "${WIN32_LIBS}" ./Makefile
 sed --in-place "${ADD_INCLUDE}" ./Makefile
 # Update clean clause
 CLEAN_LINE='s/$(RM) $(EXECUTABLE)/$(RM) ..\/bin\/$(EXECUTABLE) ..\/src\/*.o/g'
@@ -170,7 +174,7 @@ ADD_PORT='/PLATFORM = /aPORT=12000'
 sed --in-place "${ADD_PORT}" ./Makefile
 sed --in-place "${ADD_HOST}" ./Makefile
 ADD_RUN_LINE_1='$arun: all'
-ADD_RUN_LINE_2='$a\\t@$(PWD)/../bin/$(EXECUTABLE) $(HOST) $(PORT)'
+ADD_RUN_LINE_2='$a\\t@sudo LD_LIBRARY_PATH=/home/ubuntu/frameworks/titan/titan.core/Install/lib $(PWD)/../bin/$(EXECUTABLE) $(HOST) $(PORT)'
 sed --in-place "${ADD_RUN_LINE_1}" ./Makefile 
 sed --in-place "${ADD_RUN_LINE_2}" ./Makefile 
 ADD_RUN_LINE_1='$arun_d: all'

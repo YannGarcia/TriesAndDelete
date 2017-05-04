@@ -27,7 +27,8 @@ namespace layers {
         loggers::loggers::log("PCOCommon_layer::register_layer");
         _registered_layers.push_back(p_layer);
         if (_final_layer == NULL) {
-            _final_layer = new udp_layer();
+	  //            _final_layer = new udp_layer();
+            _final_layer = new pcap_layer();
             loggers::loggers::log("PCOCommon_layer::register_layer: register to final_layer: %d", _registered_layers.size());
             _final_layer->register_layer(PCOCommon_layer::_PCOCommon_layer);
         }
