@@ -3,7 +3,6 @@
 #include <stdexcept>
 #include <cerrno>
 
-
 #include "pcap_layer.hh"
 
 #include "loggers.hh"

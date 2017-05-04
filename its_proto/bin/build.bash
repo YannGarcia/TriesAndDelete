@@ -155,7 +155,7 @@ else
 fi
 LINUX_LIBS='s/LINUX_LIBS = -lxml2/LINUX_LIBS = -lxml2 -L\/usr\/lib\/x86_64-linux-gnu\/ -lpcap/g'
 WIN32_LIBS='s/WIN32_LIBS = -lxml2/WIN32_LIBS = -lxml2 -L\/usr\/lib\/x86_64-linux-gnu\/ -lpcap/g'
-ADD_INCLUDE='/CPPFLAGS = /a\\CPPFLAGS += -I../include -I../include/ports -I../include/layers -I../include/codec -I../include/loggers -I. -I$(HOME_INC) -I/usr/incude/pcap'
+ADD_INCLUDE='/CPPFLAGS = /a\\CPPFLAGS += -I../include -I../include/ports -I../include/layers -I../include/codec -I../include/loggers -I. -I$(HOME_INC) -I/usr/include/pcap'
 sed --in-place "${CXXFLAGS_DEBUG_MODE}" ./Makefile 
 sed --in-place "${LDFLAGS_DEBUG_MODE}" ./Makefile
 sed --in-place "${LINUX_LIBS}" ./Makefile
