@@ -1,142 +1,177 @@
 // TTCN-3 version of "Hello, world!"
 module MyExample
 {
-type port PCOType1 message
-{
-  inout charstring;
-}
-
-type port PCOType2 message
-{
-  inout charstring;
-}
-
-type component MTCTypesSystem
-{
-  port PCOType1 MyPCO1_PT;
-  port PCOType2 MyPCO2_PT;
-}
-
-type component PTCTypePCO1
-{
-  port PCOType1 MyPCO1_PT;
-}
-
-type component PTCTypePCO2
-{
-  port PCOType2 MyPCO2_PT;
-}
-
-/**
- * @desc MTC component description in case of mono component 
- */
-type component MTCTypes
-{
-  port PCOType1 MyPCO1_PT;
-  port PCOType2 MyPCO2_PT;
-}
-
-/**
- * @desc MTC component description in case of multi component 
- */
-type component MTCTypePCOs
-{
-  timer tc_sync := 30.0;
-}
-
-testcase tc_HelloW() runs on MTCTypes system MTCTypesSystem
-{
-  map(mtc:MyPCO1_PT, system:MyPCO1_PT);
-  map(mtc:MyPCO2_PT, system:MyPCO2_PT);
-  MyPCO1_PT.send("MyPCO1_PT: Hello, world!");
-  MyPCO2_PT.send("MyPCO2_PT: Hello, world!");
-  setverdict(pass);
-}
-
-testcase tc_HelloW2() runs on MTCTypes system MTCTypesSystem
-{
-  timer TL_T := 15.0;
-  map(mtc:MyPCO1_PT, system:MyPCO1_PT);
-  map(mtc:MyPCO2_PT, system:MyPCO2_PT);
-  MyPCO1_PT.send("MyPCO1_PT: Hello, world!");
-  TL_T.start;
-  alt {
-    [] MyPCO1_PT.receive("MyPCO1_PT: Hello, world!") { TL_T.stop; setverdict(pass); }
-    [] MyPCO2_PT.receive("MyPCO2_PT: Hello, world!") { TL_T.stop; setverdict(pass); }
-    [] TL_T.timeout { setverdict(inconc); }
-    [] MyPCO1_PT.receive { TL_T.stop; setverdict(fail); }
-    [] MyPCO2_PT.receive { TL_T.stop; setverdict(fail); }
+  type port PCOType1 message
+  {
+    inout charstring;
   }
-  unmap(mtc:MyPCO1_PT, system:MyPCO1_PT);
-  unmap(mtc:MyPCO2_PT, system:MyPCO2_PT);
-}
 
-testcase tc_HelloW3() runs on MTCTypePCOs system MTCTypesSystem
-{
-  var PTCTypePCO1 v_pco1;
-  var PTCTypePCO2 v_pco2;
+  type port PCOType2 message
+  {
+    inout charstring;
+  }
 
-  v_pco1 := PTCTypePCO1.create("PCO1_component");
-  v_pco2 := PTCTypePCO2.create("PCO2_component");
+  type port UtPort message
+  {
+    in UtInitialiseResult;
+    out UtInitialise;
+  }
 
-  map(v_pco1:MyPCO1_PT, system:MyPCO1_PT);
-  map(v_pco2:MyPCO2_PT, system:MyPCO2_PT);
+  type record UtInitialise {
+    octetstring hashId8
+    }
 
-  v_pco1.start(f_tc_HelloW3_pco1());
-  v_pco2.start(f_tc_HelloW3_pco2());
+  type boolean UtInitialiseResult;
+
+  type component MTCTypesSystem
+  {
+    port UtPort   utPort;
+    port PCOType1 MyPCO1_PT;
+    port PCOType2 MyPCO2_PT;
+  }
+
+  type component PTCTypePCO1
+  {
+    port PCOType1 MyPCO1_PT;
+  }
+
+  type component PTCTypePCO2
+  {
+    port PCOType2 MyPCO2_PT;
+  }
+
+  /**
+   * @desc MTC component description in case of mono component 
+   */
+  type component MTCTypes
+  {
+    port PCOType1 MyPCO1_PT;
+    port PCOType2 MyPCO2_PT;
+  }
+
+  /**
+   * @desc MTC component description in case of multi component 
+   */
+  type component MTCTypePCOs
+  {
+    port UtPort   utPort;
+    timer tc_sync := 30.0;
+  }
+
+  testcase tc_HelloW() runs on MTCTypes system MTCTypesSystem
+  {
+    map(mtc:MyPCO1_PT, system:MyPCO1_PT);
+    map(mtc:MyPCO2_PT, system:MyPCO2_PT);
+    MyPCO1_PT.send("MyPCO1_PT: Hello, world!");
+    MyPCO2_PT.send("MyPCO2_PT: Hello, world!");
+    setverdict(pass);
+  }
+
+  testcase tc_HelloW2() runs on MTCTypes system MTCTypesSystem
+  {
+    timer TL_T := 15.0;
+    map(mtc:MyPCO1_PT, system:MyPCO1_PT);
+    map(mtc:MyPCO2_PT, system:MyPCO2_PT);
+    MyPCO1_PT.send("MyPCO1_PT: Hello, world!");
+    TL_T.start;
+    alt {
+      [] MyPCO1_PT.receive("MyPCO1_PT: Hello, world!") { TL_T.stop; setverdict(pass); }
+      [] MyPCO2_PT.receive("MyPCO2_PT: Hello, world!") { TL_T.stop; setverdict(pass); }
+      [] TL_T.timeout { setverdict(inconc); }
+      [] MyPCO1_PT.receive { TL_T.stop; setverdict(fail); }
+      [] MyPCO2_PT.receive { TL_T.stop; setverdict(fail); }
+    }
+    unmap(mtc:MyPCO1_PT, system:MyPCO1_PT);
+    unmap(mtc:MyPCO2_PT, system:MyPCO2_PT);
+  }
+
+  testcase tc_HelloW3() runs on MTCTypePCOs system MTCTypesSystem
+  {
+    var PTCTypePCO1 v_pco1;
+    var PTCTypePCO2 v_pco2;
+
+    v_pco1 := PTCTypePCO1.create("PCO1_component");
+    v_pco2 := PTCTypePCO2.create("PCO2_component");
+
+    map(self:utPort, system:utPort);
+    map(v_pco1:MyPCO1_PT, system:MyPCO1_PT);
+    map(v_pco2:MyPCO2_PT, system:MyPCO2_PT);
+
+    utPort.send(UtInitialise:{ hashId8 := '0000000000000000'O });
+    alt {
+      [] utPort.receive(UtInitialiseResult:true) {
+        log("**** tc_HelloW3: UtInitialiseResult received with true ****") ;
+	setverdict(pass);
+        tc_sync.stop;
+      }
+      [] utPort.receive {
+        log("**** tc_HelloW3: Unexpected UtPort message ****") ;
+	setverdict(fail);
+        tc_sync.stop;
+      }
+      [] tc_sync.timeout {
+        log("**** tc_HelloW3: UtPort timeout ****") ;
+	setverdict(inconc);
+        stop;
+      }
+    }
+    
+    v_pco1.start(f_tc_HelloW3_pco1());
+    v_pco2.start(f_tc_HelloW3_pco2());
   
-  tc_sync.start;
-  alt {
-    [] all component.done {
+    tc_sync.start;
+    alt {
+      [] all component.done {
         tc_sync.stop;
         log("**** tc_HelloW3: All sync clients have finished their execution. Sync server now terminating test case. ****") ;
       }
-    [] tc_sync.timeout {
+      [] tc_sync.timeout {
         log("**** tc_HelloW3: Not all sync clients have finshed execution within the sync time limit. Sync server will stop test case! ****") ;
         stop;
       }
-  }
+    }
   
-  v_pco1.done;
-  v_pco2.done; 
+    v_pco1.done;
+    v_pco2.done; 
   
-  unmap(v_pco1:MyPCO1_PT, system:MyPCO1_PT);
-  unmap(v_pco2:MyPCO2_PT, system:MyPCO2_PT);
-}
-
-function f_tc_HelloW3_pco1() runs on PTCTypePCO1
-{
-  log("f_tc_HelloW3_pco1");
-  timer TL_T := 15.0;
-  MyPCO1_PT.send("MyPCO1_PT: Hello, world!");
-  TL_T.start;
-  alt {
-    [] MyPCO1_PT.receive("MyPCO1_PT: Hello, world!") { TL_T.stop; setverdict(pass); }
-    [] TL_T.timeout { setverdict(inconc); }
-    [] MyPCO1_PT.receive { TL_T.stop; setverdict(fail); }
+    unmap(self:utPort, system:utPort);
+    unmap(v_pco1:MyPCO1_PT, system:MyPCO1_PT);
+    unmap(v_pco2:MyPCO2_PT, system:MyPCO2_PT);
   }
-}
 
-function f_tc_HelloW3_pco2() runs on PTCTypePCO2
-{
-  log("f_tc_HelloW3_pco2");
-  timer TL_T := 15.0;
-  MyPCO2_PT.send("MyPCO2_PT: Hello, world!");
-  TL_T.start;
-  alt {
-    [] MyPCO2_PT.receive("MyPCO2_PT: Hello, world!") { TL_T.stop; setverdict(pass); }
-    [] TL_T.timeout { setverdict(inconc); }
-    [] MyPCO2_PT.receive { TL_T.stop; setverdict(fail); }
+  function f_tc_HelloW3_pco1() runs on PTCTypePCO1
+  {
+    log("f_tc_HelloW3_pco1");
+    timer TL_T := 15.0;
+    MyPCO1_PT.send("MyPCO1_PT: Hello, world!");
+    TL_T.start;
+    alt {
+      [] MyPCO1_PT.receive("MyPCO1_PT: Hello, world!") { TL_T.stop; setverdict(pass); }
+      [] TL_T.timeout { setverdict(inconc); }
+      [] MyPCO1_PT.receive { TL_T.stop; setverdict(fail); }
+    }
   }
-}
 
-control
-{
-  execute(tc_HelloW());
-  execute(tc_HelloW2());
-}
+  function f_tc_HelloW3_pco2() runs on PTCTypePCO2
+  {
+    log("f_tc_HelloW3_pco2");
+    timer TL_T := 15.0;
+    MyPCO2_PT.send("MyPCO2_PT: Hello, world!");
+    TL_T.start;
+    alt {
+      [] MyPCO2_PT.receive("MyPCO2_PT: Hello, world!") { TL_T.stop; setverdict(pass); }
+      [] TL_T.timeout { setverdict(inconc); }
+      [] MyPCO2_PT.receive { TL_T.stop; setverdict(fail); }
+    }
+  }
+
+  control
+  {
+    execute(tc_HelloW());
+    execute(tc_HelloW2());
+  }
 } with {
-    variant""
-    encode "RAW"
-}
+  variant""
+  encode "RAW"
+  }
 
