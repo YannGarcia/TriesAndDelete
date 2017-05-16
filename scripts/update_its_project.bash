@@ -11,6 +11,10 @@ if [ "${UNAME}" == "Ubuntu64" ]
 then
     CHOWN_USER_GROUP=yann:yann
     SRC_ITS_PATH=/media/sf_F_DRIVE/FSCOM/ETSI/ITS/STF525_Auto_Interop/workspace_titan/STF525_Auto_Interop/src
+elif [ "${UNAME}" == "ubuntu-xenial" ]
+then
+    CHOWN_USER_GROUP=ubuntu:ubuntu
+    SRC_ITS_PATH=/media/sf_F_DRIVE/FSCOM/ETSI/ITS/STF525_Auto_Interop/workspace_titan/STF525_Auto_Interop/src    
 else 
     CHOWN_USER_GROUP=yann:None
     SRC_ITS_PATH=/cygdrive/f/FSCOM/ETSI/ITS/STF525_Auto_Interop/workspace_titan/STF525_Auto_Interop/src
@@ -43,6 +47,7 @@ do
 	cp $j ${ASN1_DST_PATH}/$i
     done
 done
+cp ${ASN1_SRC_PATH}/../Makefile ${ASN1_DST_PATH}/..
 
 # Update ATS TTCN-3 files
 echo 'Update TTCN-3 files'
