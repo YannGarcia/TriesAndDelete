@@ -26,7 +26,7 @@ then
     f_usage
 fi
 
-ATS_NAME=CAM
+ATS_NAME=DENM
 
 #CURPWD=`pwd`
 if [ ! "${PWD##*/}" == "objs" ]
@@ -84,7 +84,7 @@ then
     fi
 fi
 
-REFERENCES="LibCommon LibIts/Common LibIts/BTP LibIts/GeoNetworking LibIts/GeoNetworking LibIts/Ipv6OverGeoNetworking LibIts/Security LibIts/CAM"
+REFERENCES="LibCommon LibIts/Common LibIts/BTP LibIts/GeoNetworking LibIts/GeoNetworking LibIts/Ipv6OverGeoNetworking LibIts/Security LibIts/DENM"
 for i in ${REFERENCES}
 do
     # TTCN code
@@ -172,7 +172,7 @@ else
     CXXFLAGS_DEBUG_MODE='s/-Wall/-g -Wall -std=c++11/g'
     LDFLAGS_DEBUG_MODE='s/LDFLAGS = /LDFLAGS = -g -L${PATH_DEV_ITS}/lib -lItsAsn /g'
 fi
-ADD_INCLUDE='/CPPFLAGS = /a\\CPPFLAGS += -I../include -I../../LibIts/Common/include -I../../LibIts/BTP/include -I../../LibIts/CAM/include -I../../LibIts/DENM/include -I$(HOME_INC) -I.'
+ADD_INCLUDE='/CPPFLAGS = /a\\CPPFLAGS += -I../include -I../../LibIts/Common/include -I../../LibIts/BTP/include -I../../LibIts/DENM/include -I../../LibIts/DENM/include -I$(HOME_INC) -I.'
 sed --in-place "${CXXFLAGS_DEBUG_MODE}" ./Makefile 
 sed --in-place "${LDFLAGS_DEBUG_MODE}" ./Makefile
 sed --in-place "${ADD_INCLUDE}" ./Makefile

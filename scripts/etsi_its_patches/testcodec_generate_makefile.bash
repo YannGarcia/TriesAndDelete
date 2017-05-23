@@ -26,7 +26,7 @@ then
     f_usage
 fi
 
-ATS_NAME=CAM
+ATS_NAME=TestCodec
 
 #CURPWD=`pwd`
 if [ ! "${PWD##*/}" == "objs" ]
@@ -170,9 +170,9 @@ then
     LDFLAGS_DEBUG_MODE='s/LDFLAGS = /LDFLAGS = -pg /g'
 else
     CXXFLAGS_DEBUG_MODE='s/-Wall/-g -Wall -std=c++11/g'
-    LDFLAGS_DEBUG_MODE='s/LDFLAGS = /LDFLAGS = -g -L${PATH_DEV_ITS}/lib -lItsAsn /g'
+    LDFLAGS_DEBUG_MODE='s/LDFLAGS = /LDFLAGS = -g /g'
 fi
-ADD_INCLUDE='/CPPFLAGS = /a\\CPPFLAGS += -I../include -I../../LibIts/Common/include -I../../LibIts/BTP/include -I../../LibIts/CAM/include -I../../LibIts/DENM/include -I$(HOME_INC) -I.'
+ADD_INCLUDE='/CPPFLAGS = /a\\CPPFLAGS += -I$(PATH_DEV_ITS)/include -I$(PATH_DEV_ITS)/framework/include -I../include -I../../LibIts/Common/include -I../../LibIts/BTP/include -I../../LibIts/CAM/include -I../../LibIts/DENM/include -I$(HOME_INC) -I.'
 sed --in-place "${CXXFLAGS_DEBUG_MODE}" ./Makefile 
 sed --in-place "${LDFLAGS_DEBUG_MODE}" ./Makefile
 sed --in-place "${ADD_INCLUDE}" ./Makefile

@@ -26,7 +26,7 @@ then
     f_usage
 fi
 
-ATS_NAME=CAM
+ATS_NAME=Btp
 
 #CURPWD=`pwd`
 if [ ! "${PWD##*/}" == "objs" ]
@@ -84,7 +84,7 @@ then
     fi
 fi
 
-REFERENCES="LibCommon LibIts/Common LibIts/BTP LibIts/GeoNetworking LibIts/GeoNetworking LibIts/Ipv6OverGeoNetworking LibIts/Security LibIts/CAM"
+REFERENCES="LibCommon LibIts/Common LibIts/BTP"
 for i in ${REFERENCES}
 do
     # TTCN code

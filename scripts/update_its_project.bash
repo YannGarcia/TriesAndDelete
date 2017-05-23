@@ -6,6 +6,9 @@ set -evx
 # Usage: sudo ./update_project.bash
 # TODO Use git clone in temporary directory
 
+# Execution path
+RUN_PATH="${0%/*}"
+
 UNAME=`uname -n`
 if [ "${UNAME}" == "Ubuntu64" ]
 then
@@ -27,7 +30,7 @@ fi
 # Check if target directory exist
 if [ ! -d ${PATH_DEV_ITS} ]
 then
-    mkdir -p ${PATH_DEV_ITS}/asn1/LibIts ${PATH_DEV_ITS}/include ${PATH_DEV_ITS}/bin ${PATH_DEV_ITS}/objs ${PATH_DEV_ITS}/src ${PATH_DEV_ITS}/docs
+    mkdir -p ${PATH_DEV_ITS}/asn1/LibIts ${PATH_DEV_ITS}/include ${PATH_DEV_ITS}/bin ${PATH_DEV_ITS}/lib ${PATH_DEV_ITS}/objs ${PATH_DEV_ITS}/src ${PATH_DEV_ITS}/docs
 fi
 
 # Update ASN.1 files
@@ -49,11 +52,38 @@ do
 done
 cp ${ASN1_SRC_PATH}/../Makefile ${ASN1_DST_PATH}/..
 
+# Update ETSI Framework files
+echo 'Updating ETSI Framework files'
+FWK_SRC_PATH=${SRC_ITS_PATH}/ccsrc
+FWK_DST_PATH=${PATH_DEV_ITS}/framework
+mkdir -p ${FWK_DST_PATH}/src ${FWK_DST_PATH}/include
+chmod -R 775 ${FWK_DST_PATH}
+FWK_DIR_LIST_HH=`find ${FWK_SRC_PATH}/Protocols/ -name "*.h*" -type f`
+FWK_DIR_LIST_CC=`find ${FWK_SRC_PATH}/Protocols/ -name "*.c*" -type f`
+for i in ${FWK_DIR_LIST_HH}
+do
+    cp $i ${FWK_DST_PATH}/include
+done
+for i in ${FWK_DIR_LIST_CC}
+do
+    cp $i ${FWK_DST_PATH}/src
+done
+FWK_DIR_LIST_HH=`find ${FWK_SRC_PATH}/Framework/ -name "*.h*" -type f`
+FWK_DIR_LIST_CC=`find ${FWK_SRC_PATH}/Framework/ -name "*.c*" -type f`
+for i in ${FWK_DIR_LIST_HH}
+do
+    cp $i ${FWK_DST_PATH}/include
+done
+for i in ${FWK_DIR_LIST_CC}
+do
+    cp $i ${FWK_DST_PATH}/src
+done
+
 # Update ATS TTCN-3 files
 echo 'Update TTCN-3 files'
 TTCN_3_ORG_PATH=${SRC_ITS_PATH}/ttcn
 TTCN_3_DST_PATH=${PATH_DEV_ITS}/src
-TTCN_3_ATS_LIST='AtsAutoInterop AtsCAM AtsDENM AtsGeoNetworking AtsSecurity LibCommon'
+TTCN_3_ATS_LIST='AtsAutoInterop AtsCAM AtsDENM AtsBtp AtsGeoNetworking AtsSecurity LibCommon TestCodec'
 for i in ${TTCN_3_ATS_LIST}
 do
     if [ ! -d ${TTCN_3_DST_PATH}/$i ]
@@ -125,7 +155,16 @@ done
 PATH_PATCHES=`pwd`/etsi_its_patches
 if [ -d ${PATH_PATCHES} ]
 then
+    # Patch ASN1C Makefile
+    # Update BTP
+    cp ${PATH_PATCHES}/btp_generate_makefile.bash ${PATH_DEV_ITS}/src/AtsBtp/bin
+    ${RUN_PATH}/etsi_its_patches/asn1c_patch.bash ${ASN1_DST_PATH}/../Makefile
+    # Update CAM
     cp ${PATH_PATCHES}/cam_generate_makefile.bash ${PATH_DEV_ITS}/src/AtsCAM/bin
+    # Update DENM
+    cp ${PATH_PATCHES}/denm_generate_makefile.bash ${PATH_DEV_ITS}/src/AtsDENM/bin
+    # Update TestCodec
+    cp ${PATH_PATCHES}/testcodec_generate_makefile.bash ${PATH_DEV_ITS}/src/TestCodec/bin
 fi
 
 # Set rights
@@ -133,3 +172,13 @@ find ${PATH_DEV_ITS} -type f -exec chmod 664 {} \;
 find ${PATH_DEV_ITS} -name "*.bash" -type f -exec chmod 775 {} \;
 find ${PATH_DEV_ITS} -type d -exec chmod 775 {} \;
 chown -R ${CHOWN_USER_GROUP} ${PATH_DEV_ITS}
+
+# Build libAsn1
+cd ${ASN1_DST_PATH}/..
+make
+for i in ${PATH_DEV_ITS}/bin/asn1/*.h
+do
+    ln -s $i ../include/`basename $i`
+done
+ln -s ${PATH_DEV_ITS}/bin/asn1/libItsAsn.so ${PATH_DEV_ITS}/lib/libItsAsn.so
+cd -
