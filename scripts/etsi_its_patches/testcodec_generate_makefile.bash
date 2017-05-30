@@ -84,7 +84,7 @@ then
     fi
 fi
 
-REFERENCES="LibCommon LibIts/Common LibIts/BTP LibIts/GeoNetworking LibIts/GeoNetworking LibIts/Ipv6OverGeoNetworking LibIts/Security LibIts/CAM"
+REFERENCES="LibCommon LibIts/Common LibIts/BTP LibIts/GeoNetworking LibIts/GeoNetworking LibIts/Ipv6OverGeoNetworking LibIts/Security LibIts/CAM LibIts/DENM"
 for i in ${REFERENCES}
 do
     # TTCN code
@@ -92,18 +92,24 @@ do
     do
 	ln -sf $j ../ttcn/`basename $j`
     done
-    # Include code
+    # Include source code
+    files=`find ${PATH_DEV_ITS}/src/$i/include -type f`
 #    if [ "`ls ${PATH_DEV_ITS}/src/$i/include`" != " " ]
-#    then
-#	for j in `find ${PATH_DEV_ITS}/src/$i/include -type f`;
-#	do
-#	    ln -sf $j ../include/`basename $j`
-#	done
-#    fi
-    # CC source code
-    if [ "`ls ${PATH_DEV_ITS}/src/$i/src`" != " " ]
+    if [ "${files}" != " " ]
     then
-	for j in `find ${PATH_DEV_ITS}/src/$i/src -type f"`;
+#	for j in `find ${PATH_DEV_ITS}/src/$i/include -type f`;
+	for j in ${files};
+	do
+	    ln -sf $j ../include/`basename $j`
+	done
+    fi
+    # CC source code
+    files=`find ${PATH_DEV_ITS}/src/$i/src -type f`
+#    if [ "`ls ${PATH_DEV_ITS}/src/$i/src`" != " " ]
+    if [ "${files}" != " " ]
+    then
+#	for j in `find ${PATH_DEV_ITS}/src/$i/src -type f"`;
+	for j in ${files};
 	do
 	    ln -sf $j ../src/`basename $j`
 	done
@@ -123,7 +129,8 @@ then
         f_exit "Failed to compile ATS" 4
     fi
 else
-    compiler -b -d -f -g -j -l -L -t -R -U none -x -X ${TTCN_FILES} ${ASN1_FILES} 2>&1 3>&1 | tee build.log
+    compiler -d -f -g -l -L -t -R -U none -x -X ${TTCN_FILES} ${ASN1_FILES} 2>&1 3>&1 | tee build.log
+#    compiler -b -d -f -g -j -l -L -t -R -U none -x -X ${TTCN_FILES} ${ASN1_FILES} 2>&1 3>&1 | tee build.log
     if [ "$?" == "1" ]
     then 
         f_exit "Failed to generate ATS source code" 6
@@ -133,18 +140,19 @@ fi
 # Sart ATS generation - Step 2
 # Create working variables
 CC_FILES=`find ../src -name '*.c*'`
+FWK_FILES=`find ${PATH_DEV_ITS}/framework/ -name '*.c*'`
 CFG_FILES=`find ../etc -name '*.cfg'`
 
 # Sart ATS generation - Step 3
 if [ "${OSTYPE}" == "cygwin" ]
 then
-    ttcn3_makefilegen.exe -d -f -g -m -R -U none -e Ats${ATS_NAME} ${TTCN_FILES} ${ASN1_FILES} ${CC_FILES} ${CFG_FILES} | tee --append build.log
+    ttcn3_makefilegen.exe -d -f -g -m -R -U none -e Ats${ATS_NAME} ${TTCN_FILES} ${ASN1_FILES} ${CC_FILES} ${FWK_FILES} ${CFG_FILES} | tee --append build.log
     if [ "$?" == "1" ]
     then
         f_exit "Failed to compile ATS" 5
     fi
 else
-    ttcn3_makefilegen -d -f -g -m -R -U none -e Ats${ATS_NAME} ${TTCN_FILES} ${ASN1_FILES} ${CC_FILES} ${CFG_FILES} | tee --append build.log
+    ttcn3_makefilegen -d -f -g -m -R -U none -e Ats${ATS_NAME} ${TTCN_FILES} ${ASN1_FILES} ${CC_FILES} ${FWK_FILES} ${CFG_FILES} | tee --append build.log
     if [ "$?" == "1" ]
     then
         f_exit "Failed to generate ATS source code" 7
@@ -169,7 +177,7 @@ then
     CXXFLAGS_DEBUG_MODE='s/-Wall/-pg -Wall -std=c++11/g'
     LDFLAGS_DEBUG_MODE='s/LDFLAGS = /LDFLAGS = -pg /g'
 else
-    CXXFLAGS_DEBUG_MODE='s/-Wall/-g -Wall -std=c++11/g'
+    CXXFLAGS_DEBUG_MODE='s/-Wall/-ggdb -Wall -std=c++11/g'
     LDFLAGS_DEBUG_MODE='s/LDFLAGS = /LDFLAGS = -g /g'
 fi
 ADD_INCLUDE='/CPPFLAGS = /a\\CPPFLAGS += -I$(PATH_DEV_ITS)/include -I$(PATH_DEV_ITS)/framework/include -I../include -I../../LibIts/Common/include -I../../LibIts/BTP/include -I../../LibIts/CAM/include -I../../LibIts/DENM/include -I$(HOME_INC) -I.'

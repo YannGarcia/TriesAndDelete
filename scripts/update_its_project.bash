@@ -62,14 +62,30 @@ FWK_DIR_LIST_HH=`find ${FWK_SRC_PATH}/Protocols/ -name "*.h*" -type f`
 FWK_DIR_LIST_CC=`find ${FWK_SRC_PATH}/Protocols/ -name "*.c*" -type f`
 for i in ${FWK_DIR_LIST_HH}
 do
+    if [ `basename $i` != BTPPort.hh ]
+    then
+	cp $i ${FWK_DST_PATH}/include
+    fi
+done
+for i in ${FWK_DIR_LIST_CC}
+do
+    if [ `basename $i` != BTPPort.cc ]
+    then
+	cp $i ${FWK_DST_PATH}/src
+    fi
+done
+FWK_DIR_LIST_HH=`find ${FWK_SRC_PATH}/Framework/ -name "*.h*" -type f`
+FWK_DIR_LIST_CC=`find ${FWK_SRC_PATH}/Framework/ -name "*.c*" -type f`
+for i in ${FWK_DIR_LIST_HH}
+do
     cp $i ${FWK_DST_PATH}/include
 done
 for i in ${FWK_DIR_LIST_CC}
 do
     cp $i ${FWK_DST_PATH}/src
 done
-FWK_DIR_LIST_HH=`find ${FWK_SRC_PATH}/Framework/ -name "*.h*" -type f`
-FWK_DIR_LIST_CC=`find ${FWK_SRC_PATH}/Framework/ -name "*.c*" -type f`
+FWK_DIR_LIST_HH=`find ${FWK_SRC_PATH}/loggers/ -name "*.h*" -type f`
+FWK_DIR_LIST_CC=`find ${FWK_SRC_PATH}/loggers/ -name "*.c*" -type f`
 for i in ${FWK_DIR_LIST_HH}
 do
     cp $i ${FWK_DST_PATH}/include
@@ -143,6 +159,7 @@ do
     then
 	cp ${CC_SRC_PATH}/Externals/LibItsIpv6OverGeoNetworking_externals.cc ${TTCN_3_DST_PATH}/LibIts/$i/src
 	cp ${CC_SRC_PATH}/Ports/LibIts_ports/IPv6oGN_ports/*.cc ${TTCN_3_DST_PATH}/LibIts/$i/src
+	cp ${CC_SRC_PATH}/Ports/LibIts_ports/IPv6oGN_ports/*.hh ${TTCN_3_DST_PATH}/LibIts/$i/include
 	cp ${CC_SRC_PATH}/Ports/LibIts_ports/*.hh ${TTCN_3_DST_PATH}/LibIts/$i/include
     elif [ "$i" == "Security" ]
     then
@@ -165,6 +182,7 @@ then
     cp ${PATH_PATCHES}/denm_generate_makefile.bash ${PATH_DEV_ITS}/src/AtsDENM/bin
     # Update TestCodec
     cp ${PATH_PATCHES}/testcodec_generate_makefile.bash ${PATH_DEV_ITS}/src/TestCodec/bin
+    cp ${PATH_PATCHES}/../run_mtc.bash ${PATH_DEV_ITS}/src/TestCodec/bin
 fi
 
 # Set rights
