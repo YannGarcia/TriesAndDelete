@@ -6,6 +6,8 @@ set -evx
 # Usage: sudo ./update_project.bash
 # TODO Use git clone in temporary directory
 
+OLDPWD=`pwd`
+
 # Execution path
 RUN_PATH="${0%/*}"
 
@@ -94,6 +96,16 @@ for i in ${FWK_DIR_LIST_CC}
 do
     cp $i ${FWK_DST_PATH}/src
 done
+FWK_DIR_LIST_HH=`find ${FWK_SRC_PATH}/Asn1c/ -name "*.h*" -type f`
+FWK_DIR_LIST_CC=`find ${FWK_SRC_PATH}/Asn1c/ -name "*.c*" -type f`
+for i in ${FWK_DIR_LIST_HH}
+do
+    cp $i ${FWK_DST_PATH}/include
+done
+for i in ${FWK_DIR_LIST_CC}
+do
+    cp $i ${FWK_DST_PATH}/src
+done
 
 # Update ATS TTCN-3 files
 echo 'Update TTCN-3 files'
@@ -104,10 +116,11 @@ for i in ${TTCN_3_ATS_LIST}
 do
     if [ ! -d ${TTCN_3_DST_PATH}/$i ]
     then
-	mkdir -p ${TTCN_3_DST_PATH}/$i/bin ${TTCN_3_DST_PATH}/$i/lib ${TTCN_3_DST_PATH}/$i/src ${TTCN_3_DST_PATH}/$i/include ${TTCN_3_DST_PATH}/$i/ttcn ${TTCN_3_DST_PATH}/$i/objs ${TTCN_3_DST_PATH}/$i/cfg ${TTCN_3_DST_PATH}/$i/docs
+	mkdir -p ${TTCN_3_DST_PATH}/$i/bin ${TTCN_3_DST_PATH}/$i/lib ${TTCN_3_DST_PATH}/$i/src ${TTCN_3_DST_PATH}/$i/include ${TTCN_3_DST_PATH}/$i/ttcn ${TTCN_3_DST_PATH}/$i/objs ${TTCN_3_DST_PATH}/$i/etc ${TTCN_3_DST_PATH}/$i/docs
 	chmod -R 775 ${TTCN_3_DST_PATH}/$i
     fi
     cp ${TTCN_3_ORG_PATH}/$i/*.ttcn ${TTCN_3_DST_PATH}/$i/ttcn
+    cp ${TTCN_3_ORG_PATH}/../etc/*.cfg ${TTCN_3_DST_PATH}/$i/etc
 done
 
 # Update libraries & CC files
@@ -183,6 +196,7 @@ then
     # Update TestCodec
     cp ${PATH_PATCHES}/testcodec_generate_makefile.bash ${PATH_DEV_ITS}/src/TestCodec/bin
     cp ${PATH_PATCHES}/../run_mtc.bash ${PATH_DEV_ITS}/src/TestCodec/bin
+    cp ${PATH_PATCHES}/../run_ptcs.bash ${PATH_DEV_ITS}/src/TestCodec/bin
 fi
 
 # Set rights
@@ -193,10 +207,25 @@ chown -R ${CHOWN_USER_GROUP} ${PATH_DEV_ITS}
 
 # Build libAsn1
 cd ${ASN1_DST_PATH}/..
-make
-for i in ${PATH_DEV_ITS}/bin/asn1/*.h
-do
-    ln -s $i ../include/`basename $i`
-done
-ln -s ${PATH_DEV_ITS}/bin/asn1/libItsAsn.so ${PATH_DEV_ITS}/lib/libItsAsn.so
+make CC=gcc
 cd -
+if [ ! -d ${PATH_DEV_ITS}/include/asn1 ]
+then
+    mkdir ${PATH_DEV_ITS}/include/asn1
+else
+    for i in `find ${PATH_DEV_ITS}/include/asn1 -name "*.h"`;
+    do
+	rm $i
+    done
+fi
+for i in `find ${PATH_DEV_ITS}/bin/asn1 -name "*.h"`
+do
+    cp $i ${PATH_DEV_ITS}/include/asn1
+done
+ln -sf ${PATH_DEV_ITS}/bin/asn1/libItsAsn.so ${PATH_DEV_ITS}/lib/libItsAsn.so
+#rm -fr ${PATH_DEV_ITS}/bin/asn1
+#cp ~/frameworks/asn1c/skeletons/ANY.h ${PATH_DEV_ITS}/include/asn1
+cd ${OLDPWD}
+
+exit 0
+

@@ -94,10 +94,8 @@ do
     done
     # Include source code
     files=`find ${PATH_DEV_ITS}/src/$i/include -type f`
-#    if [ "`ls ${PATH_DEV_ITS}/src/$i/include`" != " " ]
     if [ "${files}" != " " ]
     then
-#	for j in `find ${PATH_DEV_ITS}/src/$i/include -type f`;
 	for j in ${files};
 	do
 	    ln -sf $j ../include/`basename $j`
@@ -105,10 +103,8 @@ do
     fi
     # CC source code
     files=`find ${PATH_DEV_ITS}/src/$i/src -type f`
-#    if [ "`ls ${PATH_DEV_ITS}/src/$i/src`" != " " ]
     if [ "${files}" != " " ]
     then
-#	for j in `find ${PATH_DEV_ITS}/src/$i/src -type f"`;
 	for j in ${files};
 	do
 	    ln -sf $j ../src/`basename $j`
@@ -180,10 +176,12 @@ else
     CXXFLAGS_DEBUG_MODE='s/-Wall/-ggdb -Wall -std=c++11/g'
     LDFLAGS_DEBUG_MODE='s/LDFLAGS = /LDFLAGS = -g /g'
 fi
-ADD_INCLUDE='/CPPFLAGS = /a\\CPPFLAGS += -I$(PATH_DEV_ITS)/include -I$(PATH_DEV_ITS)/framework/include -I../include -I../../LibIts/Common/include -I../../LibIts/BTP/include -I../../LibIts/CAM/include -I../../LibIts/DENM/include -I$(HOME_INC) -I.'
+ADD_INCLUDE='/CPPFLAGS = /a\\CPPFLAGS += -I$(PATH_DEV_ITS)/include -I$(PATH_DEV_ITS)/include/asn1 -I$(PATH_DEV_ITS)/framework/include -I../include -I../../LibIts/Common/include -I../../LibIts/BTP/include -I../../LibIts/CAM/include -I../../LibIts/DENM/include -I$(HOME_INC) -I.'
+ADD_LIBRARIES='s/LINUX_LIBS = -lxml2/LINUX_LIBS = -lxml2 -L$(PATH_DEV_ITS)\/lib -lItsAsn /g'
 sed --in-place "${CXXFLAGS_DEBUG_MODE}" ./Makefile 
 sed --in-place "${LDFLAGS_DEBUG_MODE}" ./Makefile
 sed --in-place "${ADD_INCLUDE}" ./Makefile
+sed --in-place "${ADD_LIBRARIES}" ./Makefile
 # Update clean clause
 CLEAN_LINE='s/$(RM) $(EXECUTABLE)/$(RM) ..\/bin\/$(EXECUTABLE) ..\/src\/*.o/g'
 sed --in-place "${CLEAN_LINE}" ./Makefile
