@@ -3,7 +3,6 @@ set -x
 
 clear
 
-TITAN_LOG_DIR=../logs
 CURPWD=`pwd`
 if [ ! "${PWD##*/}" == "objs" ]
 then
@@ -15,13 +14,17 @@ then
     fi
 fi
 
-CFG_FILES=`find .. -name '*.cfg'`
-if [ ! -d ../logs ]
+TITAN_LOG_DIR=../logs
+if [ ! -d ${TITAN_LOG_DIR} ]
 then
-    mkdir ../logs
+    mkdir ${TITAN_LOG_DIR}
+else
+    rm -f ${TITAN_LOG_DIR}/*.log
 fi
-LOG_FILES=`find ${TITAN_LOG_DIR} -name '*.log'`
-mv ${LOG_FILES} ../logs
+
+CFG_FILES=`find .. -name '*.cfg'`
+#LOG_FILES=`find ${TITAN_LOG_DIR} -name '*.log'`
+#mv ${LOG_FILES} ../logs
 
 #if [ "${OSTYPE}" == "cygwin" ]
 #then

@@ -14,10 +14,15 @@ then
     fi
 fi
 
-make all
+if [ -f ./core ]
+then
+    rm -f ./core
+fi
 if [ "$1" == "d" ]
 then 
     make run_d
+elif [ "$1" == "v" ]
+     make run_v
 else
     make run
 fi

@@ -10,34 +10,63 @@ OLDPWD=`pwd`
 
 # Execution path
 RUN_PATH="${0%/*}"
+UNAME=`uname -n`
+if [ "${UNAME}" == "Ubuntu64" ]
+then
+    SRC_ITS_PATH=/media/sf_F_DRIVE/FSCOM/ETSI/ITS/STF525_Auto_Interop/workspace_titan/STF525_Auto_Interop/src
+elif [ "${UNAME}" == "ubuntu-xenial" ]
+then
+    SRC_ITS_PATH=/media/sf_F_DRIVE/FSCOM/ETSI/ITS/STF525_Auto_Interop/workspace_titan/STF525_Auto_Interop/src
+    VAGRANT_DIR=/vagrant
+    if [ ! -d ${VAGRANT_DIR} ]
+    then
+	exit -1
+    else
+	VAGRANT_DIR=/vagrant/to_be_merged
+	if [ -d ${VAGRANT_DIR} ]
+	then
+	    rm -f ${VAGRANT_DIR}/*
+	else
+	    mkdir ${VAGRANT_DIR}
+	fi
+    fi
+else 
+    SRC_ITS_PATH=/cygdrive/f/FSCOM/ETSI/ITS/STF525_Auto_Interop/workspace_titan/STF525_Auto_Interop/src
+fi
+if [ "${PATH_DEV_ITS}" == "" ]
+then
+    PATH_DEV_ITS=`pwd`/../etsi_its
+fi
 
 # Update ETSI Framework files
 echo 'Merging ETSI Framework files'
 FWK_SRC_PATH=${SRC_ITS_PATH}/ccsrc
 FWK_DST_PATH=${PATH_DEV_ITS}/framework
 FWK_DIR_LIST_HH=`find ${FWK_SRC_PATH}/Protocols/ -name "*.h*" -type f`
-FWK_DIR_LIST_CC=`find ${FWK_SRC_PATH}/Protocols/ -name "*.c*" -type f`
 for i in ${FWK_DIR_LIST_HH}
 do
-    if [ `basename $i` != BTPPort.hh ]
+    BN=`basename $i`
+    if [ "${BN}" != "BTPPort.hh" ]
     then
-	s1 = sha256sum $i
-	s2 = sha256sum ${FWK_DST_PATH}/include/`basename $i`
-	if [ "s1" != "s2" ]
+	s1=`sha256sum -b $i | cut -d' ' -f1`
+	s2=`sha256sum -b ${FWK_DST_PATH}/include/${BN} | cut -d' ' -f1`
+	if [ ${s1} != ${s2} ]
 	then
-	    sdiff -sbBE $i ${FWK_DST_PATH}/include/`basename $i`
+	    cp ${FWK_DST_PATH}/include/${BN} ${VAGRANT_DIR}
 	fi
     fi
 done
+FWK_DIR_LIST_CC=`find ${FWK_SRC_PATH}/Protocols/ -name "*.c*" -type f`
 for i in ${FWK_DIR_LIST_CC}
 do
-    if [ `basename $i` != BTPPort.cc ]
+    BN=`basename $i`
+    if [ ${BN} != BTPPort.cc ]
     then	
-	s1 = sha256sum $i
-	s2 = sha256sum ${FWK_DST_PATH}/src/`basename $i`
-	if [ "s1" != "s2" ]
+	s1=`sha256sum -b $i | cut -d' ' -f1`
+	s2=`sha256sum -b ${FWK_DST_PATH}/src/${BN} | cut -d' ' -f1`
+	if [ ${s1} != ${s2} ]
 	then
-	    sdiff -sbBE $i ${FWK_DST_PATH}/src/`basename $i`
+	    cp ${FWK_DST_PATH}/src/${BN} ${VAGRANT_DIR}
 	fi
     fi
 done
@@ -45,40 +74,44 @@ FWK_DIR_LIST_HH=`find ${FWK_SRC_PATH}/Framework/ -name "*.h*" -type f`
 FWK_DIR_LIST_CC=`find ${FWK_SRC_PATH}/Framework/ -name "*.c*" -type f`
 for i in ${FWK_DIR_LIST_HH}
 do
-    s1 = sha256sum $i
-    s2 = sha256sum ${FWK_DST_PATH}/include/`basename $i`
-    if [ "s1" != "s2" ]
+    BN=`basename $i`
+    s1=`sha256sum -b $i | cut -d' ' -f1`
+    s2=`sha256sum -b ${FWK_DST_PATH}/include/${BN} | cut -d' ' -f1`
+    if [ ${s1} != ${s2} ]
     then
-	sdiff -sbBE $i ${FWK_DST_PATH}/include/`basename $i`
+	cp ${FWK_DST_PATH}/include/${BN} ${VAGRANT_DIR}
     fi
 done
 for i in ${FWK_DIR_LIST_CC}
 do
-    s1 = sha256sum $i
-    s2 = sha256sum ${FWK_DST_PATH}/src/`basename $i`
-    if [ "s1" != "s2" ]
+    BN=`basename $i`
+    s1=`sha256sum -b $i | cut -d' ' -f1`
+    s2=`sha256sum -b ${FWK_DST_PATH}/src/${BN} | cut -d' ' -f1`
+    if [ ${s1} != ${s2} ]
     then
-	sdiff -sbBE $i ${FWK_DST_PATH}/src/`basename $i`
+	cp ${FWK_DST_PATH}/src/${BN} ${VAGRANT_DIR}
     fi
 done
 FWK_DIR_LIST_HH=`find ${FWK_SRC_PATH}/loggers/ -name "*.h*" -type f`
-FWK_DIR_LIST_CC=`find ${FWK_SRC_PATH}/loggers/ -name "*.c*" -type f`
 for i in ${FWK_DIR_LIST_HH}
 do
-    s1 = sha256sum $i
-    s2 = sha256sum ${FWK_DST_PATH}/include/`basename $i`
-    if [ "s1" != "s2" ]
+    BN=`basename $i`
+    s1=`sha256sum -b $i | cut -d' ' -f1`
+    s2=`sha256sum -b ${FWK_DST_PATH}/include/${BN} | cut -d' ' -f1`
+    if [ ${s1} != ${s2} ]
     then
-	sdiff -sbBE $i ${FWK_DST_PATH}/include/`basename $i`
+	cp ${FWK_DST_PATH}/include/${BN} ${VAGRANT_DIR}
     fi
 done
+FWK_DIR_LIST_CC=`find ${FWK_SRC_PATH}/loggers/ -name "*.c*" -type f`
 for i in ${FWK_DIR_LIST_CC}
 do
-    s1 = sha256sum $i
-    s2 = sha256sum ${FWK_DST_PATH}/src/`basename $i`
-    if [ "s1" != "s2" ]
+    BN=`basename $i`
+    s1=`sha256sum -b $i | cut -d' ' -f1`
+    s2=`sha256sum -b ${FWK_DST_PATH}/src/${BN} | cut -d' ' -f1`
+    if [ ${s1} != ${s2} ]
     then
-	sdiff -sbBE $i ${FWK_DST_PATH}/src/`basename $i`
+	cp ${FWK_DST_PATH}/src/${BN} ${VAGRANT_DIR}
     fi
 done
 
@@ -89,14 +122,32 @@ TTCN_3_DST_PATH=${PATH_DEV_ITS}/src
 TTCN_3_ATS_LIST='AtsAutoInterop AtsCAM AtsDENM AtsBtp AtsGeoNetworking AtsSecurity LibCommon TestCodec'
 for i in ${TTCN_3_ATS_LIST}
 do
-    LIST_TTCN_FILES=`find ${FWK_SRC_PATH}ttcn/ -name "*.ttcn" -type f`    
+    LIST_TTCN_FILES=`find ${TTCN_3_ORG_PATH}/$i -name "*.ttcn" -type f`
+    
     for j in ${LIST_TTCN_FILES}
     do
-	s1 = sha256sum $j
-	s2 = sha256sum ${TTCN_3_DST_PATH}/$i/ttcn/`basename $j`
-	if [ "s1" != "s2" ]
+	BN=`basename $j`
+	s1=`sha256sum -b $j | cut -d' ' -f1`
+	s2=`sha256sum -b ${TTCN_3_DST_PATH}/$i/ttcn/${BN} | cut -d' ' -f1`
+	if [ ${s1} != ${s2} ]
 	then
-	    sdiff -sbBE ${TTCN_3_ORG_PATH}/$i/$j ${TTCN_3_DST_PATH}/$i/ttcn/`basename $j`
+	    cp ${TTCN_3_DST_PATH}/$i/ttcn/${BN} ${VAGRANT_DIR}
+	fi
+    done
+done
+
+TTCN_3_LIB_LIST='Common BTP CAM DENM GeoNetworking Ipv6OverGeoNetworking Security'
+for i in ${TTCN_3_LIB_LIST}
+do
+    LIST_TTCN_FILES=`find ${TTCN_3_ORG_PATH}/LibIts/$i -name "*.ttcn" -type f`
+    for j in ${LIST_TTCN_FILES}
+    do
+	BN=`basename $j`
+	s1=`sha256sum -b $j | cut -d' ' -f1`
+	s2=`sha256sum -b ${TTCN_3_DST_PATH}/LibIts/$i/ttcn/${BN} | cut -d' ' -f1`
+	if [ ${s1} != ${s2} ]
+	then
+	    cp ${TTCN_3_DST_PATH}/LibIts/$i/ttcn/${BN} ${VAGRANT_DIR}
 	fi
     done
 done
@@ -113,10 +164,6 @@ CC_SRC_PATH=${SRC_ITS_PATH}/ccsrc
 TTCN_3_LIB_LIST='Common BTP CAM DENM GeoNetworking Ipv6OverGeoNetworking Security'
 for i in ${TTCN_3_LIB_LIST}
 do
-    if [ ! -d ${TTCN_3_DST_PATH}/LibIts/$i ]
-    then
-	mkdir -p ${TTCN_3_DST_PATH}/LibIts/$i/docs ${TTCN_3_DST_PATH}/LibIts/$i/src ${TTCN_3_DST_PATH}/LibIts/$i/include ${TTCN_3_DST_PATH}/LibIts/$i/ttcn
-    fi
     cp ${TTCN_3_ORG_PATH}/LibIts/$i/*.ttcn ${TTCN_3_DST_PATH}/LibIts/$i/ttcn
     # Update CC files
     if [ "$i" == "Common" ]

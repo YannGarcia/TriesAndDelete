@@ -177,7 +177,7 @@ else
     LDFLAGS_DEBUG_MODE='s/LDFLAGS = /LDFLAGS = -g /g'
 fi
 ADD_INCLUDE='/CPPFLAGS = /a\\CPPFLAGS += -I$(PATH_DEV_ITS)/include -I$(PATH_DEV_ITS)/include/asn1 -I$(PATH_DEV_ITS)/framework/include -I../include -I../../LibIts/Common/include -I../../LibIts/BTP/include -I../../LibIts/CAM/include -I../../LibIts/DENM/include -I$(HOME_INC) -I.'
-ADD_LIBRARIES='s/LINUX_LIBS = -lxml2/LINUX_LIBS = -lxml2 -lpthread -lpcap -L$(PATH_DEV_ITS)\/lib -lItsAsn /g'
+ADD_LIBRARIES='s/LINUX_LIBS = -lxml2/LINUX_LIBS = -lxml2 -L$(PATH_DEV_ITS)\/lib -lItsAsn /g'
 sed --in-place "${CXXFLAGS_DEBUG_MODE}" ./Makefile 
 sed --in-place "${LDFLAGS_DEBUG_MODE}" ./Makefile
 sed --in-place "${ADD_INCLUDE}" ./Makefile
@@ -195,7 +195,7 @@ ADD_PORT='/PLATFORM = /aPORT=12000'
 sed --in-place "${ADD_PORT}" ./Makefile
 sed --in-place "${ADD_HOST}" ./Makefile
 ADD_RUN_LINE_1='$arun: all'
-ADD_RUN_LINE_2='$a\\t@sudo LD_LIBRARY_PATH=$(LD_LIBRARY_PATH) $(PWD)/../bin/$(EXECUTABLE) $(HOST) $(PORT)'
+ADD_RUN_LINE_2='$a\\t@$(PWD)/../bin/$(EXECUTABLE) $(HOST) $(PORT)'
 sed --in-place "${ADD_RUN_LINE_1}" ./Makefile 
 sed --in-place "${ADD_RUN_LINE_2}" ./Makefile 
 ADD_RUN_LINE_1='$arun_d: all'
