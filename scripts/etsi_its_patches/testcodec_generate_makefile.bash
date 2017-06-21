@@ -170,14 +170,14 @@ done
 # Add compiler/linker options
 if [ "$1" == "prof" ]
 then
-    CXXFLAGS_DEBUG_MODE='s/-Wall/-pg -Wall -std=c++11/g'
-    LDFLAGS_DEBUG_MODE='s/LDFLAGS = /LDFLAGS = -pg /g'
+    CXXFLAGS_DEBUG_MODE='s/-Wall/-pg -Wall -std=c++11 -pthreads -fstack-check -fstack-protector/g'
+    LDFLAGS_DEBUG_MODE='s/LDFLAGS = /LDFLAGS = -pg -pthread -fstack-check -fstack-protector/g'
 else
-    CXXFLAGS_DEBUG_MODE='s/-Wall/-ggdb -Wall -std=c++11/g'
-    LDFLAGS_DEBUG_MODE='s/LDFLAGS = /LDFLAGS = -g /g'
+    CXXFLAGS_DEBUG_MODE='s/-Wall/-ggdb -Wall -std=c++11 -pthread -fstack-check -fstack-protector/g'
+    LDFLAGS_DEBUG_MODE='s/LDFLAGS = /LDFLAGS = -g -pthread -fstack-check -fstack-protector/g'
 fi
 ADD_INCLUDE='/CPPFLAGS = /a\\CPPFLAGS += -I$(PATH_DEV_ITS)/include -I$(PATH_DEV_ITS)/include/asn1 -I$(PATH_DEV_ITS)/framework/include -I../include -I../../LibIts/Common/include -I../../LibIts/BTP/include -I../../LibIts/CAM/include -I../../LibIts/DENM/include -I$(HOME_INC) -I.'
-ADD_LIBRARIES='s/LINUX_LIBS = -lxml2/LINUX_LIBS = -lxml2 -L$(PATH_DEV_ITS)\/lib -lItsAsn /g'
+ADD_LIBRARIES='s/LINUX_LIBS = -lxml2/LINUX_LIBS = -lxml2 -lpcap -L$(PATH_DEV_ITS)\/lib -lItsAsn /g'
 sed --in-place "${CXXFLAGS_DEBUG_MODE}" ./Makefile 
 sed --in-place "${LDFLAGS_DEBUG_MODE}" ./Makefile
 sed --in-place "${ADD_INCLUDE}" ./Makefile
