@@ -140,6 +140,8 @@ TTCN_3_LIB_LIST='Common BTP CAM DENM GeoNetworking Ipv6OverGeoNetworking Securit
 for i in ${TTCN_3_LIB_LIST}
 do
     LIST_TTCN_FILES=`find ${TTCN_3_ORG_PATH}/LibIts/$i -name "*.ttcn" -type f`
+#    FWK_DIR_LIST_HH=`find ${FWK_SRC_PATH}/src/LibIts/$i/include -name "*.h*" -type f`
+#    FWK_DIR_LIST_CC=`find ${FWK_SRC_PATH}/src/LibIts/$i/src -name "*.c*" -type f`
     for j in ${LIST_TTCN_FILES}
     do
 	BN=`basename $j`
@@ -150,6 +152,26 @@ do
 	    cp ${TTCN_3_DST_PATH}/LibIts/$i/ttcn/${BN} ${VAGRANT_DIR}
 	fi
     done
+#    for j in ${FWK_DIR_LIST_HH}
+#    do
+#	BN=`basename $j`
+#	s1=`sha256sum -b $j | cut -d' ' -f1`
+#	s2=`sha256sum -b ${PATH_DEV_ITS}/src/LibIts/$i/include/${BN} | cut -d' ' -f1`
+#	if [ ${s1} != ${s2} ]
+#	then
+#	    cp ${PATH_DEV_ITS}/src/LibIts/$i/include/${BN} ${VAGRANT_DIR}
+#	fi
+#    done
+#    for j in ${FWK_DIR_LIST_CC}
+#    do
+#	BN=`basename $j`
+#	s1=`sha256sum -b $j | cut -d' ' -f1`
+#	s2=`sha256sum -b ${PATH_DEV_ITS}/src/LibIts/$i/src/${BN} | cut -d' ' -f1`
+#	if [ ${s1} != ${s2} ]
+#	then
+#	    cp ${PATH_DEV_ITS}/src/LibIts/$i/src/${BN} ${VAGRANT_DIR}
+#	fi
+#    done
 done
 
 
