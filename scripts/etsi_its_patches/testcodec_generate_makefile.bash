@@ -202,6 +202,10 @@ ADD_RUN_LINE_1='$arun_d: all'
 ADD_RUN_LINE_2='$a\\t@gdb --args $(PWD)/../bin/$(EXECUTABLE) $(HOST) $(PORT)'
 sed --in-place "${ADD_RUN_LINE_1}" ./Makefile 
 sed --in-place "${ADD_RUN_LINE_2}" ./Makefile 
+ADD_RUN_LINE_1='$arun_v: all'
+ADD_RUN_LINE_2='$a\\t@valgrind -v --tool=memcheck --leak-check=yes --show-reachable=yes --track-fds=yes --run-cxx-freeres=yes $(PWD)/../bin/$(EXECUTABLE) $(HOST) $(PORT)'
+sed --in-place "${ADD_RUN_LINE_1}" ./Makefile 
+sed --in-place "${ADD_RUN_LINE_2}" ./Makefile 
 
 # Build all
 make all 2>&1 3>&1 | tee --append build.log
