@@ -53,6 +53,10 @@ do
 	if [ ${s1} != ${s2} ]
 	then
 	    cp ${FWK_DST_PATH}/include/${BN} ${VAGRANT_DIR}
+	    if [ -f ${FWK_DST_PATH}/include/${BN}~ ]
+	    then
+		rm ${FWK_DST_PATH}/include/${BN}~
+	    fi
 	fi
     fi
 done
@@ -67,6 +71,10 @@ do
 	if [ ${s1} != ${s2} ]
 	then
 	    cp ${FWK_DST_PATH}/src/${BN} ${VAGRANT_DIR}
+	    if [ -f ${FWK_DST_PATH}/src/${BN}~ ]
+	    then
+		rm ${FWK_DST_PATH}/src/${BN}~
+	    fi
 	fi
     fi
 done
@@ -79,8 +87,12 @@ do
     s2=`sha256sum -b ${FWK_DST_PATH}/include/${BN} | cut -d' ' -f1`
     if [ ${s1} != ${s2} ]
     then
-	cp ${FWK_DST_PATH}/include/${BN} ${VAGRANT_DIR}
-    fi
+	cp ${FWK_DST_PATH}/include/${BN} ${VAGRANT_DIR} 
+	if [ -f ${FWK_DST_PATH}/include/${BN}~ ]
+	then
+	    rm ${FWK_DST_PATH}/include/${BN}~
+	fi
+   fi
 done
 for i in ${FWK_DIR_LIST_CC}
 do
@@ -90,6 +102,10 @@ do
     if [ ${s1} != ${s2} ]
     then
 	cp ${FWK_DST_PATH}/src/${BN} ${VAGRANT_DIR}
+	if [ -f ${FWK_DST_PATH}/src/${BN}~ ]
+	then
+	    rm ${FWK_DST_PATH}/src/${BN}~
+	fi
     fi
 done
 FWK_DIR_LIST_HH=`find ${FWK_SRC_PATH}/loggers/ -name "*.h*" -type f`
@@ -101,6 +117,10 @@ do
     if [ ${s1} != ${s2} ]
     then
 	cp ${FWK_DST_PATH}/include/${BN} ${VAGRANT_DIR}
+	if [ -f ${FWK_DST_PATH}/include/${BN}~ ]
+	then
+	    rm ${FWK_DST_PATH}/include/${BN}~
+	fi
     fi
 done
 FWK_DIR_LIST_CC=`find ${FWK_SRC_PATH}/loggers/ -name "*.c*" -type f`
@@ -112,9 +132,12 @@ do
     if [ ${s1} != ${s2} ]
     then
 	cp ${FWK_DST_PATH}/src/${BN} ${VAGRANT_DIR}
+	if [ -f ${FWK_DST_PATH}/src/${BN}~ ]
+	then
+	    rm ${FWK_DST_PATH}/src/${BN}~
+	fi
     fi
 done
-
 # Update ATS TTCN-3 files
 echo 'Update TTCN-3 files'
 TTCN_3_ORG_PATH=${SRC_ITS_PATH}/ttcn
@@ -150,29 +173,43 @@ do
 	if [ ${s1} != ${s2} ]
 	then
 	    cp ${TTCN_3_DST_PATH}/LibIts/$i/ttcn/${BN} ${VAGRANT_DIR}
+	    rm ${TTCN_3_DST_PATH}/LibIts/$i/ttcn/${BN}~
 	fi
     done
-    for j in ${FWK_DIR_LIST_HH}
-    do
-	BN=`basename $j`
-	s1=`sha256sum -b $j | cut -d' ' -f1`
-	s2=`sha256sum -b ${PATH_DEV_ITS}/src/LibIts/$i/include/${BN} | cut -d' ' -f1`
-	if [ ${s1} != ${s2} ]
-	then
-	    cp ${PATH_DEV_ITS}/src/LibIts/$i/include/${BN} ${VAGRANT_DIR}
-	fi
-    done
-    for j in ${FWK_DIR_LIST_CC}
-    do
-	BN=`basename $j`
-	s1=`sha256sum -b $j | cut -d' ' -f1`
-	s2=`sha256sum -b ${PATH_DEV_ITS}/src/LibIts/$i/src/${BN} | cut -d' ' -f1`
-	if [ ${s1} != ${s2} ]
-	then
-	    cp ${PATH_DEV_ITS}/src/LibIts/$i/src/${BN} ${VAGRANT_DIR}
-	fi
-    done
+#    for j in ${FWK_DIR_LIST_HH}
+#    do
+#	BN=`basename $j`
+#	s1=`sha256sum -b $j | cut -d' ' -f1`
+#	s2=`sha256sum -b ${PATH_DEV_ITS}/src/LibIts/$i/include/${BN} | cut -d' ' -f1`
+#	if [ ${s1} != ${s2} ]
+#	then
+#	    cp ${PATH_DEV_ITS}/src/LibIts/$i/include/${BN} ${VAGRANT_DIR}
+#	    rm ${PATH_DEV_ITS}/src/LibIts/$i/include/${BN}~
+#	fi
+#   done
+#    for j in ${FWK_DIR_LIST_CC}
+#    do
+#	BN=`basename $j`
+#	s1=`sha256sum -b $j | cut -d' ' -f1`
+#	s2=`sha256sum -b ${PATH_DEV_ITS}/src/LibIts/$i/src/${BN} | cut -d' ' -f1`
+#	if [ ${s1} != ${s2} ]
+#	then
+#	    cp ${PATH_DEV_ITS}/src/LibIts/$i/src/${BN} ${VAGRANT_DIR}
+#	    rm ${PATH_DEV_ITS}/src/LibIts/$i/src/${BN}~
+#	fi
+#   done
 done
+
+
+LIST_FILES=`find ${PATH_DEV_ITS} -name "*~" -type f`
+for i in ${TTCN_3_LIB_LIST}
+do
+    BN=$i
+    BN=${BN:: -1} # Remove the last character
+    echo cp ${BN} ${VAGRANT_DIR}
+done
+
+
 
 
 exit 0
