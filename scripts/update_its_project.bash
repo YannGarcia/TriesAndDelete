@@ -186,6 +186,10 @@ PATH_PATCHES=`pwd`/etsi_its_patches
 if [ -d ${PATH_PATCHES} ]
 then
     # Patch ASN1C Makefile
+    # Update GeoNetworking
+    cp ${PATH_PATCHES}/geonw_generate_makefile.bash ${PATH_DEV_ITS}/src/AtsGeoNetworking/bin
+    cp ${PATH_PATCHES}/../run_mtc.bash ${PATH_DEV_ITS}/src/AtsGeoNetworking/bin
+    cp ${PATH_PATCHES}/../run_ptcs.bash ${PATH_DEV_ITS}/src/AtsGeoNetworking/bin
     # Update BTP
     cp ${PATH_PATCHES}/btp_generate_makefile.bash ${PATH_DEV_ITS}/src/AtsBtp/bin
     ${RUN_PATH}/etsi_its_patches/asn1c_patch.bash ${ASN1_DST_PATH}/../Makefile
