@@ -1,5 +1,5 @@
 #!/bin/bash
-#set -x
+#set -evx
 
 clear
 
@@ -22,7 +22,8 @@ if [ "$1" == "d" ]
 then 
     make run_d
 elif [ "$1" == "v" ]
-     make run_v
+then
+    make run_v
 else
     make run
 fi

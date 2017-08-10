@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Debug mode
-set -evx
+#set -evx
 
 # Usage: sudo ./update_project.bash
 # TODO Use git clone in temporary directory

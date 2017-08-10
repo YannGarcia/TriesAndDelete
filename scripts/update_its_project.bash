@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Debug mode
-set -evx
+#set -evx
 
 # Usage: sudo ./update_project.bash
 # TODO Use git clone in temporary directory
@@ -27,6 +27,16 @@ fi
 if [ "${PATH_DEV_ITS}" == "" ]
 then
     PATH_DEV_ITS=`pwd`/../etsi_its
+fi
+
+if [ -d ${PATH_DEV_ITS} ]
+then
+    if [ -f ~/tmp/etsi_its.tar.bz2 ]
+    then
+	rm ~/tmp/etsi_its.tar.bz2
+    fi
+    tar jcvf ~/tmp/etsi_its.tar.bz2 ${PATH_DEV_ITS}
+    rm -fr ${PATH_DEV_ITS}
 fi
 
 # Check if target directory exist
@@ -170,6 +180,7 @@ do
 	cp ${CC_SRC_PATH}/Ports/LibIts_ports/GN_ports/*.partH ${TTCN_3_DST_PATH}/LibIts/$i/include
     elif [ "$i" == "Ipv6OverGeoNetworking" ]
     then
+	cp ${CC_SRC_PATH}/EncDec/LibItsIpv6OverGeoNetworking_Encdec.cc ${TTCN_3_DST_PATH}/LibIts/$i/src
 	cp ${CC_SRC_PATH}/Externals/LibItsIpv6OverGeoNetworking_externals.cc ${TTCN_3_DST_PATH}/LibIts/$i/src
 	cp ${CC_SRC_PATH}/Ports/LibIts_ports/IPv6oGN_ports/*.cc ${TTCN_3_DST_PATH}/LibIts/$i/src
 	cp ${CC_SRC_PATH}/Ports/LibIts_ports/IPv6oGN_ports/*.hh ${TTCN_3_DST_PATH}/LibIts/$i/include
