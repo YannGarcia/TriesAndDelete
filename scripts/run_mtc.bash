@@ -47,6 +47,8 @@ LOG_FILES=`find ${TITAN_LOG_DIR} -name '*.log'`
 if [ "${TITAN_LOG_DIR}" != "" ]
 then
     ttcn3_logmerge -o ${TITAN_LOG_DIR}/merged.log ${LOG_FILES}
+    ttcn3_logformat -o ${TITAN_LOG_DIR}/merged_formated.log ${TITAN_LOG_DIR}/merged.log
+    mv ${TITAN_LOG_DIR}/merged_formated.log ${TITAN_LOG_DIR}/merged.log    
     echo "log files were merged into ${TITAN_LOG_DIR}/merged.log"
 fi
 
