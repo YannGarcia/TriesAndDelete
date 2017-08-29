@@ -75,3 +75,4 @@ git://git.eclipse.org/gitroot/titan/titan.TestPorts.GPIO.git
 git://git.eclipse.org/gitroot/titan/titan.TestPorts.SOCKET_CANasp.git
 git://git.eclipse.org/gitroot/titan/titan.TestPorts.SocketCANasp.git
 git://git.eclipse.org/gitroot/titan/titan.TestPortss.MTP3asp.git
+git://git.eclipse.org/gitroot/titan/titan.TestPorts.Serial.git

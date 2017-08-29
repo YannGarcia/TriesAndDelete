@@ -1,5 +1,5 @@
 #!/bin/bash
-set -x
+set -evx
 
 function f_exit {
     cd ${CURPWD}
@@ -162,8 +162,17 @@ do
 done
 for i in `ls ../src/*.cc`
 do
-    rm ./`basename $i`
+    if [ -f ./`basename $i` ]
+    then
+	rm ./`basename $i`
+    fi
 done
+
+# Check if Makefile was generated
+if [ ! -f ./Makefile ]
+then
+        f_exit "Failed to generate ATS source code" 8
+fi
 
 # Patch ATS generated files
 #./bin/patch.bash 2>&1 3>&1 | tee --append build.log
@@ -177,7 +186,7 @@ else
     LDFLAGS_DEBUG_MODE='s/LDFLAGS = /LDFLAGS = -g -pthread -fstack-check -fstack-protector/g'
 fi
 ADD_INCLUDE='/CPPFLAGS = /a\\CPPFLAGS += -I$(PATH_DEV_ITS)/include -I$(PATH_DEV_ITS)/include/asn1 -I$(PATH_DEV_ITS)/framework/include -I../include -I../../LibIts/Common/include -I../../LibIts/BTP/include -I../../LibIts/CAM/include -I../../LibIts/DENM/include -I$(HOME_INC) -I.'
-ADD_LIBRARIES='s/LINUX_LIBS = -lxml2/LINUX_LIBS = -lxml2 -lpcap -L$(PATH_DEV_ITS)\/lib -lItsAsn /g'
+ADD_LIBRARIES='s/LINUX_LIBS = -lxml2/LINUX_LIBS = -lrt -lxml2 -lpcap -L$(PATH_DEV_ITS)\/lib -lItsAsn /g'
 sed --in-place "${CXXFLAGS_DEBUG_MODE}" ./Makefile 
 sed --in-place "${LDFLAGS_DEBUG_MODE}" ./Makefile
 sed --in-place "${ADD_INCLUDE}" ./Makefile
@@ -211,6 +220,6 @@ sed --in-place "${ADD_RUN_LINE_2}" ./Makefile
 make all 2>&1 3>&1 | tee --append build.log
 if [ "$?" == "1" ]
 then
-    f_exit "Failed to generate ATS source code" 8
+    f_exit "Failed to generate ATS source code" 9
 fi
 f_exit "Build done successfully" 0
