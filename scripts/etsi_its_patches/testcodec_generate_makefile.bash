@@ -119,14 +119,13 @@ TTCN_FILES=`find .. -name '*.ttcn*'`
 if [ "${OSTYPE}" == "cygwin" ]
 then
     rm ../bin/*.exe ../lib/*.dll
-    compiler.exe -b -d -f -g -j -l -L -t -R -U none -x -X ${TTCN_FILES} ${ASN1_FILES} 2>&1 3>&1 | tee build.log
+    compiler.exe -d -f -g -j -l -L -t -R -U none -x -X ${TTCN_FILES} ${ASN1_FILES} 2>&1 3>&1 | tee build.log
     if [ "$?" == "1" ]
     then
         f_exit "Failed to compile ATS" 4
     fi
 else
     compiler -d -f -g -l -L -t -R -U none -x -X ${TTCN_FILES} ${ASN1_FILES} 2>&1 3>&1 | tee build.log
-#    compiler -b -d -f -g -j -l -L -t -R -U none -x -X ${TTCN_FILES} ${ASN1_FILES} 2>&1 3>&1 | tee build.log
     if [ "$?" == "1" ]
     then 
         f_exit "Failed to generate ATS source code" 6
@@ -177,12 +176,13 @@ fi
 # Patch ATS generated files
 #./bin/patch.bash 2>&1 3>&1 | tee --append build.log
 # Add compiler/linker options
+# -DASN_DISABLE_OER_SUPPORT is required for CAMCodec and DENMCodec
 if [ "$1" == "prof" ]
 then
-    CXXFLAGS_DEBUG_MODE='s/-Wall/-pg -Wall -std=c++11 -pthreads -fstack-check -fstack-protector/g'
+    CXXFLAGS_DEBUG_MODE='s/-Wall/-pg -Wall -std=c++11 -pthreads -fstack-check -fstack-protector -DASN_DISABLE_OER_SUPPORT/g'
     LDFLAGS_DEBUG_MODE='s/LDFLAGS = /LDFLAGS = -pg -pthread -fstack-check -fstack-protector/g'
 else
-    CXXFLAGS_DEBUG_MODE='s/-Wall/-ggdb -O0 -Wall -std=c++11 -pthread -fstack-check -fstack-protector/g'
+    CXXFLAGS_DEBUG_MODE='s/-Wall/-ggdb -O0 -Wall -std=c++11 -pthread -fstack-check -fstack-protector -DASN_DISABLE_OER_SUPPORT/g'
     LDFLAGS_DEBUG_MODE='s/LDFLAGS = /LDFLAGS = -g -pthread -fstack-check -fstack-protector/g'
 fi
 ADD_INCLUDE='/CPPFLAGS = /a\\CPPFLAGS += -I$(PATH_DEV_ITS)/include -I$(PATH_DEV_ITS)/include/asn1 -I$(PATH_DEV_ITS)/framework/include -I../include -I../../LibIts/Common/include -I../../LibIts/BTP/include -I../../LibIts/CAM/include -I../../LibIts/DENM/include -I$(HOME_INC) -I.'
