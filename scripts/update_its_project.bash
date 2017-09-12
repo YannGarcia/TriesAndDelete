@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Debug mode
-#set -evx
+set -evx
 
 # Usage: sudo ./update_project.bash
 # TODO Use git clone in temporary directory
@@ -19,7 +19,7 @@ then
 elif [ "${UNAME}" == "ubuntu-xenial" ]
 then
     CHOWN_USER_GROUP=ubuntu:ubuntu
-    SRC_ITS_PATH=/media/sf_F_DRIVE/FSCOM/ETSI/ITS/STF525_Auto_Interop/workspace_titan/STF525_Auto_Interop/src    
+    SRC_ITS_PATH=/media/sf_F_DRIVE/FSCOM/ETSI/ITS/STF525_Auto_Interop/workspace_titan/STF525_Auto_Interop/src
 else 
     CHOWN_USER_GROUP=yann:None
     SRC_ITS_PATH=/cygdrive/f/FSCOM/ETSI/ITS/STF525_Auto_Interop/workspace_titan/STF525_Auto_Interop/src

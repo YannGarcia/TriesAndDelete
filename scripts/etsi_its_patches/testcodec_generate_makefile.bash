@@ -119,13 +119,13 @@ TTCN_FILES=`find .. -name '*.ttcn*'`
 if [ "${OSTYPE}" == "cygwin" ]
 then
     rm ../bin/*.exe ../lib/*.dll
-    compiler.exe -d -f -g -j -l -L -t -R -U none -x -X ${TTCN_FILES} ${ASN1_FILES} 2>&1 3>&1 | tee build.log
+    compiler.exe -d -e -f -g -j -l -L -t -R -U none -x -X ${TTCN_FILES} ${ASN1_FILES} 2>&1 3>&1 | tee build.log
     if [ "$?" == "1" ]
     then
         f_exit "Failed to compile ATS" 4
     fi
 else
-    compiler -d -f -g -l -L -t -R -U none -x -X ${TTCN_FILES} ${ASN1_FILES} 2>&1 3>&1 | tee build.log
+    compiler -d -e -f -g -l -L -t -R -U none -x -X ${TTCN_FILES} ${ASN1_FILES} 2>&1 3>&1 | tee build.log
     if [ "$?" == "1" ]
     then 
         f_exit "Failed to generate ATS source code" 6
@@ -170,7 +170,7 @@ done
 # Check if Makefile was generated
 if [ ! -f ./Makefile ]
 then
-        f_exit "Failed to generate ATS source code" 8
+    f_exit "Failed to generate ATS source code" 8
 fi
 
 # Patch ATS generated files
@@ -185,7 +185,7 @@ else
     CXXFLAGS_DEBUG_MODE='s/-Wall/-ggdb -O0 -Wall -std=c++11 -pthread -fstack-check -fstack-protector -DASN_DISABLE_OER_SUPPORT/g'
     LDFLAGS_DEBUG_MODE='s/LDFLAGS = /LDFLAGS = -g -pthread -fstack-check -fstack-protector/g'
 fi
-ADD_INCLUDE='/CPPFLAGS = /a\\CPPFLAGS += -I$(PATH_DEV_ITS)/include -I$(PATH_DEV_ITS)/include/asn1 -I$(PATH_DEV_ITS)/framework/include -I../include -I../../LibIts/Common/include -I../../LibIts/BTP/include -I../../LibIts/CAM/include -I../../LibIts/DENM/include -I$(HOME_INC) -I.'
+ADD_INCLUDE='/CPPFLAGS = /a\\CPPFLAGS += -I/usr/local/share -I$(PATH_DEV_ITS)/include -I$(PATH_DEV_ITS)/include/asn1 -I$(PATH_DEV_ITS)/framework/include -I../include -I../../LibIts/Common/include -I../../LibIts/BTP/include -I../../LibIts/CAM/include -I../../LibIts/DENM/include -I$(HOME_INC) -I.'
 ADD_LIBRARIES='s/LINUX_LIBS = -lxml2/LINUX_LIBS = -lrt -lxml2 -lpcap -L$(PATH_DEV_ITS)\/lib -lItsAsn /g'
 sed --in-place "${CXXFLAGS_DEBUG_MODE}" ./Makefile 
 sed --in-place "${LDFLAGS_DEBUG_MODE}" ./Makefile
