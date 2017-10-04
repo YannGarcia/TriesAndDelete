@@ -157,13 +157,16 @@ fi
 # Remove port skeletons to use src/<port skeletons>
 for i in `ls ../include/*.hh`
 do
-    rm ./`basename $i`
+    if [ -f ./`basename $i` ]
+    then
+	      rm ./`basename $i`
+    fi
 done
 for i in `ls ../src/*.cc`
 do
     if [ -f ./`basename $i` ]
     then
-	rm ./`basename $i`
+	      rm ./`basename $i`
     fi
 done
 

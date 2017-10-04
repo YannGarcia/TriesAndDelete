@@ -22,7 +22,7 @@ else
     rm -f ${TITAN_LOG_DIR}/*.log
 fi
 
-CFG_FILES=`find .. -name '*.cfg'`
+CFG_FILES=`find ../etc -name '*.cfg'`
 #LOG_FILES=`find ${TITAN_LOG_DIR} -name '*.log'`
 #mv ${LOG_FILES} ../logs
 
