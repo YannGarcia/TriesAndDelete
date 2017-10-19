@@ -1,7 +1,8 @@
 #!/bin/bash
 
 # Debug mode
-set -evx
+#set -e
+#set -vx
 
 # Usage: sudo ./update_project.bash
 # TODO Use git clone in temporary directory
@@ -33,7 +34,7 @@ if [ -d ${PATH_DEV_ITS} ]
 then
     if [ -f ~/tmp/etsi_its.tar.bz2 ]
     then
-	rm ~/tmp/etsi_its.tar.bz2
+	      rm ~/tmp/etsi_its.tar.bz2
     fi
     tar jcvf ~/tmp/etsi_its.tar.bz2 ${PATH_DEV_ITS}
     rm -fr ${PATH_DEV_ITS}
@@ -54,15 +55,24 @@ for i in ${ASN1_DIR_LIST}
 do
     if [ ! -d ${ASN1_DST_PATH}/$i ]
     then
-	mkdir ${ASN1_DST_PATH}/$i
-	chmod 775 ${ASN1_DST_PATH}/$i
+	      mkdir ${ASN1_DST_PATH}/$i
+	      chmod 775 ${ASN1_DST_PATH}/$i
     fi
     for j in `ls ${ASN1_SRC_PATH}/$i/*.asn`
     do
-	cp $j ${ASN1_DST_PATH}/$i
+	      cp $j ${ASN1_DST_PATH}/$i
     done
 done
 cp ${ASN1_SRC_PATH}/../Makefile ${ASN1_DST_PATH}/..
+
+# Update testdata
+echo 'Updating testdata'
+FWK_SRC_PATH=${SRC_ITS_PATH}/testdata
+FWK_DST_PATH=${PATH_DEV_ITS}
+if [ -d ${FWK_SRC_PATH} ]
+then
+    cp -Rp ${FWK_SRC_PATH} ${FWK_DST_PATH}
+fi
 
 # Update ETSI Framework files
 echo 'Updating ETSI Framework files'
@@ -76,14 +86,14 @@ for i in ${FWK_DIR_LIST_HH}
 do
     if [ `basename $i` != BTPPort.hh ]
     then
-	cp $i ${FWK_DST_PATH}/include
+	      cp $i ${FWK_DST_PATH}/include
     fi
 done
 for i in ${FWK_DIR_LIST_CC}
 do
     if [ `basename $i` != BTPPort.cc ]
     then
-	cp $i ${FWK_DST_PATH}/src
+	      cp $i ${FWK_DST_PATH}/src
     fi
 done
 FWK_DIR_LIST_HH=`find ${FWK_SRC_PATH}/Framework/ -name "*.h*" -type f`
@@ -126,8 +136,8 @@ for i in ${TTCN_3_ATS_LIST}
 do
     if [ ! -d ${TTCN_3_DST_PATH}/$i ]
     then
-	mkdir -p ${TTCN_3_DST_PATH}/$i/bin ${TTCN_3_DST_PATH}/$i/lib ${TTCN_3_DST_PATH}/$i/src ${TTCN_3_DST_PATH}/$i/include ${TTCN_3_DST_PATH}/$i/ttcn ${TTCN_3_DST_PATH}/$i/objs ${TTCN_3_DST_PATH}/$i/etc ${TTCN_3_DST_PATH}/$i/docs
-	chmod -R 775 ${TTCN_3_DST_PATH}/$i
+	      mkdir -p ${TTCN_3_DST_PATH}/$i/bin ${TTCN_3_DST_PATH}/$i/lib ${TTCN_3_DST_PATH}/$i/src ${TTCN_3_DST_PATH}/$i/include ${TTCN_3_DST_PATH}/$i/ttcn ${TTCN_3_DST_PATH}/$i/objs ${TTCN_3_DST_PATH}/$i/etc ${TTCN_3_DST_PATH}/$i/docs
+	      chmod -R 775 ${TTCN_3_DST_PATH}/$i
     fi
     cp ${TTCN_3_ORG_PATH}/$i/*.ttcn ${TTCN_3_DST_PATH}/$i/ttcn
     cp ${TTCN_3_ORG_PATH}/../etc/*.cfg ${TTCN_3_DST_PATH}/$i/etc
@@ -140,55 +150,55 @@ for i in ${TTCN_3_LIB_LIST}
 do
     if [ ! -d ${TTCN_3_DST_PATH}/LibIts/$i ]
     then
-	mkdir -p ${TTCN_3_DST_PATH}/LibIts/$i/docs ${TTCN_3_DST_PATH}/LibIts/$i/src ${TTCN_3_DST_PATH}/LibIts/$i/include ${TTCN_3_DST_PATH}/LibIts/$i/ttcn
+	      mkdir -p ${TTCN_3_DST_PATH}/LibIts/$i/docs ${TTCN_3_DST_PATH}/LibIts/$i/src ${TTCN_3_DST_PATH}/LibIts/$i/include ${TTCN_3_DST_PATH}/LibIts/$i/ttcn
     fi
     cp ${TTCN_3_ORG_PATH}/LibIts/$i/*.ttcn ${TTCN_3_DST_PATH}/LibIts/$i/ttcn
     # Update CC files
     if [ "$i" == "Common" ]
     then
-	cp ${CC_SRC_PATH}/Externals/LibItsCommon_externals.cc ${TTCN_3_DST_PATH}/LibIts/$i/src
-	cp ${CC_SRC_PATH}/Ports/LibIts_ports/*.cc ${TTCN_3_DST_PATH}/LibIts/$i/src
-	cp ${CC_SRC_PATH}/Ports/LibIts_ports/*.hh ${TTCN_3_DST_PATH}/LibIts/$i/include
+	      cp ${CC_SRC_PATH}/Externals/LibItsCommon_externals.cc ${TTCN_3_DST_PATH}/LibIts/$i/src
+	      cp ${CC_SRC_PATH}/Ports/LibIts_ports/*.cc ${TTCN_3_DST_PATH}/LibIts/$i/src
+	      cp ${CC_SRC_PATH}/Ports/LibIts_ports/*.hh ${TTCN_3_DST_PATH}/LibIts/$i/include
     elif [ "$i" == "BTP" ]
     then
-	cp ${CC_SRC_PATH}/EncDec/LibItsBtp_Encdec.cc ${TTCN_3_DST_PATH}/LibIts/$i/src
-	cp ${CC_SRC_PATH}/Ports/LibIts_ports/BTP_ports/*.cc ${TTCN_3_DST_PATH}/LibIts/$i/src
-	cp ${CC_SRC_PATH}/Ports/LibIts_ports/BTP_ports/*.hh ${TTCN_3_DST_PATH}/LibIts/$i/include
-	cp ${CC_SRC_PATH}/Ports/LibIts_ports/BTP_ports/*.partC ${TTCN_3_DST_PATH}/LibIts/$i/src
-	cp ${CC_SRC_PATH}/Ports/LibIts_ports/BTP_ports/*.partH ${TTCN_3_DST_PATH}/LibIts/$i/include
+	      cp ${CC_SRC_PATH}/EncDec/LibItsBtp_Encdec.cc ${TTCN_3_DST_PATH}/LibIts/$i/src
+	      cp ${CC_SRC_PATH}/Ports/LibIts_ports/BTP_ports/*.cc ${TTCN_3_DST_PATH}/LibIts/$i/src
+	      cp ${CC_SRC_PATH}/Ports/LibIts_ports/BTP_ports/*.hh ${TTCN_3_DST_PATH}/LibIts/$i/include
+	      cp ${CC_SRC_PATH}/Ports/LibIts_ports/BTP_ports/*.partC ${TTCN_3_DST_PATH}/LibIts/$i/src
+	      cp ${CC_SRC_PATH}/Ports/LibIts_ports/BTP_ports/*.partH ${TTCN_3_DST_PATH}/LibIts/$i/include
     elif [ "$i" == "CAM" ]
     then
-	cp ${CC_SRC_PATH}/EncDec/LibItsCam_Encdec.cc ${TTCN_3_DST_PATH}/LibIts/$i/src
-	cp ${CC_SRC_PATH}/Ports/LibIts_ports/CAM_ports/*.cc ${TTCN_3_DST_PATH}/LibIts/$i/src
-	cp ${CC_SRC_PATH}/Ports/LibIts_ports/CAM_ports/*.hh ${TTCN_3_DST_PATH}/LibIts/$i/include
-	cp ${CC_SRC_PATH}/Ports/LibIts_ports/CAM_ports/*.partC ${TTCN_3_DST_PATH}/LibIts/$i/src
-	cp ${CC_SRC_PATH}/Ports/LibIts_ports/CAM_ports/*.partH ${TTCN_3_DST_PATH}/LibIts/$i/include
+	      cp ${CC_SRC_PATH}/EncDec/LibItsCam_Encdec.cc ${TTCN_3_DST_PATH}/LibIts/$i/src
+	      cp ${CC_SRC_PATH}/Ports/LibIts_ports/CAM_ports/*.cc ${TTCN_3_DST_PATH}/LibIts/$i/src
+	      cp ${CC_SRC_PATH}/Ports/LibIts_ports/CAM_ports/*.hh ${TTCN_3_DST_PATH}/LibIts/$i/include
+	      cp ${CC_SRC_PATH}/Ports/LibIts_ports/CAM_ports/*.partC ${TTCN_3_DST_PATH}/LibIts/$i/src
+	      cp ${CC_SRC_PATH}/Ports/LibIts_ports/CAM_ports/*.partH ${TTCN_3_DST_PATH}/LibIts/$i/include
     elif [ "$i" == "DENM" ]
     then
-	cp ${CC_SRC_PATH}/EncDec/LibItsDenm_Encdec.cc ${TTCN_3_DST_PATH}/LibIts/$i/src
-	cp ${CC_SRC_PATH}/Ports/LibIts_ports/DENM_ports/*.cc ${TTCN_3_DST_PATH}/LibIts/$i/src
-	cp ${CC_SRC_PATH}/Ports/LibIts_ports/DENM_ports/*.hh ${TTCN_3_DST_PATH}/LibIts/$i/include
-	cp ${CC_SRC_PATH}/Ports/LibIts_ports/DENM_ports/*.partC ${TTCN_3_DST_PATH}/LibIts/$i/src
-	cp ${CC_SRC_PATH}/Ports/LibIts_ports/DENM_ports/*.partH ${TTCN_3_DST_PATH}/LibIts/$i/include
+	      cp ${CC_SRC_PATH}/EncDec/LibItsDenm_Encdec.cc ${TTCN_3_DST_PATH}/LibIts/$i/src
+	      cp ${CC_SRC_PATH}/Ports/LibIts_ports/DENM_ports/*.cc ${TTCN_3_DST_PATH}/LibIts/$i/src
+	      cp ${CC_SRC_PATH}/Ports/LibIts_ports/DENM_ports/*.hh ${TTCN_3_DST_PATH}/LibIts/$i/include
+	      cp ${CC_SRC_PATH}/Ports/LibIts_ports/DENM_ports/*.partC ${TTCN_3_DST_PATH}/LibIts/$i/src
+	      cp ${CC_SRC_PATH}/Ports/LibIts_ports/DENM_ports/*.partH ${TTCN_3_DST_PATH}/LibIts/$i/include
     elif [ "$i" == "GeoNetworking" ]
     then
-	cp ${CC_SRC_PATH}/EncDec/LibItsGeoNetworking_Encdec.cc ${TTCN_3_DST_PATH}/LibIts/$i/src
-	cp ${CC_SRC_PATH}/Externals/LibItsGeoNetworking_externals.cc ${TTCN_3_DST_PATH}/LibIts/$i/src
-	cp ${CC_SRC_PATH}/Ports/LibIts_ports/GN_ports/*.cc ${TTCN_3_DST_PATH}/LibIts/$i/src
-	cp ${CC_SRC_PATH}/Ports/LibIts_ports/GN_ports/*.hh ${TTCN_3_DST_PATH}/LibIts/$i/include
-	cp ${CC_SRC_PATH}/Ports/LibIts_ports/GN_ports/*.partC ${TTCN_3_DST_PATH}/LibIts/$i/src
-	cp ${CC_SRC_PATH}/Ports/LibIts_ports/GN_ports/*.partH ${TTCN_3_DST_PATH}/LibIts/$i/include
+	      cp ${CC_SRC_PATH}/EncDec/LibItsGeoNetworking_Encdec.cc ${TTCN_3_DST_PATH}/LibIts/$i/src
+	      cp ${CC_SRC_PATH}/Externals/LibItsGeoNetworking_externals.cc ${TTCN_3_DST_PATH}/LibIts/$i/src
+	      cp ${CC_SRC_PATH}/Ports/LibIts_ports/GN_ports/*.cc ${TTCN_3_DST_PATH}/LibIts/$i/src
+	      cp ${CC_SRC_PATH}/Ports/LibIts_ports/GN_ports/*.hh ${TTCN_3_DST_PATH}/LibIts/$i/include
+	      cp ${CC_SRC_PATH}/Ports/LibIts_ports/GN_ports/*.partC ${TTCN_3_DST_PATH}/LibIts/$i/src
+	      cp ${CC_SRC_PATH}/Ports/LibIts_ports/GN_ports/*.partH ${TTCN_3_DST_PATH}/LibIts/$i/include
     elif [ "$i" == "Ipv6OverGeoNetworking" ]
     then
-	cp ${CC_SRC_PATH}/EncDec/LibItsIpv6OverGeoNetworking_Encdec.cc ${TTCN_3_DST_PATH}/LibIts/$i/src
-	cp ${CC_SRC_PATH}/Externals/LibItsIpv6OverGeoNetworking_externals.cc ${TTCN_3_DST_PATH}/LibIts/$i/src
-	cp ${CC_SRC_PATH}/Ports/LibIts_ports/IPv6oGN_ports/*.cc ${TTCN_3_DST_PATH}/LibIts/$i/src
-	cp ${CC_SRC_PATH}/Ports/LibIts_ports/IPv6oGN_ports/*.hh ${TTCN_3_DST_PATH}/LibIts/$i/include
-	cp ${CC_SRC_PATH}/Ports/LibIts_ports/*.hh ${TTCN_3_DST_PATH}/LibIts/$i/include
+	      cp ${CC_SRC_PATH}/EncDec/LibItsIpv6OverGeoNetworking_Encdec.cc ${TTCN_3_DST_PATH}/LibIts/$i/src
+	      cp ${CC_SRC_PATH}/Externals/LibItsIpv6OverGeoNetworking_externals.cc ${TTCN_3_DST_PATH}/LibIts/$i/src
+	      cp ${CC_SRC_PATH}/Ports/LibIts_ports/IPv6oGN_ports/*.cc ${TTCN_3_DST_PATH}/LibIts/$i/src
+	      cp ${CC_SRC_PATH}/Ports/LibIts_ports/IPv6oGN_ports/*.hh ${TTCN_3_DST_PATH}/LibIts/$i/include
+	      cp ${CC_SRC_PATH}/Ports/LibIts_ports/*.hh ${TTCN_3_DST_PATH}/LibIts/$i/include
     elif [ "$i" == "Security" ]
     then
-	cp ${CC_SRC_PATH}/EncDec/LibItsSecurity_Encdec.cc ${TTCN_3_DST_PATH}/LibIts/$i/src
-	cp ${CC_SRC_PATH}/Externals/LibItsSecurity_externals.cc ${TTCN_3_DST_PATH}/LibIts/$i/src
+	      cp ${CC_SRC_PATH}/EncDec/LibItsSecurity_Encdec.cc ${TTCN_3_DST_PATH}/LibIts/$i/src
+	      cp ${CC_SRC_PATH}/Externals/LibItsSecurity_externals.cc ${TTCN_3_DST_PATH}/LibIts/$i/src
     fi
 done
 
@@ -208,6 +218,8 @@ then
     cp ${PATH_PATCHES}/cam_generate_makefile.bash ${PATH_DEV_ITS}/src/AtsCAM/bin
     # Update DENM
     cp ${PATH_PATCHES}/denm_generate_makefile.bash ${PATH_DEV_ITS}/src/AtsDENM/bin
+    cp ${PATH_PATCHES}/../run_mtc.bash ${PATH_DEV_ITS}/src/AtsDENM/bin
+    cp ${PATH_PATCHES}/../run_ptcs.bash ${PATH_DEV_ITS}/src/AtsDENM/bin
     # Update TestCodec
     cp ${PATH_PATCHES}/testcodec_generate_makefile.bash ${PATH_DEV_ITS}/src/TestCodec/bin
     cp ${PATH_PATCHES}/../run_mtc.bash ${PATH_DEV_ITS}/src/TestCodec/bin
@@ -223,6 +235,7 @@ chown -R ${CHOWN_USER_GROUP} ${PATH_DEV_ITS}
 # Build libAsn1
 cd ${ASN1_DST_PATH}/..
 make CC=gcc
+rm -fr ${PATH_DEV_ITS}/asn1/LibIts/IS/ISO_TS_19091/original
 cd -
 if [ ! -d ${PATH_DEV_ITS}/include/asn1 ]
 then
@@ -230,7 +243,7 @@ then
 else
     for i in `find ${PATH_DEV_ITS}/include/asn1 -name "*.h"`;
     do
-	rm $i
+	      rm $i
     done
 fi
 for i in `find ${PATH_DEV_ITS}/bin/asn1 -name "*.h"`
@@ -238,7 +251,6 @@ do
     cp $i ${PATH_DEV_ITS}/include/asn1
 done
 ln -sf ${PATH_DEV_ITS}/bin/asn1/libItsAsn.so ${PATH_DEV_ITS}/lib/libItsAsn.so
-#rm -fr ${PATH_DEV_ITS}/bin/asn1
 #cp ~/frameworks/asn1c/skeletons/ANY.h ${PATH_DEV_ITS}/include/asn1
 cd ${OLDPWD}
 

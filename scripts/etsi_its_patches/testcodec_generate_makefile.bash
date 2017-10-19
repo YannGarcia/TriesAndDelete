@@ -84,7 +84,7 @@ then
     fi
 fi
 
-REFERENCES="LibCommon LibIts/Common LibIts/BTP LibIts/GeoNetworking LibIts/GeoNetworking LibIts/Ipv6OverGeoNetworking LibIts/Security LibIts/CAM LibIts/DENM"
+REFERENCES="LibCommon LibIts/Common LibIts/BTP LibIts/GeoNetworking LibIts/Ipv6OverGeoNetworking LibIts/Security LibIts/CAM LibIts/DENM"
 for i in ${REFERENCES}
 do
     # TTCN code
@@ -225,4 +225,5 @@ if [ "$?" == "1" ]
 then
     f_exit "Failed to generate ATS source code" 9
 fi
+../bin/AtsTestCodec -v
 f_exit "Build done successfully" 0
