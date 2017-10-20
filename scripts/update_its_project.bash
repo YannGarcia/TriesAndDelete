@@ -140,7 +140,8 @@ do
 	      chmod -R 775 ${TTCN_3_DST_PATH}/$i
     fi
     cp ${TTCN_3_ORG_PATH}/$i/*.ttcn ${TTCN_3_DST_PATH}/$i/ttcn
-    cp ${TTCN_3_ORG_PATH}/../etc/*.cfg ${TTCN_3_DST_PATH}/$i/etc
+    cp ${TTCN_3_ORG_PATH}/../etc/$i/*.cfg ${TTCN_3_DST_PATH}/$i/etc
+    cp ${TTCN_3_ORG_PATH}/../docs/$i/o2.cfg ${TTCN_3_DST_PATH}/$i/docs
 done
 
 # Update libraries & CC files

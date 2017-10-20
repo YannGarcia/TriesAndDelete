@@ -1,1 +1,0 @@
-This directory shall be empty.

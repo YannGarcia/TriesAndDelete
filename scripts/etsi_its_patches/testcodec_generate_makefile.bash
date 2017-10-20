@@ -218,6 +218,11 @@ ADD_RUN_LINE_1='$arun_v: all'
 ADD_RUN_LINE_2='$a\\t@sudo LD_LIBRARY_PATH=$(LD_LIBRARY_PATH) valgrind -v --tool=memcheck --leak-check=yes --show-reachable=yes --track-fds=yes --run-cxx-freeres=yes $(PWD)/../bin/$(EXECUTABLE) $(HOST) $(PORT)'
 sed --in-place "${ADD_RUN_LINE_1}" ./Makefile 
 sed --in-place "${ADD_RUN_LINE_2}" ./Makefile 
+# Add Doxygen entry
+ADD_RUN_LINE_1='$agendoc:'
+ADD_RUN_LINE_2='$a\\tdoxygen ../docs/o2.cfg'
+sed --in-place "${ADD_RUN_LINE_1}" ./Makefile 
+sed --in-place "${ADD_RUN_LINE_2}" ./Makefile 
 
 # Build all
 make all 2>&1 3>&1 | tee --append build.log
