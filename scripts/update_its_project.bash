@@ -217,6 +217,8 @@ then
     ${RUN_PATH}/etsi_its_patches/asn1c_patch.bash ${ASN1_DST_PATH}/../Makefile
     # Update CAM
     cp ${PATH_PATCHES}/cam_generate_makefile.bash ${PATH_DEV_ITS}/src/AtsCAM/bin
+    cp ${PATH_PATCHES}/../run_mtc.bash ${PATH_DEV_ITS}/src/AtsCAM/bin
+    cp ${PATH_PATCHES}/../run_ptcs.bash ${PATH_DEV_ITS}/src/AtsCAM/bin
     # Update DENM
     cp ${PATH_PATCHES}/denm_generate_makefile.bash ${PATH_DEV_ITS}/src/AtsDENM/bin
     cp ${PATH_PATCHES}/../run_mtc.bash ${PATH_DEV_ITS}/src/AtsDENM/bin

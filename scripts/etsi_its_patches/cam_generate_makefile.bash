@@ -85,7 +85,7 @@ then
     fi
 fi
 
-REFERENCES="LibCommon LibIts/Common LibIts/BTP LibIts/GeoNetworking LibIts/Ipv6OverGeoNetworking LibIts/Security LibIts/CAM"
+REFERENCES="LibCommon LibIts/Common LibIts/BTP LibIts/GeoNetworking LibIts/Ipv6OverGeoNetworking LibIts/Security LibIts/CAM LibIts/DENM"
 for i in ${REFERENCES}
 do
     # TTCN code
@@ -189,7 +189,7 @@ else
     CXXFLAGS_DEBUG_MODE='s/-Wall/-ggdb -O0 -Wall -std=c++11 -pthread -fstack-check -fstack-protector -DASN_DISABLE_OER_SUPPORT/g'
     LDFLAGS_DEBUG_MODE='s/LDFLAGS = /LDFLAGS = -g -pthread -fstack-check -fstack-protector/g'
 fi
-ADD_INCLUDE='/CPPFLAGS = /a\\CPPFLAGS += -I/usr/local/share -I$(PATH_DEV_ITS)/include -I$(PATH_DEV_ITS)/include/asn1 -I$(PATH_DEV_ITS)/framework/include -I../include -I../../LibIts/Common/include -I../../LibIts/DENM/include -I$(HOME_INC) -I.'
+ADD_INCLUDE='/CPPFLAGS = /a\\CPPFLAGS += -I/usr/local/share -I$(PATH_DEV_ITS)/include -I$(PATH_DEV_ITS)/include/asn1 -I$(PATH_DEV_ITS)/framework/include -I../include -I../../LibIts/Common/include -I../../LibIts/CAM/include -I$(HOME_INC) -I.'
 ADD_LIBRARIES='s/LINUX_LIBS = -lxml2/LINUX_LIBS = -lrt -lxml2 -lpcap -L$(PATH_DEV_ITS)\/lib -lItsAsn /g'
 sed --in-place "${CXXFLAGS_DEBUG_MODE}" ./Makefile 
 sed --in-place "${LDFLAGS_DEBUG_MODE}" ./Makefile
@@ -217,6 +217,11 @@ sed --in-place "${ADD_RUN_LINE_1}" ./Makefile
 sed --in-place "${ADD_RUN_LINE_2}" ./Makefile 
 ADD_RUN_LINE_1='$arun_v: all'
 ADD_RUN_LINE_2='$a\\t@sudo LD_LIBRARY_PATH=$(LD_LIBRARY_PATH) valgrind -v --tool=memcheck --leak-check=yes --show-reachable=yes --track-fds=yes --run-cxx-freeres=yes $(PWD)/../bin/$(EXECUTABLE) $(HOST) $(PORT)'
+sed --in-place "${ADD_RUN_LINE_1}" ./Makefile 
+sed --in-place "${ADD_RUN_LINE_2}" ./Makefile 
+# Add gendoc entry
+ADD_RUN_LINE_1='$agendoc: ../docs/o2.cfg'
+ADD_RUN_LINE_2='$a\\tdoxygen ../docs/o2.cfg'
 sed --in-place "${ADD_RUN_LINE_1}" ./Makefile 
 sed --in-place "${ADD_RUN_LINE_2}" ./Makefile 
 
