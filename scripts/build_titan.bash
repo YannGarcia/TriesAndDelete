@@ -77,6 +77,13 @@ then
 fi
 mkdir ${TTCN3_DIR}
 cd ./titan.core
+/bin/cat <<EOF > Makefile.personal
+JNI:=no
+GUI:=no
+DEBUG:=no
+GEN_PDF:=no
+EOF
+
 echo "Starting build..."
 make clean
 if [ "${OSTYPE}" == "cygwin" ]
