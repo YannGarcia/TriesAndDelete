@@ -135,7 +135,7 @@ done
 echo 'Update TTCN-3 files'
 TTCN_3_ORG_PATH=${SRC_ITS_PATH}/ttcn
 TTCN_3_DST_PATH=${PATH_DEV_ITS}/src
-TTCN_3_ATS_LIST='AtsAutoInterop AtsCAM AtsDENM AtsBtp AtsGeoNetworking AtsSecurity LibCommon TestCodec'
+TTCN_3_ATS_LIST='AtsAutoInterop AtsCAM AtsDENM AtsBTP AtsGeoNetworking AtsSecurity LibCommon TestCodec'
 for i in ${TTCN_3_ATS_LIST}
 do
     if [ ! -d ${TTCN_3_DST_PATH}/$i ]
@@ -217,7 +217,7 @@ then
     cp ${PATH_PATCHES}/../run_mtc.bash ${PATH_DEV_ITS}/src/AtsGeoNetworking/bin
     cp ${PATH_PATCHES}/../run_ptcs.bash ${PATH_DEV_ITS}/src/AtsGeoNetworking/bin
     # Update BTP
-    cp ${PATH_PATCHES}/btp_generate_makefile.bash ${PATH_DEV_ITS}/src/AtsBtp/bin
+    cp ${PATH_PATCHES}/btp_generate_makefile.bash ${PATH_DEV_ITS}/src/AtsBTP/bin
     ${RUN_PATH}/etsi_its_patches/asn1c_patch.bash ${ASN1_DST_PATH}/../Makefile
     # Update CAM
     cp ${PATH_PATCHES}/cam_generate_makefile.bash ${PATH_DEV_ITS}/src/AtsCAM/bin
