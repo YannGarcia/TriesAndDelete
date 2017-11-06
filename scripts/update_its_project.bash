@@ -54,7 +54,8 @@ fi
 echo 'Updating ASN.1 files'
 ASN1_SRC_PATH=${SRC_ITS_PATH}/asn1/LibIts
 ASN1_DST_PATH=${PATH_DEV_ITS}/asn1/LibIts
-ASN1_DIR_LIST=`find ${ASN1_SRC_PATH} -type d -not -path "*/.svn*" | cut -sd / -f13-`
+NB_DEL=`echo ${ASN1_SRC_PATH} | awk -F"/" '{print NF + 1}'`
+ASN1_DIR_LIST=`find ${ASN1_SRC_PATH} -type d -not -path "*/.svn*" | cut -sd / -f${NB_DEL}-`
 for i in ${ASN1_DIR_LIST}
 do
     if [ ! -d ${ASN1_DST_PATH}/$i ]
@@ -241,7 +242,7 @@ chown -R ${CHOWN_USER_GROUP} ${PATH_DEV_ITS}
 
 # Build libAsn1
 cd ${ASN1_DST_PATH}/..
-make CC=gcc
+make --trace CC=gcc
 rm -fr ${PATH_DEV_ITS}/asn1/LibIts/IS/ISO_TS_19091/original
 cd -
 if [ ! -d ${PATH_DEV_ITS}/include/asn1 ]
