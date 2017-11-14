@@ -136,7 +136,7 @@ done
 echo 'Update TTCN-3 files'
 TTCN_3_ORG_PATH=${SRC_ITS_PATH}/ttcn
 TTCN_3_DST_PATH=${PATH_DEV_ITS}/src
-TTCN_3_ATS_LIST='AtsAutoInterop AtsCAM AtsDENM AtsBTP AtsGeoNetworking AtsSecurity LibCommon TestCodec'
+TTCN_3_ATS_LIST='AtsAutoInterop AtsCAM AtsDENM AtsBTP AtsGeoNetworking AtsSecurity AtsRSUSimulator LibCommon TestCodec'
 for i in ${TTCN_3_ATS_LIST}
 do
     if [ ! -d ${TTCN_3_DST_PATH}/$i ]
@@ -151,7 +151,7 @@ done
 
 # Update libraries & CC files
 CC_SRC_PATH=${SRC_ITS_PATH}/ccsrc
-TTCN_3_LIB_LIST='Common BTP CAM DENM GeoNetworking Ipv6OverGeoNetworking Security'
+TTCN_3_LIB_LIST='Common BTP CAM DENM GeoNetworking Ipv6OverGeoNetworking Security MapemSpatem IVIM SremSsem'
 for i in ${TTCN_3_LIB_LIST}
 do
     if [ ! -d ${TTCN_3_DST_PATH}/LibIts/$i ]
@@ -205,6 +205,27 @@ do
     then
 	      cp ${CC_SRC_PATH}/EncDec/LibItsSecurity_Encdec.cc ${TTCN_3_DST_PATH}/LibIts/$i/src
 	      cp ${CC_SRC_PATH}/Externals/LibItsSecurity_externals.cc ${TTCN_3_DST_PATH}/LibIts/$i/src
+    elif [ "$i" == "MapemSpatem" ]
+    then
+	      #cp ${CC_SRC_PATH}/EncDec/LibItsCam_Encdec.cc ${TTCN_3_DST_PATH}/LibIts/$i/src
+	      cp ${CC_SRC_PATH}/Ports/LibIts_ports/MapemSpatem_ports/*.cc ${TTCN_3_DST_PATH}/LibIts/$i/src
+	      cp ${CC_SRC_PATH}/Ports/LibIts_ports/MapemSpatem_ports/*.hh ${TTCN_3_DST_PATH}/LibIts/$i/include
+	      cp ${CC_SRC_PATH}/Ports/LibIts_ports/MapemSpatem_ports/*.partC ${TTCN_3_DST_PATH}/LibIts/$i/src
+	      cp ${CC_SRC_PATH}/Ports/LibIts_ports/MapemSpatem_ports/*.partH ${TTCN_3_DST_PATH}/LibIts/$i/include
+    elif [ "$i" == "IVIM" ]
+    then
+	      #cp ${CC_SRC_PATH}/EncDec/LibItsCam_Encdec.cc ${TTCN_3_DST_PATH}/LibIts/$i/src
+	      cp ${CC_SRC_PATH}/Ports/LibIts_ports/IVIM_ports/*.cc ${TTCN_3_DST_PATH}/LibIts/$i/src
+	      cp ${CC_SRC_PATH}/Ports/LibIts_ports/IVIM_ports/*.hh ${TTCN_3_DST_PATH}/LibIts/$i/include
+	      cp ${CC_SRC_PATH}/Ports/LibIts_ports/IVIM_ports/*.partC ${TTCN_3_DST_PATH}/LibIts/$i/src
+	      cp ${CC_SRC_PATH}/Ports/LibIts_ports/IVIM_ports/*.partH ${TTCN_3_DST_PATH}/LibIts/$i/include
+    elif [ "$i" == "SremSsem" ]
+    then
+	      #cp ${CC_SRC_PATH}/EncDec/LibItsCam_Encdec.cc ${TTCN_3_DST_PATH}/LibIts/$i/src
+	      cp ${CC_SRC_PATH}/Ports/LibIts_ports/SremSsem_ports/*.cc ${TTCN_3_DST_PATH}/LibIts/$i/src
+	      cp ${CC_SRC_PATH}/Ports/LibIts_ports/SremSsem_ports/*.hh ${TTCN_3_DST_PATH}/LibIts/$i/include
+	      cp ${CC_SRC_PATH}/Ports/LibIts_ports/SremSsem_ports/*.partC ${TTCN_3_DST_PATH}/LibIts/$i/src
+	      cp ${CC_SRC_PATH}/Ports/LibIts_ports/SremSsem_ports/*.partH ${TTCN_3_DST_PATH}/LibIts/$i/include
     fi
 done
 
@@ -228,6 +249,10 @@ then
     cp ${PATH_PATCHES}/denm_generate_makefile.bash ${PATH_DEV_ITS}/src/AtsDENM/bin
     cp ${PATH_PATCHES}/../run_mtc.bash ${PATH_DEV_ITS}/src/AtsDENM/bin
     cp ${PATH_PATCHES}/../run_ptcs.bash ${PATH_DEV_ITS}/src/AtsDENM/bin
+    # Update RSUSimulator
+    cp ${PATH_PATCHES}/rsusimulator_generate_makefile.bash ${PATH_DEV_ITS}/src/RSUSimulator/bin
+    cp ${PATH_PATCHES}/../run_mtc.bash ${PATH_DEV_ITS}/src/RSUSimulator/bin
+    cp ${PATH_PATCHES}/../run_ptcs.bash ${PATH_DEV_ITS}/src/RSUSimulator/bin
     # Update TestCodec
     cp ${PATH_PATCHES}/testcodec_generate_makefile.bash ${PATH_DEV_ITS}/src/TestCodec/bin
     cp ${PATH_PATCHES}/../run_mtc.bash ${PATH_DEV_ITS}/src/TestCodec/bin
@@ -242,7 +267,7 @@ chown -R ${CHOWN_USER_GROUP} ${PATH_DEV_ITS}
 
 # Build libAsn1
 cd ${ASN1_DST_PATH}/..
-make --trace CC=gcc
+make CC=gcc
 rm -fr ${PATH_DEV_ITS}/asn1/LibIts/IS/ISO_TS_19091/original
 cd -
 if [ ! -d ${PATH_DEV_ITS}/include/asn1 ]
