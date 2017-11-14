@@ -5,7 +5,7 @@ if [ ! -d /media/sf_F_DRIVE/FSCOM/ETSI/ITS/STF525_Auto_Interop/workspace_titan/S
 then
     exit -1
 fi
-cd ~/tmp/workspace_titan/STF525_Auto_Interop/src
+cd ${HOME}/tmp/workspace_titan/STF525_Auto_Interop/src
 
 # Cleanup bin folders
 if [ -d ./bin ]
@@ -34,7 +34,7 @@ fi
 
 # Update generated ASN.1 header files
 mkdir -p ./bin/asn1
-cp ~/TriesAndDelete/etsi_its/bin/asn1/*.h ./bin/asn1
+cp ${HOME}/TriesAndDelete/etsi_its/bin/asn1/*.h ./bin/asn1
 
 find . -type d -exec chmod 775 {} \;
 find . -type f -exec chmod 664 {} \;

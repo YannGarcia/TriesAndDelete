@@ -27,7 +27,7 @@ then
     f_usage
 fi
 
-ATS_NAME=RSUSimulator
+ATS_NAME=RSUsSimulator
 
 #CURPWD=`pwd`
 if [ ! "${PWD##*/}" == "objs" ]

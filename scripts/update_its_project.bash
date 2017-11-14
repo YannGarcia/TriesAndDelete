@@ -27,7 +27,7 @@ then # cygwin
     SRC_ITS_PATH=/cygdrive/f/FSCOM/ETSI/ITS/STF525_Auto_Interop/workspace_titan/STF525_Auto_Interop/src
 else # docket-titan
     CHOWN_USER_GROUP=root:root
-    SRC_ITS_PATH=~/tmp/STF525
+    SRC_ITS_PATH=${HOME}/tmp/STF525
 fi
 if [ "${PATH_DEV_ITS}" == "" ]
 then
@@ -36,11 +36,11 @@ fi
 
 if [ -d ${PATH_DEV_ITS} ]
 then
-    if [ -f ~/tmp/etsi_its.tar.bz2 ]
+    if [ -f ${HOME}/tmp/etsi_its.tar.bz2 ]
     then
-	      rm ~/tmp/etsi_its.tar.bz2
+	      rm ${HOME}/tmp/etsi_its.tar.bz2
     fi
-    tar jcvf ~/tmp/etsi_its.tar.bz2 ${PATH_DEV_ITS}
+    tar jcvf ${HOME}/tmp/etsi_its.tar.bz2 ${PATH_DEV_ITS}
     rm -fr ${PATH_DEV_ITS}
 fi
 
@@ -136,7 +136,7 @@ done
 echo 'Update TTCN-3 files'
 TTCN_3_ORG_PATH=${SRC_ITS_PATH}/ttcn
 TTCN_3_DST_PATH=${PATH_DEV_ITS}/src
-TTCN_3_ATS_LIST='AtsAutoInterop AtsCAM AtsDENM AtsBTP AtsGeoNetworking AtsSecurity AtsRSUSimulator LibCommon TestCodec'
+TTCN_3_ATS_LIST='AtsAutoInterop AtsCAM AtsDENM AtsBTP AtsGeoNetworking AtsSecurity AtsRSUsSimulator LibCommon TestCodec'
 for i in ${TTCN_3_ATS_LIST}
 do
     if [ ! -d ${TTCN_3_DST_PATH}/$i ]
@@ -249,18 +249,16 @@ then
     cp ${PATH_PATCHES}/denm_generate_makefile.bash ${PATH_DEV_ITS}/src/AtsDENM/bin
     cp ${PATH_PATCHES}/../run_mtc.bash ${PATH_DEV_ITS}/src/AtsDENM/bin
     cp ${PATH_PATCHES}/../run_ptcs.bash ${PATH_DEV_ITS}/src/AtsDENM/bin
-    # Update RSUSimulator
-    cp ${PATH_PATCHES}/rsusimulator_generate_makefile.bash ${PATH_DEV_ITS}/src/RSUSimulator/bin
-    cp ${PATH_PATCHES}/../run_mtc.bash ${PATH_DEV_ITS}/src/RSUSimulator/bin
-    cp ${PATH_PATCHES}/../run_ptcs.bash ${PATH_DEV_ITS}/src/RSUSimulator/bin
+    # Update RSUsSimulator
+    cp ${PATH_PATCHES}/rsusimulator_generate_makefile.bash ${PATH_DEV_ITS}/src/AtsRSUsSimulator/bin
+    cp ${PATH_PATCHES}/../run_mtc.bash ${PATH_DEV_ITS}/src/AtsRSUsSimulator/bin
+    cp ${PATH_PATCHES}/../run_ptcs.bash ${PATH_DEV_ITS}/src/AtsRSUsSimulator/bin
     # Update AutoInterop
 	  cp ${CC_SRC_PATH}/Ports/LibIts_ports/AutoInterop_ports/*.cc ${TTCN_3_DST_PATH}/AtsAutoInterop/src
 	  cp ${CC_SRC_PATH}/Ports/LibIts_ports/AutoInterop_ports/*.hh ${TTCN_3_DST_PATH}/AtsAutoInterop/include
-	  cp ${CC_SRC_PATH}/Ports/LibIts_ports/AutoInterop_ports/*.partC ${TTCN_3_DST_PATH}/AtsAutoInterop/src
-	  cp ${CC_SRC_PATH}/Ports/LibIts_ports/AutoInterop_ports/*.partH ${TTCN_3_DST_PATH}/AtsAutoInterop/include
-    cp ${PATH_PATCHES}/rsusimulator_generate_makefile.bash  ${PATH_DEV_ITS}/src/AtsGeoNetworking/bin
-    cp ${PATH_PATCHES}/../run_mtc.bash ${PATH_DEV_ITS}/src/AtsGeoNetworking/bin
-    cp ${PATH_PATCHES}/../run_ptcs.bash ${PATH_DEV_ITS}/src/AtsGeoNetworking/bin
+    cp ${PATH_PATCHES}/autointerop_generate_makefile.bash  ${PATH_DEV_ITS}/src/AtsAutoInterop/bin
+    cp ${PATH_PATCHES}/../run_mtc.bash ${PATH_DEV_ITS}/src/AtsAutoInterop/bin
+    cp ${PATH_PATCHES}/../run_ptcs.bash ${PATH_DEV_ITS}/src/AtsAutoInterop/bin
     # Update TestCodec
     cp ${PATH_PATCHES}/testcodec_generate_makefile.bash ${PATH_DEV_ITS}/src/TestCodec/bin
     cp ${PATH_PATCHES}/../run_mtc.bash ${PATH_DEV_ITS}/src/TestCodec/bin
@@ -292,7 +290,7 @@ do
     cp $i ${PATH_DEV_ITS}/include/asn1
 done
 ln -sf ${PATH_DEV_ITS}/bin/asn1/libItsAsn.so ${PATH_DEV_ITS}/lib/libItsAsn.so
-#cp ~/frameworks/asn1c/skeletons/ANY.h ${PATH_DEV_ITS}/include/asn1
+#cp ${HOME}/frameworks/asn1c/skeletons/ANY.h ${PATH_DEV_ITS}/include/asn1
 cd ${OLDPWD}
 
 exit 0
