@@ -27,7 +27,7 @@ then
     f_usage
 fi
 
-ATS_NAME=Denm
+ATS_NAME=AutoInterop
 
 #CURPWD=`pwd`
 if [ ! "${PWD##*/}" == "objs" ]
@@ -185,21 +185,21 @@ if [ "$1" == "prof" ]
 then
     if [ "${OSTYPE}" == "cygwin" ]
     then
-        CXXFLAGS_DEBUG_MODE='s/-Wall/-pg -Wall -std=c++11 -DOSTYPE=cygwin -D_XOPEN_SOURCE=700 -pthreads -fstack-check -fstack-protector/g' # -DASN_DISABLE_OER_SUPPORT
+        CXXFLAGS_DEBUG_MODE='s/-Wall/-pg -Wall -std=c++11 -DOSTYPE=cygwin -D_XOPEN_SOURCE=700 -pthreads -fstack-check -fstack-protector/g'
     else
-        CXXFLAGS_DEBUG_MODE='s/-Wall/-pg -Wall -std=c++11 -DOSTYPE=linux -pthreads -fstack-check -fstack-protector/g' # -DASN_DISABLE_OER_SUPPORT
+        CXXFLAGS_DEBUG_MODE='s/-Wall/-pg -Wall -std=c++11 -DOSTYPE=linux -pthreads -fstack-check -fstack-protector/g'
     fi
     LDFLAGS_DEBUG_MODE='s/LDFLAGS = /LDFLAGS = -pg -pthread -fstack-check -fstack-protector/g'
 else
     if [ "${OSTYPE}" == "cygwin" ]
     then
-        CXXFLAGS_DEBUG_MODE='s/-Wall/-ggdb -O0 -Wall -std=c++11 -DOSTYPE=cygwin -D_XOPEN_SOURCE=700 -pthread -fstack-check -fstack-protector/g' #  -DASN_DISABLE_OER_SUPPORT
+        CXXFLAGS_DEBUG_MODE='s/-Wall/-ggdb -O0 -Wall -std=c++11 -DOSTYPE=cygwin -D_XOPEN_SOURCE=700 -pthread -fstack-check -fstack-protector/g'
     else
-        CXXFLAGS_DEBUG_MODE='s/-Wall/-ggdb -O0 -Wall -std=c++11 -DOSTYPE=linux -pthread -fstack-check -fstack-protector/g' #  -DASN_DISABLE_OER_SUPPORT
+        CXXFLAGS_DEBUG_MODE='s/-Wall/-ggdb -O0 -Wall -std=c++11 -DOSTYPE=linux -pthread -fstack-check -fstack-protector/g'
     fi
     LDFLAGS_DEBUG_MODE='s/LDFLAGS = /LDFLAGS = -g -pthread -fstack-check -fstack-protector/g'
 fi
-ADD_INCLUDE='/CPPFLAGS = /a\\CPPFLAGS += -I/usr/local/share -I$(PATH_DEV_ITS)/include -I$(PATH_DEV_ITS)/include/asn1 -I$(PATH_DEV_ITS)/framework/include -I../include -I../../LibIts/Common/include -I../../LibIts/DENM/include -I$(HOME_INC) -I.'
+ADD_INCLUDE='/CPPFLAGS = /a\\CPPFLAGS += -I/usr/local/share -I$(PATH_DEV_ITS)/include -I$(PATH_DEV_ITS)/include/asn1 -I$(PATH_DEV_ITS)/framework/include -I../include -I../../LibIts/Common/include -I../../LibIts/GeoNetworking/include -I$(HOME_INC) -I.'
 ADD_LIBRARIES='s/LINUX_LIBS = -lxml2/LINUX_LIBS = -lrt -lxml2 -lpcap -L$(PATH_DEV_ITS)\/lib -lItsAsn /g'
 sed --in-place "${CXXFLAGS_DEBUG_MODE}" ./Makefile 
 sed --in-place "${LDFLAGS_DEBUG_MODE}" ./Makefile

@@ -253,6 +253,14 @@ then
     cp ${PATH_PATCHES}/rsusimulator_generate_makefile.bash ${PATH_DEV_ITS}/src/RSUSimulator/bin
     cp ${PATH_PATCHES}/../run_mtc.bash ${PATH_DEV_ITS}/src/RSUSimulator/bin
     cp ${PATH_PATCHES}/../run_ptcs.bash ${PATH_DEV_ITS}/src/RSUSimulator/bin
+    # Update AutoInterop
+	  cp ${CC_SRC_PATH}/Ports/LibIts_ports/AutoInterop_ports/*.cc ${TTCN_3_DST_PATH}/AtsAutoInterop/src
+	  cp ${CC_SRC_PATH}/Ports/LibIts_ports/AutoInterop_ports/*.hh ${TTCN_3_DST_PATH}/AtsAutoInterop/include
+	  cp ${CC_SRC_PATH}/Ports/LibIts_ports/AutoInterop_ports/*.partC ${TTCN_3_DST_PATH}/AtsAutoInterop/src
+	  cp ${CC_SRC_PATH}/Ports/LibIts_ports/AutoInterop_ports/*.partH ${TTCN_3_DST_PATH}/AtsAutoInterop/include
+    cp ${PATH_PATCHES}/rsusimulator_generate_makefile.bash  ${PATH_DEV_ITS}/src/AtsGeoNetworking/bin
+    cp ${PATH_PATCHES}/../run_mtc.bash ${PATH_DEV_ITS}/src/AtsGeoNetworking/bin
+    cp ${PATH_PATCHES}/../run_ptcs.bash ${PATH_DEV_ITS}/src/AtsGeoNetworking/bin
     # Update TestCodec
     cp ${PATH_PATCHES}/testcodec_generate_makefile.bash ${PATH_DEV_ITS}/src/TestCodec/bin
     cp ${PATH_PATCHES}/../run_mtc.bash ${PATH_DEV_ITS}/src/TestCodec/bin
