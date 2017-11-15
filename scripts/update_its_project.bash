@@ -2,7 +2,7 @@
 
 # Debug mode
 #set -e
-#set -vx
+set -vx
 
 # Usage: sudo ./update_project.bash
 # TODO Use git clone in temporary directory
