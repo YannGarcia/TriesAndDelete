@@ -1,5 +1,6 @@
 #!/bin/bash
-set -evx
+set -e
+set -vx
 
 function f_exit {
     cd ${CURPWD}
@@ -74,9 +75,9 @@ then
 
     if [ "${OSTYPE}" == "cygwin" ]
     then
-        asn1_compiler.exe ${ASN1_FILES}
+        asn1_compiler.exe -e -O ${ASN1_FILES}
     else
-        asn1_compiler ${ASN1_FILES}
+        asn1_compiler -e -O ${ASN1_FILES}
     fi
     if [ "$?" != "0" ]
     then
@@ -115,17 +116,17 @@ done
 # Generate the list of the TTCN-3 files
 TTCN_FILES=`find .. -name '*.ttcn*'`
 
-# Sart ATS generation - Step 1
+# Start ATS generation - Step 1
 if [ "${OSTYPE}" == "cygwin" ]
 then
     rm ../bin/*.exe ../lib/*.dll
-    compiler.exe -d -e -f -g -j -l -L -t -R -U none -x -X ${TTCN_FILES} ${ASN1_FILES} 2>&1 3>&1 | tee build.log
+    compiler.exe -d -e -f -g -j -l -L -O -t -R -U none -x -X ${TTCN_FILES} ${ASN1_FILES} 2>&1 3>&1 | tee build.log
     if [ "$?" == "1" ]
     then
         f_exit "Failed to compile ATS" 4
     fi
 else
-    compiler -d -e -f -g -l -L -t -R -U none -x -X ${TTCN_FILES} ${ASN1_FILES} 2>&1 3>&1 | tee build.log
+    compiler -d -e -f -g -l -L -O -t -R -U none -x -X ${TTCN_FILES} ${ASN1_FILES} 2>&1 3>&1 | tee build.log
     if [ "$?" == "1" ]
     then 
         f_exit "Failed to generate ATS source code" 6
@@ -179,7 +180,6 @@ fi
 # Patch ATS generated files
 #./bin/patch.bash 2>&1 3>&1 | tee --append build.log
 # Add compiler/linker options
-# -DASN_DISABLE_OER_SUPPORT is required for CAMCodec and DENMCodec
 if [ "$1" == "prof" ]
 then
     if [ "${OSTYPE}" == "cygwin" ]
@@ -204,6 +204,9 @@ sed --in-place "${CXXFLAGS_DEBUG_MODE}" ./Makefile
 sed --in-place "${LDFLAGS_DEBUG_MODE}" ./Makefile
 sed --in-place "${ADD_INCLUDE}" ./Makefile
 sed --in-place "${ADD_LIBRARIES}" ./Makefile
+# Update COMPILER_FLAGS
+COMPILER_FLAGS='s/COMPILER_FLAGS = /COMPILER_FLAGS = -e -O /g'
+sed --in-place "${COMPILER_FLAGS}" ./Makefile
 # Update clean clause
 CLEAN_LINE='s/$(RM) $(EXECUTABLE)/$(RM) ..\/bin\/$(EXECUTABLE) ..\/src\/*.o/g'
 sed --in-place "${CLEAN_LINE}" ./Makefile

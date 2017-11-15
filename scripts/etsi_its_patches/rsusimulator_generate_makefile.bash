@@ -1,5 +1,5 @@
 #!/bin/bash
-#set -e
+set -e
 set -vx
 
 function f_exit {
@@ -116,7 +116,7 @@ done
 # Generate the list of the TTCN-3 files
 TTCN_FILES=`find .. -name '*.ttcn*'`
 
-# Sart ATS generation - Step 1
+# Start ATS generation - Step 1
 if [ "${OSTYPE}" == "cygwin" ]
 then
     rm ../bin/*.exe ../lib/*.dll
@@ -205,6 +205,9 @@ sed --in-place "${CXXFLAGS_DEBUG_MODE}" ./Makefile
 sed --in-place "${LDFLAGS_DEBUG_MODE}" ./Makefile
 sed --in-place "${ADD_INCLUDE}" ./Makefile
 sed --in-place "${ADD_LIBRARIES}" ./Makefile
+# Update COMPILER_FLAGS
+COMPILER_FLAGS='s/COMPILER_FLAGS = /COMPILER_FLAGS = -e -O /g'
+sed --in-place "${COMPILER_FLAGS}" ./Makefile
 # Update clean clause
 CLEAN_LINE='s/$(RM) $(EXECUTABLE)/$(RM) ..\/bin\/$(EXECUTABLE) ..\/src\/*.o/g'
 sed --in-place "${CLEAN_LINE}" ./Makefile
