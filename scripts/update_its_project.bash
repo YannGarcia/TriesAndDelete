@@ -214,7 +214,7 @@ do
 	      cp ${CC_SRC_PATH}/Ports/LibIts_ports/MapemSpatem_ports/*.partH ${TTCN_3_DST_PATH}/LibIts/$i/include
     elif [ "$i" == "IVIM" ]
     then
-	      #cp ${CC_SRC_PATH}/EncDec/LibItsCam_Encdec.cc ${TTCN_3_DST_PATH}/LibIts/$i/src
+	      cp ${CC_SRC_PATH}/EncDec/LibItsIvim_Encdec.cc ${TTCN_3_DST_PATH}/LibIts/$i/src
 	      cp ${CC_SRC_PATH}/Ports/LibIts_ports/IVIM_ports/*.cc ${TTCN_3_DST_PATH}/LibIts/$i/src
 	      cp ${CC_SRC_PATH}/Ports/LibIts_ports/IVIM_ports/*.hh ${TTCN_3_DST_PATH}/LibIts/$i/include
 	      cp ${CC_SRC_PATH}/Ports/LibIts_ports/IVIM_ports/*.partC ${TTCN_3_DST_PATH}/LibIts/$i/src
