@@ -79,6 +79,3 @@ git://git.eclipse.org/gitroot/titan/titan.ProtocolModules.WTP.git
 git://git.eclipse.org/gitroot/titan/titan.TestPorts.GPIO.git
 git://git.eclipse.org/gitroot/titan/titan.TestPorts.MTP3asp.git
 git://git.eclipse.org/gitroot/titan/titan.TestPorts.Serial.git
-git://git.eclipse.org/gitroot/titan/titan.TestPorts.SocketCANasp.git
-
-
