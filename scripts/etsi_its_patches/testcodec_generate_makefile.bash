@@ -243,5 +243,5 @@ if [ "$?" == "1" ]
 then
     f_exit "Failed to generate ATS source code" 9
 fi
-../bin/AtsTestCodec -v
+../bin/Ats${ATS_NAME} -v
 f_exit "Build done successfully" 0

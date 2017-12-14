@@ -136,6 +136,7 @@ done
 echo 'Update TTCN-3 files'
 TTCN_3_ORG_PATH=${SRC_ITS_PATH}/ttcn
 TTCN_3_DST_PATH=${PATH_DEV_ITS}/src
+CC_SRC_PATH=${SRC_ITS_PATH}/ccsrc
 TTCN_3_ATS_LIST='AtsAutoInterop AtsCAM AtsDENM AtsBTP AtsGeoNetworking AtsSecurity AtsRSUsSimulator LibCommon TestCodec'
 for i in ${TTCN_3_ATS_LIST}
 do
@@ -147,10 +148,14 @@ do
     cp ${TTCN_3_ORG_PATH}/$i/*.ttcn ${TTCN_3_DST_PATH}/$i/ttcn
     cp ${TTCN_3_ORG_PATH}/../etc/$i/*.cfg ${TTCN_3_DST_PATH}/$i/etc
     cp ${TTCN_3_ORG_PATH}/../docs/$i/o2.cfg ${TTCN_3_DST_PATH}/$i/docs
+    if [ "$i" == "AtsRSUsSimulator" ]
+    then
+        # Arg should create a LibItsRSUsSimulator and move it in Update libraries & CC files
+	      cp ${CC_SRC_PATH}/Externals/AtsRSUsSimulator_externals.cc ${TTCN_3_DST_PATH}/$i/src # 
+    fi
 done
 
 # Update libraries & CC files
-CC_SRC_PATH=${SRC_ITS_PATH}/ccsrc
 TTCN_3_LIB_LIST='Common BTP CAM DENM GeoNetworking Ipv6OverGeoNetworking Security MapemSpatem IVIM SremSsem'
 for i in ${TTCN_3_LIB_LIST}
 do
