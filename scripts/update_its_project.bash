@@ -21,6 +21,10 @@ elif [ "${UNAME}" == "ubuntu-xenial" ]
 then
     CHOWN_USER_GROUP=ubuntu:ubuntu
     SRC_ITS_PATH=/media/sf_F_DRIVE/FSCOM/ETSI/ITS/STF525_Auto_Interop/workspace_titan/STF525_Auto_Interop/src
+elif [ "${UNAME}" == "vagrant" ]
+then
+    CHOWN_USER_GROUP=vagrant:vagrant
+    SRC_ITS_PATH=/media/sf_F_DRIVE/FSCOM/ETSI/ITS/STF525_Auto_Interop/workspace_titan/STF525_Auto_Interop/src
 elif [ "${UNAME}" == "yann-FSCOM" ]
 then # cygwin
     CHOWN_USER_GROUP=yann:None
