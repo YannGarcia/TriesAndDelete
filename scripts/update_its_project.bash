@@ -14,19 +14,23 @@ RUN_PATH="${0%/*}"
 
 UNAME=`uname -n`
 if [ "${UNAME}" == "Ubuntu64" ]
-then
+then # Win7 Virtualbox Ubuntu 16.04
     CHOWN_USER_GROUP=yann:yann
     SRC_ITS_PATH=/media/sf_F_DRIVE/FSCOM/ETSI/ITS/STF525_Auto_Interop/workspace_titan/STF525_Auto_Interop/src
 elif [ "${UNAME}" == "ubuntu-xenial" ]
-then
+then # Vqgrant xenial-ubuntu
     CHOWN_USER_GROUP=ubuntu:ubuntu
     SRC_ITS_PATH=/media/sf_F_DRIVE/FSCOM/ETSI/ITS/STF525_Auto_Interop/workspace_titan/STF525_Auto_Interop/src
 elif [ "${UNAME}" == "vagrant" ]
-then
+then # Vagrant xenial-ubuntu
     CHOWN_USER_GROUP=vagrant:vagrant
     SRC_ITS_PATH=/media/sf_F_DRIVE/FSCOM/ETSI/ITS/STF525_Auto_Interop/workspace_titan/STF525_Auto_Interop/src
+elif [ "${UNAME}" == "vagrant-prov" ]
+then # Vagrant ubuntu 16.04 with provisioner script to automate ITS project build & test
+    CHOWN_USER_GROUP=ubuntu:ubuntu
+    SRC_ITS_PATH=${HOME}/tmp/STF525
 elif [ "${UNAME}" == "yann-FSCOM" ]
-then # cygwin
+then # Win7 cygwin64
     CHOWN_USER_GROUP=yann:None
     SRC_ITS_PATH=/cygdrive/f/FSCOM/ETSI/ITS/STF525_Auto_Interop/workspace_titan/STF525_Auto_Interop/src
 else # docket-titan
