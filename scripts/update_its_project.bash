@@ -216,7 +216,7 @@ do
 	      cp ${CC_SRC_PATH}/Externals/LibItsSecurity_externals.cc ${TTCN_3_DST_PATH}/LibIts/$i/src
     elif [ "$i" == "MapemSpatem" ]
     then
-	      #cp ${CC_SRC_PATH}/EncDec/LibItsCam_Encdec.cc ${TTCN_3_DST_PATH}/LibIts/$i/src
+	      cp ${CC_SRC_PATH}/EncDec/LibItsMapemSpatem_Encdec.cc ${TTCN_3_DST_PATH}/LibIts/$i/src
 	      cp ${CC_SRC_PATH}/Ports/LibIts_ports/MapemSpatem_ports/*.cc ${TTCN_3_DST_PATH}/LibIts/$i/src
 	      cp ${CC_SRC_PATH}/Ports/LibIts_ports/MapemSpatem_ports/*.hh ${TTCN_3_DST_PATH}/LibIts/$i/include
 	      cp ${CC_SRC_PATH}/Ports/LibIts_ports/MapemSpatem_ports/*.partC ${TTCN_3_DST_PATH}/LibIts/$i/src
@@ -230,7 +230,7 @@ do
 	      cp ${CC_SRC_PATH}/Ports/LibIts_ports/IVIM_ports/*.partH ${TTCN_3_DST_PATH}/LibIts/$i/include
     elif [ "$i" == "SremSsem" ]
     then
-	      #cp ${CC_SRC_PATH}/EncDec/LibItsCam_Encdec.cc ${TTCN_3_DST_PATH}/LibIts/$i/src
+	      cp ${CC_SRC_PATH}/EncDec/LibItsSremSsem_Encdec.cc ${TTCN_3_DST_PATH}/LibIts/$i/src
 	      cp ${CC_SRC_PATH}/Ports/LibIts_ports/SremSsem_ports/*.cc ${TTCN_3_DST_PATH}/LibIts/$i/src
 	      cp ${CC_SRC_PATH}/Ports/LibIts_ports/SremSsem_ports/*.hh ${TTCN_3_DST_PATH}/LibIts/$i/include
 	      cp ${CC_SRC_PATH}/Ports/LibIts_ports/SremSsem_ports/*.partC ${TTCN_3_DST_PATH}/LibIts/$i/src
