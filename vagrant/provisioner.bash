@@ -3,10 +3,13 @@
 #set -e # Exit with non 0 if any command fails
 #set -vx
 
-# Install gcc-6
+export USERNAME=$1
+export PASSWORD=$2
+
+# Update system
 sudo apt-get update
 sudo apt-get dist-upgrade -y
-sudo DEBIAN_FRONTEND=noninteractive apt-get install emacs git-core lsof ntp gdb make cmake flex bison autoconf doxygen graphviz libncurses5-dev expect libssl-dev libxml2-dev xutils-dev tcpdump libpcap-dev libwireshark-dev valgrind wget tree unzip sshpass texlive-font-utils -y
+sudo DEBIAN_FRONTEND=noninteractive apt-get install emacs git-core subversion lsof ntp gdb make cmake flex bison autoconf doxygen graphviz libtool libncurses5-dev expect libssl-dev libxml2-dev xutils-dev tcpdump libpcap-dev libwireshark-dev valgrind wget tree unzip sshpass texlive-font-utils -y
 sudo DEBIAN_FRONTEND=noninteractive apt-get install --reinstall g++ -y
 gcc --version
 g++ --version
@@ -76,16 +79,17 @@ echo "" >> ${HOME}/.bashrc
 
 # Install all frameworks
 cd ${HOME_FRAMEWORKS}
+
 # Install Raspberry PI WringPI library
-git clone git://git.drogon.net/wiringPi wiringpi
-cd ${HOME_FRAMEWORKS}/wiringpi/wiringPi
-make CC=arm-linux-gnueabihf-gcc
-ln -sf ${HOME_FRAMEWORKS}/wiringpi/wiringPi/libwiringPi.so.`cat ../VERSION` ${HOME_LIB}/libwiringPi.so
-for i in `ls *.h`
-do
-    ln -sf $i ${HOME_INC}/`basename $i`
-done
-cd -
+#git clone git://git.drogon.net/wiringPi wiringpi
+#cd ${HOME_FRAMEWORKS}/wiringpi/wiringPi
+#make CC=arm-linux-gnueabihf-gcc
+#ln -sf ${HOME_FRAMEWORKS}/wiringpi/wiringPi/libwiringPi.so.`cat ../VERSION` ${HOME_LIB}/libwiringPi.so
+#for i in `ls *.h`
+#do
+#    ln -sf $i ${HOME_INC}/`basename $i`
+#done
+#cd -
 
 # Install ARM cross compile for bare metal hardware
 #cd ${HOME_FRAMEWORKS}
@@ -98,12 +102,9 @@ cd -
 #./gcc-arm-none-eabi_5.4.1+svn241155.orig/bin/arm-none-eabi-g++ --version
 
 # Install asn1c
-# FIXME While asn1c is buggee, use tarball asn1c
 cd ${HOME_FRAMEWORKS}
-tar xvf /media/sf_F_DRIVE/asn1c.tar
-#git clone https://github.com/vlm/asn1c.git asn1c
+git clone https://github.com/vlm/asn1c.git asn1c
 cd ${HOME_FRAMEWORKS}/asn1c
-#git checkout f22184d
 test -f configure || autoreconf -iv
 ./configure
 make && sudo make install
@@ -127,7 +128,7 @@ cd ${HOME_FRAMEWORKS}
 git clone https://github.com/weidai11/cryptopp.git cryptopp
 cd ${HOME_FRAMEWORKS}/cryptopp
 CXXFLAGS="-DNDEBUG -g2 -O3 -std=c++11" make
-if [ -f crypttest.exe ]
+if [ -f cryptest.exe ]
 then
     sudo make install PREFIX=/usr/local
 fi
@@ -147,6 +148,13 @@ lcov --version
 coveralls-lcov -h
 valgrind --version
 
+# Checkout the project
+if [ ${USERNAME} != '' ] && [ ${PASSWORD} != '' ]
+then
+    cd ${HOME}/tmp
+    svn co --username $USERNAME --password $PASSWORD --non-interactive https://oldforge.etsi.org/svn/ITS/branches/STF525
+fi
+
 cd ${HOME}/TriesAndDelete/scripts
 . ${HOME}/devenv.bash
 ./build_titan.bash
@@ -156,10 +164,14 @@ ln -sf ~/TriesAndDelete/etsi_its/lib/libItsAsn.so ~/lib/libItsAsn.so
 cd ${HOME}/TriesAndDelete/etsi_its/src/TestCodec/objs
 . ${HOME}/devenv.bash
 ../bin/testcodec_generate_makefile.bash
+../bin/run_mtc.bash &
+../bin/run_ptcs.bash
 
 cd ${OLD_PWD}
+
+unset USERNAME
+unset PASSWORD
 
 sudo init 6
 
 exit 0
-#return 0
