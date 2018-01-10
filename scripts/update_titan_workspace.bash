@@ -12,9 +12,17 @@ if [ -d ./bin ]
 then
     rm -fr ./bin
 fi
-if [ -d ../bin ]
+if [ -d ../ccsrc ]
 then
-    rm -fr ../bin
+    rm -fr ../ccsrc
+fi
+if [ -d ../ttcn ]
+then
+    rm -fr ../ttcn
+fi
+if [ -d ../testdata ]
+then
+    rm -fr ../testdata
 fi
 find . -name ".o" -type f -exec rm {} \;
 
