@@ -94,8 +94,16 @@ FWK_DST_PATH=${PATH_DEV_ITS}/framework
 mkdir -p ${FWK_DST_PATH}/src ${FWK_DST_PATH}/include
 chmod -R 775 ${FWK_DST_PATH}
 FWK_DIR_LIST_HH=`find ${FWK_SRC_PATH}/Protocols/ -name "*.h*" -type f`
+FWK_DIR_LIST_THH=`find ${FWK_SRC_PATH}/Protocols/ -name "*.t.h*" -type f`
 FWK_DIR_LIST_CC=`find ${FWK_SRC_PATH}/Protocols/ -name "*.c*" -type f`
 for i in ${FWK_DIR_LIST_HH}
+do
+    if [ `basename $i` != BTPPort.hh ]
+    then
+	      cp $i ${FWK_DST_PATH}/include
+    fi
+done
+for i in ${FWK_DIR_LIST_THH}
 do
     if [ `basename $i` != BTPPort.hh ]
     then
@@ -145,7 +153,8 @@ echo 'Update TTCN-3 files'
 TTCN_3_ORG_PATH=${SRC_ITS_PATH}/ttcn
 TTCN_3_DST_PATH=${PATH_DEV_ITS}/src
 CC_SRC_PATH=${SRC_ITS_PATH}/ccsrc
-TTCN_3_ATS_LIST='AtsAutoInterop AtsCAM AtsDENM AtsBTP AtsGeoNetworking AtsSecurity AtsRSUsSimulator LibCommon TestCodec'
+TTCN_3_ATS_LIST='AtsAutoInterop AtsCAM AtsDENM AtsBTP AtsGeoNetworking AtsSecurity AtsRSUsSimulator LibCommon TestCodec
+                                '
 for i in ${TTCN_3_ATS_LIST}
 do
     if [ ! -d ${TTCN_3_DST_PATH}/$i ]
