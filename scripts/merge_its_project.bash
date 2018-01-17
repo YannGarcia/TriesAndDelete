@@ -14,7 +14,7 @@ UNAME=`uname -n`
 if [ "${UNAME}" == "Ubuntu64" ]
 then
     SRC_ITS_PATH=/media/sf_F_DRIVE/FSCOM/ETSI/ITS/STF525_Auto_Interop/workspace_titan/STF525_Auto_Interop/src
-elif [ "${UNAME}" == "ubuntu-xenial" ]
+elif [ "${UNAME}" == "ubuntu-xenial" ] || [ "${UNAME}" == "vagrant" ]
 then
     SRC_ITS_PATH=/media/sf_F_DRIVE/FSCOM/ETSI/ITS/STF525_Auto_Interop/workspace_titan/STF525_Auto_Interop/src
     VAGRANT_DIR=/vagrant
@@ -30,7 +30,7 @@ then
 	          mkdir ${VAGRANT_DIR}
 	      fi
     fi
-else 
+else # Cygwin
     SRC_ITS_PATH=/cygdrive/f/FSCOM/ETSI/ITS/STF525_Auto_Interop/workspace_titan/STF525_Auto_Interop/src
 fi
 if [ "${PATH_DEV_ITS}" == "" ]
@@ -230,8 +230,6 @@ do
     rm $i
 done
 
-
-
-
+chmod -R 664 ${VAGRANT_DIR}
 exit 0
 
