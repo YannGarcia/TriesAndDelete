@@ -1,5 +1,6 @@
 #!/bin/bash
 #set -xv
+set -e
 
 if [ ! -d /media/sf_F_DRIVE/FSCOM/ETSI/ITS/STF525_Auto_Interop/workspace_titan/STF525_Auto_Interop ]
 then

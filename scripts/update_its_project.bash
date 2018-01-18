@@ -27,7 +27,8 @@ then # Vagrant xenial-ubuntu
     SRC_ITS_PATH=/media/sf_F_DRIVE/FSCOM/ETSI/ITS/STF525_Auto_Interop/workspace_titan/STF525_Auto_Interop/src
 elif [ "${UNAME}" == "vagrant-prov" ]
 then # Vagrant ubuntu 16.04 with provisioner script to automate ITS project build & test
-    CHOWN_USER_GROUP=ubuntu:ubuntu
+    CHOWN_USER_GROUP=vagrant:vagrant
+#    CHOWN_USER_GROUP=ubuntu:ubuntu
     SRC_ITS_PATH=${HOME}/tmp/STF525
 elif [ "${UNAME}" == "yann-FSCOM" ]
 then # Win7 cygwin64
