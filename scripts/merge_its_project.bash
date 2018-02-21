@@ -8,6 +8,21 @@
 
 OLDPWD=`pwd`
 
+# Storing path
+VAGRANT_DIR=/vagrant
+if [ ! -d ${VAGRANT_DIR} ]
+then
+	  exit -1
+else
+	  VAGRANT_DIR=/vagrant/to_be_merged
+	  if [ -d ${VAGRANT_DIR} ]
+	  then
+	      rm -f ${VAGRANT_DIR}/*
+	  else
+	          mkdir ${VAGRANT_DIR}
+	  fi
+fi
+
 # Execution path
 RUN_PATH="${0%/*}"
 UNAME=`uname -n`
@@ -17,19 +32,9 @@ then
 elif [ "${UNAME}" == "ubuntu-xenial" ] || [ "${UNAME}" == "vagrant" ]
 then
     SRC_ITS_PATH=/media/sf_F_DRIVE/FSCOM/ETSI/ITS/STF525_Auto_Interop/workspace_titan/STF525_Auto_Interop/src
-    VAGRANT_DIR=/vagrant
-    if [ ! -d ${VAGRANT_DIR} ]
-    then
-	      exit -1
-    else
-	      VAGRANT_DIR=/vagrant/to_be_merged
-	      if [ -d ${VAGRANT_DIR} ]
-	      then
-	          rm -f ${VAGRANT_DIR}/*
-	      else
-	          mkdir ${VAGRANT_DIR}
-	      fi
-    fi
+elif [ "${UNAME}" == "vagrant-prov" ]
+then
+    SRC_ITS_PATH=~/tmp/STF525
 else # Cygwin
     SRC_ITS_PATH=/cygdrive/f/FSCOM/ETSI/ITS/STF525_Auto_Interop/workspace_titan/STF525_Auto_Interop/src
 fi
@@ -142,7 +147,7 @@ done
 echo 'Update TTCN-3 files'
 TTCN_3_ORG_PATH=${SRC_ITS_PATH}/ttcn
 TTCN_3_DST_PATH=${PATH_DEV_ITS}/src
-TTCN_3_ATS_LIST='AtsAutoInterop AtsCAM AtsDENM AtsBtp AtsGeoNetworking AtsSecurity LibCommon TestCodec'
+TTCN_3_ATS_LIST='AtsAutoInterop AtsCAM AtsDENM AtsBTP AtsGeoNetworking AtsSecurity LibCommon TestCodec'
 for i in ${TTCN_3_ATS_LIST}
 do
     LIST_TTCN_FILES=`find ${TTCN_3_ORG_PATH}/$i -name "*.ttcn" -type f`
