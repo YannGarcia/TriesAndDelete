@@ -282,8 +282,12 @@ then
     cp ${PATH_PATCHES}/autointerop_generate_makefile.bash  ${PATH_DEV_ITS}/src/AtsAutoInterop/bin
     cp ${PATH_PATCHES}/../run_mtc.bash ${PATH_DEV_ITS}/src/AtsAutoInterop/bin
     cp ${PATH_PATCHES}/../run_ptcs.bash ${PATH_DEV_ITS}/src/AtsAutoInterop/bin
+    # Update Security
+    cp ${PATH_PATCHES}/geonw_generate_makefile.bash ${PATH_DEV_ITS}/src/AtsSecurity/bin
+    cp ${PATH_PATCHES}/../run_mtc.bash ${PATH_DEV_ITS}/src/AtsGeoNetworking/bin
+    cp ${PATH_PATCHES}/../run_ptcs.bash ${PATH_DEV_ITS}/src/AtsGeoNetworking/bin
     # Update TestCodec
-    cp ${PATH_PATCHES}/testcodec_generate_makefile.bash ${PATH_DEV_ITS}/src/TestCodec/bin
+    cp ${PATH_PATCHES}/security_generate_makefile.bash ${PATH_DEV_ITS}/src/TestCodec/bin
     cp ${PATH_PATCHES}/../run_mtc.bash ${PATH_DEV_ITS}/src/TestCodec/bin
     cp ${PATH_PATCHES}/../run_ptcs.bash ${PATH_DEV_ITS}/src/TestCodec/bin
 fi
