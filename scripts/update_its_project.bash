@@ -166,15 +166,10 @@ do
     cp ${TTCN_3_ORG_PATH}/$i/*.ttcn ${TTCN_3_DST_PATH}/$i/ttcn
     cp ${TTCN_3_ORG_PATH}/../etc/$i/*.cfg ${TTCN_3_DST_PATH}/$i/etc
     cp ${TTCN_3_ORG_PATH}/../docs/$i/o2.cfg ${TTCN_3_DST_PATH}/$i/docs
-    if [ "$i" == "AtsRSUsSimulator" ]
-    then
-        # Arg should create a LibItsRSUsSimulator and move it in Update libraries & CC files
-	      cp ${CC_SRC_PATH}/Externals/AtsRSUsSimulator_externals.cc ${TTCN_3_DST_PATH}/$i/src # 
-    fi
 done
 
 # Update libraries & CC files
-TTCN_3_LIB_LIST='Common BTP CAM DENM GeoNetworking Ipv6OverGeoNetworking Security MapemSpatem IVIM SremSsem'
+TTCN_3_LIB_LIST='Common BTP CAM DENM GeoNetworking Ipv6OverGeoNetworking Security MapemSpatem IVIM SremSsem AtsRSUsSimulator'
 for i in ${TTCN_3_LIB_LIST}
 do
     if [ ! -d ${TTCN_3_DST_PATH}/LibIts/$i ]
@@ -249,6 +244,11 @@ do
 	      cp ${CC_SRC_PATH}/Ports/LibIts_ports/SremSsem_ports/*.hh ${TTCN_3_DST_PATH}/LibIts/$i/include
 	      cp ${CC_SRC_PATH}/Ports/LibIts_ports/SremSsem_ports/*.partC ${TTCN_3_DST_PATH}/LibIts/$i/src
 	      cp ${CC_SRC_PATH}/Ports/LibIts_ports/SremSsem_ports/*.partH ${TTCN_3_DST_PATH}/LibIts/$i/include
+    elif [ "$i" == "AtsRSUsSimulator" ]
+    then
+	      cp ${CC_SRC_PATH}/Externals/AtsRSUsSimulator_externals.cc ${TTCN_3_DST_PATH}/$i/src
+	      cp ${CC_SRC_PATH}/Ports/LibIts_ports/RSUsSimulator_ports/*.cc ${TTCN_3_DST_PATH}/$i/src
+	      cp ${CC_SRC_PATH}/Ports/LibIts_ports/RSUsSimulator_ports/*.hh ${TTCN_3_DST_PATH}/$i/include
     fi
 done
 
