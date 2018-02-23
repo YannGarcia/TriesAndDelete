@@ -184,17 +184,17 @@ if [ "$1" == "prof" ]
 then
     if [ "${OSTYPE}" == "cygwin" ]
     then
-        CXXFLAGS_DEBUG_MODE='s/-Wall/-pg -Wall -std=c++11 -DOSTYPE=cygwin -D_XOPEN_SOURCE=700 -pthreads -fstack-check -fstack-protector/g' # -DASN_DISABLE_OER_SUPPORT
+        CXXFLAGS_DEBUG_MODE='s/-Wall/-pg -Wall -std=c++11 -D_XOPEN_SOURCE=700 -pthreads -fstack-check -fstack-protector/g' # -DASN_DISABLE_OER_SUPPORT
     else
-        CXXFLAGS_DEBUG_MODE='s/-Wall/-pg -Wall -std=c++11 -DOSTYPE=linux -pthreads -fstack-check -fstack-protector/g' # -DASN_DISABLE_OER_SUPPORT
+        CXXFLAGS_DEBUG_MODE='s/-Wall/-pg -Wall -std=c++11 -pthreads -fstack-check -fstack-protector/g' # -DASN_DISABLE_OER_SUPPORT
     fi
     LDFLAGS_DEBUG_MODE='s/LDFLAGS = /LDFLAGS = -pg -pthread -fstack-check -fstack-protector/g'
 else
     if [ "${OSTYPE}" == "cygwin" ]
     then
-        CXXFLAGS_DEBUG_MODE='s/-Wall/-ggdb -O0 -Wall -std=c++11 -DOSTYPE=cygwin -D_XOPEN_SOURCE=700 -pthread -fstack-check -fstack-protector/g' #  -DASN_DISABLE_OER_SUPPORT
+        CXXFLAGS_DEBUG_MODE='s/-Wall/-ggdb -O0 -Wall -std=c++11 -D_XOPEN_SOURCE=700 -pthread -fstack-check -fstack-protector/g' #  -DASN_DISABLE_OER_SUPPORT
     else
-        CXXFLAGS_DEBUG_MODE='s/-Wall/-ggdb -O0 -Wall -std=c++11 -DOSTYPE=linux -pthread -fstack-check -fstack-protector/g' #  -DASN_DISABLE_OER_SUPPORT
+        CXXFLAGS_DEBUG_MODE='s/-Wall/-ggdb -O0 -Wall -std=c++11 -pthread -fstack-check -fstack-protector/g' #  -DASN_DISABLE_OER_SUPPORT
     fi
     LDFLAGS_DEBUG_MODE='s/LDFLAGS = /LDFLAGS = -g -pthread -fstack-check -fstack-protector/g'
 fi
