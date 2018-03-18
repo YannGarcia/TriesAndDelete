@@ -94,6 +94,9 @@ FWK_SRC_PATH=${SRC_ITS_PATH}/ccsrc
 FWK_DST_PATH=${PATH_DEV_ITS}/framework
 mkdir -p ${FWK_DST_PATH}/src ${FWK_DST_PATH}/include
 chmod -R 775 ${FWK_DST_PATH}
+# Create link to TITAN Abstract_Socket
+ln -sf $TOP/../titan.TestPorts.Common_Components.Abstract_Socket/src/Abstract_Socket.cc ${FWK_DST_PATH}/src/Abstract_Socket.cc
+ln -sf $TOP/../titan.TestPorts.Common_Components.Abstract_Socket/src/Abstract_Socket.hh ${FWK_DST_PATH}/include/Abstract_Socket.hh
 FWK_DIR_LIST_HH=`find ${FWK_SRC_PATH}/Protocols/ -name "*.h*" -type f`
 FWK_DIR_LIST_THH=`find ${FWK_SRC_PATH}/Protocols/ -name "*.t.h*" -type f`
 FWK_DIR_LIST_CC=`find ${FWK_SRC_PATH}/Protocols/ -name "*.c*" -type f`

@@ -67,7 +67,7 @@ then
     then
         f_exit "Failed to generate XSD source code" 2
     fi
-    XSD_FILES=`find ${XSD_PATH} -name '*.ttcn'`
+    XSD_FILES=`find . -name '*.ttcn'`
 fi
 
 REFERENCES="LibCommon LibPemea"
@@ -105,13 +105,13 @@ TTCN_FILES=`find .. -name '*.ttcn*'`
 if [ "${OSTYPE}" == "cygwin" ]
 then
     rm ../bin/*.exe ../lib/*.dll
-    compiler.exe -d -e -f -g -j -l -L -O -t -R -U none -x -X ${TTCN_FILES} ${XSD_FILES} 2>&1 3>&1 | tee build.log
+    compiler.exe -d -e -f -g -j -l -L -O -t -R -U none -x -X ${TTCN_FILES} 2>&1 3>&1 | tee build.log
     if [ "$?" == "1" ]
     then
         f_exit "Failed to compile ATS" 4
     fi
 else
-    compiler -d -e -f -g -l -L -O -t -R -U none -x -X ${TTCN_FILES} ${XSD_FILES} 2>&1 3>&1 | tee build.log
+    compiler -d -e -f -g -l -L -O -t -R -U none -x -X ${TTCN_FILES} 2>&1 3>&1 | tee build.log
     if [ "$?" == "1" ]
     then 
         f_exit "Failed to generate ATS source code" 6
@@ -127,18 +127,25 @@ CFG_FILES=`find ../etc -name '*.cfg'`
 # Sart ATS generation - Step 3
 if [ "${OSTYPE}" == "cygwin" ]
 then
-    ttcn3_makefilegen.exe -d -f -g -m -R -U none -e Ats${ATS_NAME} ${TTCN_FILES} ${XSD_FILES} ${CC_FILES} ${FWK_FILES} ${CFG_FILES} | tee --append build.log
+    ttcn3_makefilegen.exe -d -f -g -m -R -U none -e Ats${ATS_NAME} ${TTCN_FILES} ${CC_FILES} ${FWK_FILES} ${CFG_FILES} | tee --append build.log
     if [ "$?" == "1" ]
     then
         f_exit "Failed to compile ATS" 5
     fi
 else
-    ttcn3_makefilegen -d -f -g -m -R -U none -e Ats${ATS_NAME} ${TTCN_FILES} ${XSD_FILES} ${CC_FILES} ${FWK_FILES} ${CFG_FILES} | tee --append build.log
+    ttcn3_makefilegen -d -f -g -m -R -U none -e Ats${ATS_NAME} ${TTCN_FILES} ${CC_FILES} ${FWK_FILES} ${CFG_FILES} | tee --append build.log
     if [ "$?" == "1" ]
     then
         f_exit "Failed to generate ATS source code" 7
     fi
 fi
+
+# Bug xsd2ttcn
+for i in ${XSD_FILES}
+do
+    VARIANT='s/  variant (\[\-\]) ;//g'
+    sed --in-place "${VARIANT}" $i
+done
 
 # Remove port skeletons to use src/<port skeletons>
 for i in `ls ../include/*.hh`
@@ -170,26 +177,26 @@ if [ "$1" == "prof" ]
 then
     if [ "${OSTYPE}" == "cygwin" ]
     then
-        CXXFLAGS_DEBUG_MODE='s/-Wall/-pg -Wall -std=c++11 -D_XOPEN_SOURCE=700 -pthreads -fstack-check -fstack-protector/g'
+        CXXFLAGS_DEBUG_MODE='s/-Wall/-pg -Wall -std=c++11 -D_XOPEN_SOURCE=700 -DAS_USE_SSL -pthreads -fstack-check -fstack-protector/g'
     else
-        CXXFLAGS_DEBUG_MODE='s/-Wall/-pg -Wall -std=c++11 -pthreads -fstack-check -fstack-protector/g'
+        CXXFLAGS_DEBUG_MODE='s/-Wall/-pg -Wall -std=c++11 -DAS_USE_SSL -pthreads -fstack-check -fstack-protector/g'
     fi
     LDFLAGS_DEBUG_MODE='s/LDFLAGS = /LDFLAGS = -pg -pthread -fstack-check -fstack-protector/g'
 else
     if [ "${OSTYPE}" == "cygwin" ]
     then
-        CXXFLAGS_DEBUG_MODE='s/-Wall/-ggdb -O0 -Wall -std=c++11 -D_XOPEN_SOURCE=700 -pthread -fstack-check -fstack-protector/g'
+        CXXFLAGS_DEBUG_MODE='s/-Wall/-ggdb -O0 -Wall -std=c++11 -DAS_USE_SSL -D_XOPEN_SOURCE=700 -pthread -fstack-check -fstack-protector/g'
     else
-        CXXFLAGS_DEBUG_MODE='s/-Wall/-ggdb -O0 -Wall -std=c++11 -pthread -fstack-check -fstack-protector/g'
+        CXXFLAGS_DEBUG_MODE='s/-Wall/-ggdb -O0 -Wall -std=c++11 -DAS_USE_SSL -pthread -fstack-check -fstack-protector/g'
     fi
     LDFLAGS_DEBUG_MODE='s/LDFLAGS = /LDFLAGS = -g -pthread -fstack-check -fstack-protector/g'
 fi
-ADD_INCLUDE='/CPPFLAGS = /a\\CPPFLAGS += -I/usr/local/share -I$(PATH_DEV_EMTEL)/include -I$(PATH_DEV_EMTEL)/framework/include -I../include -I../../LibIts/Common/include -I../../LibIts/GeoNetworking/include -I$(HOME_INC) -I.'
-#ADD_LIBRARIES='s/LINUX_LIBS = -lxml2/LINUX_LIBS = -lrt -lxml2 -lstdc++fs -lpcap -L$(PATH_DEV_EMTEL)\/lib -lItsAsn /g'
+ADD_INCLUDE='/CPPFLAGS = /a\\CPPFLAGS += -I/usr/local/share -I$(PATH_DEV_EMTEL)/include -I$(PATH_DEV_EMTEL)/framework/include -I../include -I../../LibEmtel/Common/include -I../../LibEmtel/LibPemea/include -I$(HOME_INC) -I.'
+ADD_LIBRARIES='s/LINUX_LIBS = -lxml2/LINUX_LIBS = -lrt -lxml2 -lstdc++fs -lssl/g'
 sed --in-place "${CXXFLAGS_DEBUG_MODE}" ./Makefile 
 sed --in-place "${LDFLAGS_DEBUG_MODE}" ./Makefile
 sed --in-place "${ADD_INCLUDE}" ./Makefile
-#sed --in-place "${ADD_LIBRARIES}" ./Makefile
+sed --in-place "${ADD_LIBRARIES}" ./Makefile
 # Update COMPILER_FLAGS
 COMPILER_FLAGS='s/COMPILER_FLAGS = /COMPILER_FLAGS = -e -O /g'
 sed --in-place "${COMPILER_FLAGS}" ./Makefile

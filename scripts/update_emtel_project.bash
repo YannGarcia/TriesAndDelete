@@ -71,6 +71,9 @@ FWK_SRC_PATH=${SRC_EMTEL_PATH}/ccsrc
 FWK_DST_PATH=${PATH_DEV_EMTEL}/framework
 mkdir -p ${FWK_DST_PATH}/src ${FWK_DST_PATH}/include
 chmod -R 775 ${FWK_DST_PATH}
+# Create link to TITAN Abstract_Socket
+ln -sf $TOP/../titan.TestPorts.Common_Components.Abstract_Socket/src/Abstract_Socket.cc ${FWK_DST_PATH}/src/Abstract_Socket.cc
+ln -sf $TOP/../titan.TestPorts.Common_Components.Abstract_Socket/src/Abstract_Socket.hh ${FWK_DST_PATH}/include/Abstract_Socket.hh
 FWK_DIR_LIST_HH=`find ${FWK_SRC_PATH}/Protocols/ -name "*.h*" -type f`
 FWK_DIR_LIST_THH=`find ${FWK_SRC_PATH}/Protocols/ -name "*.t.h*" -type f`
 FWK_DIR_LIST_CC=`find ${FWK_SRC_PATH}/Protocols/ -name "*.c*" -type f`
@@ -124,14 +127,11 @@ do
 	      mkdir -p ${TTCN_3_DST_PATH}/$i/docs ${TTCN_3_DST_PATH}/$i/src ${TTCN_3_DST_PATH}/$i/include ${TTCN_3_DST_PATH}/$i/ttcn
     fi
     cp ${TTCN_3_ORG_PATH}/$i/*.ttcn ${TTCN_3_DST_PATH}/$i/ttcn
-    # TODO Update CC files
-    if [ "$i" == "Ipv6OverGeoNetworking" ]
+    # Update CC files
+    if [ "$i" == "LibPemea" ]
     then
-	      cp ${CC_SRC_PATH}/EncDec/LibItsIpv6OverGeoNetworking_Encdec.cc ${TTCN_3_DST_PATH}/$i/src
-	      cp ${CC_SRC_PATH}/Externals/LibItsIpv6OverGeoNetworking_externals.cc ${TTCN_3_DST_PATH}/$i/src
-	      cp ${CC_SRC_PATH}/Ports/LibIts_ports/IPv6oGN_ports/*.cc ${TTCN_3_DST_PATH}/$i/src
-	      cp ${CC_SRC_PATH}/Ports/LibIts_ports/IPv6oGN_ports/*.hh ${TTCN_3_DST_PATH}/$i/include
-	      cp ${CC_SRC_PATH}/Ports/LibIts_ports/*.hh ${TTCN_3_DST_PATH}/$i/include
+	      cp ${CC_SRC_PATH}/include/$i/*.hh ${TTCN_3_DST_PATH}/$i/include
+	      cp ${CC_SRC_PATH}/src/$i/*.cc ${TTCN_3_DST_PATH}/$i/src
     fi
 done
 
@@ -149,8 +149,6 @@ find ${PATH_DEV_EMTEL} -type f -exec chmod 664 {} \;
 find ${PATH_DEV_EMTEL} -name "*.bash" -type f -exec chmod 775 {} \;
 find ${PATH_DEV_EMTEL} -type d -exec chmod 775 {} \;
 chown -R ${CHOWN_USER_GROUP} ${PATH_DEV_EMTEL}
-
-# Create link to TITAN Abstract socket
 
 cd ${OLDPWD}
 
