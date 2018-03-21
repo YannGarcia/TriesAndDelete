@@ -70,7 +70,7 @@ then
     XSD_FILES=`find . -name '*.ttcn'`
 fi
 
-REFERENCES="LibCommon LibPemea"
+REFERENCES="LibCommon LibHttp LibPemea"
 for i in ${REFERENCES}
 do
     # TTCN code
@@ -105,13 +105,13 @@ TTCN_FILES=`find .. -name '*.ttcn*'`
 if [ "${OSTYPE}" == "cygwin" ]
 then
     rm ../bin/*.exe ../lib/*.dll
-    compiler.exe -d -e -f -g -j -l -L -O -t -R -U none -x -X ${TTCN_FILES} 2>&1 3>&1 | tee build.log
+    compiler.exe -b -d -e -f -g -j -l -L -O -t -R -U none -x -X ${TTCN_FILES} 2>&1 3>&1 | tee build.log
     if [ "$?" == "1" ]
     then
         f_exit "Failed to compile ATS" 4
     fi
 else
-    compiler -d -e -f -g -l -L -O -t -R -U none -x -X ${TTCN_FILES} 2>&1 3>&1 | tee build.log
+    compiler -b -d -e -f -g -j -l -L -O -t -R -U none -x -X ${TTCN_FILES} 2>&1 3>&1 | tee build.log
     if [ "$?" == "1" ]
     then 
         f_exit "Failed to generate ATS source code" 6

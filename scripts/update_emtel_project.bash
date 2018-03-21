@@ -63,7 +63,8 @@ fi
 echo 'Updating XSD files'
 XSD_SRC_PATH=${SRC_EMTEL_PATH}/xsd
 XSD_DST_PATH=${PATH_DEV_EMTEL}/xsd
-cp -Rp ${XSD_SRC_PATH} ${XSD_DST_PATH}
+cp ${XSD_SRC_PATH}/*.xsd ${XSD_DST_PATH}
+cp ${XSD_SRC_PATH}/*.dtd ${XSD_DST_PATH}
 
 # Update ETSI Framework files
 echo 'Updating ETSI Framework files'
@@ -119,7 +120,7 @@ do
 done
 
 # Update libraries & CC files
-TTCN_3_LIB_LIST='LibPemea LibCommon'
+TTCN_3_LIB_LIST='LibPemea LibHttp LibCommon'
 for i in ${TTCN_3_LIB_LIST}
 do
     if [ ! -d ${TTCN_3_DST_PATH}/$i ]
