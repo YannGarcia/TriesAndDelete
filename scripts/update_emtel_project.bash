@@ -2,7 +2,7 @@
 
 # Debug mode
 #set -e
-set -vx
+#set -vx
 
 # Usage: sudo ./update_emtel_project.bash
 # TODO Use git clone in temporary directory
@@ -47,7 +47,7 @@ if [ -d ${PATH_DEV_EMTEL} ]
 then
     if [ -f ${HOME}/tmp/emtel.tar.bz2 ]
     then
-	      rm ${HOME}/tmp/emtel.tar.bz2
+	      mv ${HOME}/tmp/emtel.tar.bz2 ${HOME}/tmp/emtel.tar.`date +'%Y%m%d'`.bz2
     fi
     tar jcvf ${HOME}/tmp/emtel.tar.bz2 ${PATH_DEV_EMTEL}
     rm -fr ${PATH_DEV_EMTEL}
