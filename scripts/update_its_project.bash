@@ -47,7 +47,7 @@ if [ -d ${PATH_DEV_ITS} ]
 then
     if [ -f ${HOME}/tmp/etsi_its.tar.bz2 ]
     then
-	      rm ${HOME}/tmp/etsi_its.tar.bz2 ${HOME}/tmp/etsi_its.tar.`date +'%Y%m%d'`.bz2
+	      mv ${HOME}/tmp/etsi_its.tar.bz2 ${HOME}/tmp/etsi_its.tar.`date +'%Y%m%d'`.bz2
     fi
     tar jcvf ${HOME}/tmp/etsi_its.tar.bz2 ${PATH_DEV_ITS}
     rm -fr ${PATH_DEV_ITS}
