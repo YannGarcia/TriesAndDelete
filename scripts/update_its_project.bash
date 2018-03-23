@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Debug mode
-#set -e
+set -e
 #set -vx
 
 # Usage: sudo ./update_project.bash
