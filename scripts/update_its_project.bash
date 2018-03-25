@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Debug mode
-set -e
+#set -e
 #set -vx
 
 # Usage: sudo ./update_project.bash
@@ -171,7 +171,7 @@ do
 done
 
 # Update libraries & CC files
-TTCN_3_LIB_LIST='Common BTP CAM DENM GeoNetworking Ipv6OverGeoNetworking Security MapemSpatem IVIM SremSsem AtsRSUsSimulator'
+TTCN_3_LIB_LIST='Common BTP CAM DENM GeoNetworking Ipv6OverGeoNetworking Security MapemSpatem IVIM SremSsem AtsRSUsSimulator Http'
 for i in ${TTCN_3_LIB_LIST}
 do
     if [ ! -d ${TTCN_3_DST_PATH}/LibIts/$i ]

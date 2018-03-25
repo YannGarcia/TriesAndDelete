@@ -85,22 +85,22 @@ then
     fi
 fi
 
-REFERENCES="LibCommon LibIts/Common LibIts/BTP LibIts/GeoNetworking LibIts/Ipv6OverGeoNetworking LibIts/Security LibIts/CAM LibIts/DENM LibIts/IVIM LibIts/MapemSpatem LibIts/SremSsem"
+REFERENCES="LibCommon LibIts/Common LibIts/BTP LibIts/GeoNetworking LibIts/Ipv6OverGeoNetworking LibIts/Security LibIts/CAM LibIts/DENM LibIts/IVIM LibIts/MapemSpatem LibIts/SremSsem LibIts/Http"
 for i in ${REFERENCES}
 do
     # TTCN code
     for j in `find ${PATH_DEV_ITS}/src/$i/ttcn -type f -name "*.ttcn"`;
     do
-	ln -sf $j ../ttcn/`basename $j`
+	      ln -sf $j ../ttcn/`basename $j`
     done
     # Include source code
     files=`find ${PATH_DEV_ITS}/src/$i/include -type f`
     if [ "${files}" != " " ]
     then
-	for j in ${files};
-	do
-	    ln -sf $j ../include/`basename $j`
-	done
+	      for j in ${files};
+	      do
+	          ln -sf $j ../include/`basename $j`
+	      done
     fi
     # CC source code
     files=`find ${PATH_DEV_ITS}/src/$i/src -type f`
@@ -184,22 +184,22 @@ if [ "$1" == "prof" ]
 then
     if [ "${OSTYPE}" == "cygwin" ]
     then
-        CXXFLAGS_DEBUG_MODE='s/-Wall/-pg -Wall -std=c++11 -D_XOPEN_SOURCE=700 -pthreads -fstack-check -fstack-protector/g' # -DASN_DISABLE_OER_SUPPORT
+        CXXFLAGS_DEBUG_MODE='s/-Wall/-pg -Wall -std=c++11 -DAS_USE_SSL -D_XOPEN_SOURCE=700 -pthreads -fstack-check -fstack-protector/g' # -DASN_DISABLE_OER_SUPPORT
     else
-        CXXFLAGS_DEBUG_MODE='s/-Wall/-pg -Wall -std=c++11 -pthreads -fstack-check -fstack-protector/g' # -DASN_DISABLE_OER_SUPPORT
+        CXXFLAGS_DEBUG_MODE='s/-Wall/-pg -Wall -std=c++11 -DAS_USE_SSL -pthreads -fstack-check -fstack-protector/g' # -DASN_DISABLE_OER_SUPPORT
     fi
     LDFLAGS_DEBUG_MODE='s/LDFLAGS = /LDFLAGS = -pg -pthread -fstack-check -fstack-protector/g'
 else
     if [ "${OSTYPE}" == "cygwin" ]
     then
-        CXXFLAGS_DEBUG_MODE='s/-Wall/-ggdb -O0 -Wall -std=c++11 -D_XOPEN_SOURCE=700 -pthread -fstack-check -fstack-protector/g' #  -DASN_DISABLE_OER_SUPPORT
+        CXXFLAGS_DEBUG_MODE='s/-Wall/-ggdb -O0 -Wall -std=c++11 -DAS_USE_SSL -D_XOPEN_SOURCE=700 -pthread -fstack-check -fstack-protector/g' #  -DASN_DISABLE_OER_SUPPORT
     else
-        CXXFLAGS_DEBUG_MODE='s/-Wall/-ggdb -O0 -Wall -std=c++11 -pthread -fstack-check -fstack-protector/g' #  -DASN_DISABLE_OER_SUPPORT
+        CXXFLAGS_DEBUG_MODE='s/-Wall/-ggdb -O0 -Wall -std=c++11 -DAS_USE_SSL -pthread -fstack-check -fstack-protector/g' #  -DASN_DISABLE_OER_SUPPORT
     fi
     LDFLAGS_DEBUG_MODE='s/LDFLAGS = /LDFLAGS = -g -pthread -fstack-check -fstack-protector/g'
 fi
 ADD_INCLUDE='/CPPFLAGS = /a\\CPPFLAGS += -I/usr/local/share -I$(PATH_DEV_ITS)/include -I$(PATH_DEV_ITS)/include/asn1 -I$(PATH_DEV_ITS)/framework/include -I../include -I../../LibIts/Common/include -I../../LibIts/BTP/include -I../../LibIts/CAM/include -I../../LibIts/DENM/include -I$(HOME_INC) -I.'
-ADD_LIBRARIES='s/LINUX_LIBS = -lxml2/LINUX_LIBS = -lrt -lxml2 -lstdc++fs -lpcap -L$(PATH_DEV_ITS)\/lib -lItsAsn /g'
+ADD_LIBRARIES='s/LINUX_LIBS = -lxml2/LINUX_LIBS = -lrt -lxml2 -lssl -lstdc++fs -lpcap -L$(PATH_DEV_ITS)\/lib -lItsAsn /g'
 sed --in-place "${CXXFLAGS_DEBUG_MODE}" ./Makefile 
 sed --in-place "${LDFLAGS_DEBUG_MODE}" ./Makefile
 sed --in-place "${ADD_INCLUDE}" ./Makefile
