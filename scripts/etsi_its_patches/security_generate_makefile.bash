@@ -234,8 +234,10 @@ sed --in-place "${ADD_RUN_LINE_2}" ./Makefile
 # Add Doxygen entry
 ADD_RUN_LINE_1='$agendoc:'
 ADD_RUN_LINE_2='$a\\tdoxygen ../docs/o2.cfg'
+ADD_RUN_LINE_3='$a\\tmandb ../docs/man'
 sed --in-place "${ADD_RUN_LINE_1}" ./Makefile 
 sed --in-place "${ADD_RUN_LINE_2}" ./Makefile 
+sed --in-place "${ADD_RUN_LINE_3}" ./Makefile 
 
 # Build all
 make all 2>&1 3>&1 | tee --append build.log
