@@ -263,6 +263,7 @@ then
     cp ${PATH_PATCHES}/geonw_generate_makefile.bash ${PATH_DEV_ITS}/src/AtsGeoNetworking/bin
     cp ${PATH_PATCHES}/../run_mtc.bash ${PATH_DEV_ITS}/src/AtsGeoNetworking/bin
     cp ${PATH_PATCHES}/../run_ptcs.bash ${PATH_DEV_ITS}/src/AtsGeoNetworking/bin
+    cp ${PATH_PATCHES}/../run_all.bash ${PATH_DEV_ITS}/src/AtsGeoNetworking/bin
     # Update BTP
     cp ${PATH_PATCHES}/btp_generate_makefile.bash ${PATH_DEV_ITS}/src/AtsBTP/bin
     ${RUN_PATH}/etsi_its_patches/asn1c_patch.bash ${ASN1_DST_PATH}/../Makefile
@@ -270,32 +271,39 @@ then
     cp ${PATH_PATCHES}/cam_generate_makefile.bash ${PATH_DEV_ITS}/src/AtsCAM/bin
     cp ${PATH_PATCHES}/../run_mtc.bash ${PATH_DEV_ITS}/src/AtsCAM/bin
     cp ${PATH_PATCHES}/../run_ptcs.bash ${PATH_DEV_ITS}/src/AtsCAM/bin
+    cp ${PATH_PATCHES}/../run_all.bash ${PATH_DEV_ITS}/src/AtsGeoNetworking/bin
     # Update DENM
     cp ${PATH_PATCHES}/denm_generate_makefile.bash ${PATH_DEV_ITS}/src/AtsDENM/bin
     cp ${PATH_PATCHES}/../run_mtc.bash ${PATH_DEV_ITS}/src/AtsDENM/bin
     cp ${PATH_PATCHES}/../run_ptcs.bash ${PATH_DEV_ITS}/src/AtsDENM/bin
+    cp ${PATH_PATCHES}/../run_all.bash ${PATH_DEV_ITS}/src/AtsGeoNetworking/bin
     # Update RSUsSimulator
     cp ${PATH_PATCHES}/rsusimulator_generate_makefile.bash ${PATH_DEV_ITS}/src/AtsRSUsSimulator/bin
     cp ${PATH_PATCHES}/../run_mtc.bash ${PATH_DEV_ITS}/src/AtsRSUsSimulator/bin
     cp ${PATH_PATCHES}/../run_ptcs.bash ${PATH_DEV_ITS}/src/AtsRSUsSimulator/bin
+    cp ${PATH_PATCHES}/../run_all.bash ${PATH_DEV_ITS}/src/AtsGeoNetworking/bin
     # Update AutoInterop
 	  cp ${CC_SRC_PATH}/Ports/LibIts_ports/AutoInterop_ports/*.cc ${TTCN_3_DST_PATH}/AtsAutoInterop/src
 	  cp ${CC_SRC_PATH}/Ports/LibIts_ports/AutoInterop_ports/*.hh ${TTCN_3_DST_PATH}/AtsAutoInterop/include
     cp ${PATH_PATCHES}/autointerop_generate_makefile.bash  ${PATH_DEV_ITS}/src/AtsAutoInterop/bin
     cp ${PATH_PATCHES}/../run_mtc.bash ${PATH_DEV_ITS}/src/AtsAutoInterop/bin
     cp ${PATH_PATCHES}/../run_ptcs.bash ${PATH_DEV_ITS}/src/AtsAutoInterop/bin
+    cp ${PATH_PATCHES}/../run_all.bash ${PATH_DEV_ITS}/src/AtsGeoNetworking/bin
     # Update Security
     cp ${PATH_PATCHES}/security_generate_makefile.bash ${PATH_DEV_ITS}/src/AtsSecurity/bin
     cp ${PATH_PATCHES}/../run_mtc.bash ${PATH_DEV_ITS}/src/AtsSecurity/bin
     cp ${PATH_PATCHES}/../run_ptcs.bash ${PATH_DEV_ITS}/src/AtsSecurity/bin
+    cp ${PATH_PATCHES}/../run_all.bash ${PATH_DEV_ITS}/src/AtsGeoNetworking/bin
     # Update GenCert
     cp ${PATH_PATCHES}/gencert_generate_makefile.bash ${PATH_DEV_ITS}/src/AtsGenCert/bin
     cp ${PATH_PATCHES}/../run_mtc.bash ${PATH_DEV_ITS}/src/AtsGenCert/bin
     cp ${PATH_PATCHES}/../run_ptcs.bash ${PATH_DEV_ITS}/src/AtsGenCert/bin
+    cp ${PATH_PATCHES}/../run_all.bash ${PATH_DEV_ITS}/src/AtsGeoNetworking/bin
     # Update TestCodec
     cp ${PATH_PATCHES}/testcodec_generate_makefile.bash ${PATH_DEV_ITS}/src/TestCodec/bin
     cp ${PATH_PATCHES}/../run_mtc.bash ${PATH_DEV_ITS}/src/TestCodec/bin
     cp ${PATH_PATCHES}/../run_ptcs.bash ${PATH_DEV_ITS}/src/TestCodec/bin
+    cp ${PATH_PATCHES}/../run_all.bash ${PATH_DEV_ITS}/src/AtsGeoNetworking/bin
 fi
 
 # Set rights
