@@ -2,9 +2,9 @@
 
 # Debug mode
 #set -e
-#set -vx
+set -vx
 
-# Usage: sudo ./update_emtel_project.bash
+# Usage: sudo ./update_emcom_project.bash
 # TODO Use git clone in temporary directory
 
 OLDPWD=`pwd`
@@ -16,60 +16,60 @@ UNAME=`uname -n`
 if [ "${UNAME}" == "Ubuntu64" ]
 then # Win7 Virtualbox Ubuntu 16.04
     CHOWN_USER_GROUP=yann:yann
-    SRC_EMTEL_PATH=/media/sf_F_DRIVE/FSCOM/ETSI/EMTEL/STF549/workspace_titan/STF549_ng112
+    SRC_EMCOM_PATH=/media/sf_F_DRIVE/FSCOM/ETSI/EMCOM/STF549/workspace_titan/STF549_ng112
 elif [ "${UNAME}" == "ubuntu-xenial" ]
 then # Vqgrant xenial-ubuntu
     CHOWN_USER_GROUP=ubuntu:ubuntu
-    SRC_EMTEL_PATH=/media/sf_F_DRIVE/FSCOM/ETSI/EMTEL/STF549/workspace_titan/STF549_ng112
+    SRC_EMCOM_PATH=/media/sf_F_DRIVE/FSCOM/ETSI/EMCOM/STF549/workspace_titan/STF549_ng112
 elif [ "${UNAME}" == "vagrant" ]
 then # Vagrant xenial-ubuntu
     CHOWN_USER_GROUP=vagrant:vagrant
-    SRC_EMTEL_PATH=/media/sf_F_DRIVE/FSCOM/ETSI/EMTEL/STF549/workspace_titan/STF549_ng112
+    SRC_EMCOM_PATH=/media/sf_F_DRIVE/FSCOM/ETSI/EMCOM/STF549/workspace_titan/STF549_ng112
 elif [ "${UNAME}" == "vagrant-prov" ]
 then # Vagrant ubuntu 16.04 with provisioner script to automate ITS project build & test
     CHOWN_USER_GROUP=vagrant:vagrant
 #    CHOWN_USER_GROUP=ubuntu:ubuntu
-    SRC_EMTEL_PATH=${HOME}/tmp/STF549_ng112
+    SRC_EMCOM_PATH=${HOME}/tmp/STF549_ng112
 elif [ "${UNAME}" == "yann-FSCOM" ]
 then # Win7 cygwin64
     CHOWN_USER_GROUP=yann:None
-    SRC_EMTEL_PATH=/cygdrive/f/FSCOM/ETSI/EMTEL/STF549/workspace_titan/STF549_ng112
+    SRC_EMCOM_PATH=/cygdrive/f/FSCOM/ETSI/EMCOM/STF549/workspace_titan/STF549_ng112
 else # docket-titan
     CHOWN_USER_GROUP=root:root
-    SRC_EMTEL_PATH=${HOME}/tmp/STF549_ng112
+    SRC_EMCOM_PATH=${HOME}/tmp/STF549_ng112
 fi
-if [ "${PATH_DEV_EMTEL}" == "" ]
+if [ "${PATH_DEV_EMCOM}" == "" ]
 then
-    PATH_DEV_EMTEL=`pwd`/../emtel
+    PATH_DEV_EMCOM=`pwd`/../etsi_emcom
 fi
 
-if [ -d ${PATH_DEV_EMTEL} ]
+if [ -d ${PATH_DEV_EMCOM} ]
 then
-    if [ -f ${HOME}/tmp/emtel.tar.bz2 ]
+    if [ -f ${HOME}/tmp/emcom.tar.bz2 ]
     then
-	      mv ${HOME}/tmp/emtel.tar.bz2 ${HOME}/tmp/emtel.tar.`date +'%Y%m%d'`.bz2
+	      mv ${HOME}/tmp/emcom.tar.bz2 ${HOME}/tmp/emcom.tar.`date +'%Y%m%d'`.bz2
     fi
-    tar jcvf ${HOME}/tmp/emtel.tar.bz2 ${PATH_DEV_EMTEL}
-    rm -fr ${PATH_DEV_EMTEL}
+    tar jcvf ${HOME}/tmp/emcom.tar.bz2 ${PATH_DEV_EMCOM}
+    rm -fr ${PATH_DEV_EMCOM}
 fi
 
 # Check if target directory exist
-if [ ! -d ${PATH_DEV_EMTEL} ]
+if [ ! -d ${PATH_DEV_EMCOM} ]
 then
-    mkdir -p ${PATH_DEV_EMTEL}/xsd ${PATH_DEV_EMTEL}/framework ${PATH_DEV_EMTEL}/include ${PATH_DEV_EMTEL}/bin ${PATH_DEV_EMTEL}/lib ${PATH_DEV_EMTEL}/objs ${PATH_DEV_EMTEL}/src ${PATH_DEV_EMTEL}/docs
+    mkdir -p ${PATH_DEV_EMCOM}/xsd ${PATH_DEV_EMCOM}/framework ${PATH_DEV_EMCOM}/include ${PATH_DEV_EMCOM}/bin ${PATH_DEV_EMCOM}/lib ${PATH_DEV_EMCOM}/objs ${PATH_DEV_EMCOM}/src ${PATH_DEV_EMCOM}/docs
 fi
 
 # Update XSD files
 echo 'Updating XSD files'
-XSD_SRC_PATH=${SRC_EMTEL_PATH}/xsd
-XSD_DST_PATH=${PATH_DEV_EMTEL}/xsd
+XSD_SRC_PATH=${SRC_EMCOM_PATH}/xsd
+XSD_DST_PATH=${PATH_DEV_EMCOM}/xsd
 cp ${XSD_SRC_PATH}/*.xsd ${XSD_DST_PATH}
 cp ${XSD_SRC_PATH}/*.dtd ${XSD_DST_PATH}
 
 # Update ETSI Framework files
 echo 'Updating ETSI Framework files'
-FWK_SRC_PATH=${SRC_EMTEL_PATH}/ccsrc
-FWK_DST_PATH=${PATH_DEV_EMTEL}/framework
+FWK_SRC_PATH=${SRC_EMCOM_PATH}/ccsrc
+FWK_DST_PATH=${PATH_DEV_EMCOM}/framework
 mkdir -p ${FWK_DST_PATH}/src ${FWK_DST_PATH}/include
 chmod -R 775 ${FWK_DST_PATH}
 # Create link to TITAN Abstract_Socket
@@ -103,9 +103,9 @@ done
 
 # Update ATS TTCN-3 files
 echo 'Update TTCN-3 files'
-TTCN_3_ORG_PATH=${SRC_EMTEL_PATH}/ttcn
-TTCN_3_DST_PATH=${PATH_DEV_EMTEL}/src
-CC_SRC_PATH=${SRC_EMTEL_PATH}/ccsrc
+TTCN_3_ORG_PATH=${SRC_EMCOM_PATH}/ttcn
+TTCN_3_DST_PATH=${PATH_DEV_EMCOM}/src
+CC_SRC_PATH=${SRC_EMCOM_PATH}/ccsrc
 TTCN_3_ATS_LIST='AtsNg112'
 for i in ${TTCN_3_ATS_LIST}
 do
@@ -120,12 +120,12 @@ do
 done
 
 # Update libraries & CC files
-TTCN_3_LIB_LIST='LibNg112 LibHttp LibSip LibCommon'
+TTCN_3_LIB_LIST='LibEmcom/LibNg112 LibHttp LibSip LibCommon'
 for i in ${TTCN_3_LIB_LIST}
 do
     if [ ! -d ${TTCN_3_DST_PATH}/$i ]
     then
-	      mkdir -p ${TTCN_3_DST_PATH}/$i/docs ${TTCN_3_DST_PATH}/$i/src ${TTCN_3_DST_PATH}/$i/include ${TTCN_3_DST_PATH}/$i/ttcn
+	      mkdir -p ${TTCN_3_DST_PATH}/$i/docs ${TTCN_3_DST_PATH}/$i/src ${TTCN_3_DST_PATH}/$i/include ${TTCN_3_DST_PATH}/$i/ttcn ${TTCN_3_DST_PATH}/$i/xsd
     fi
     cp ${TTCN_3_ORG_PATH}/$i/*.ttcn ${TTCN_3_DST_PATH}/$i/ttcn
     # Update CC files
@@ -137,26 +137,30 @@ do
     if [ "$i" == "LibSip" ]
     then
         cp ${TTCN_3_ORG_PATH}/$i/ttcn/*.ttcn ${TTCN_3_DST_PATH}/$i/ttcn
-        cp ${TTCN_3_ORG_PATH}/$i/ttcn/*.xsd ${TTCN_3_DST_PATH}/$i/ttcn
+        cp ${TTCN_3_ORG_PATH}/$i/xsd/*.xsd ${TTCN_3_DST_PATH}/$i/xsd
+        cp ${TTCN_3_ORG_PATH}/$i/xsd/*.ttcn ${TTCN_3_DST_PATH}/$i/ttcn
+	      cp ${CC_SRC_PATH}/EncDec/LibSip_EncdecDeclarations.cc ${TTCN_3_DST_PATH}/$i/src
+	      cp ${CC_SRC_PATH}/Ports/$i/*.hh ${TTCN_3_DST_PATH}/$i/include
+	      cp ${CC_SRC_PATH}/Ports/$i/*.cc ${TTCN_3_DST_PATH}/$i/src
 	      cp ${CC_SRC_PATH}/include/$i/*.hh ${TTCN_3_DST_PATH}/$i/include
 	      cp ${CC_SRC_PATH}/src/$i/*.cc ${TTCN_3_DST_PATH}/$i/src
     fi
 done
 
 # Apply patches
-PATH_PATCHES=`pwd`/etsi_emtel_patches
+PATH_PATCHES=`pwd`/etsi_emcom_patches
 if [ -d ${PATH_PATCHES} ]
 then
-    cp ${PATH_PATCHES}/pemea.bash ${PATH_DEV_EMTEL}/src/AtsNg112/bin
-    cp ${PATH_PATCHES}/../run_mtc.bash ${PATH_DEV_EMTEL}/src/AtsNg112/bin
-    cp ${PATH_PATCHES}/../run_ptcs.bash ${PATH_DEV_EMTEL}/src/AtsNg112/bin
+    cp ${PATH_PATCHES}/ng112.bash ${PATH_DEV_EMCOM}/src/AtsNg112/bin
+    cp ${PATH_PATCHES}/../run_mtc.bash ${PATH_DEV_EMCOM}/src/AtsNg112/bin
+    cp ${PATH_PATCHES}/../run_ptcs.bash ${PATH_DEV_EMCOM}/src/AtsNg112/bin
 fi
 
 # Set rights
-find ${PATH_DEV_EMTEL} -type f -exec chmod 664 {} \;
-find ${PATH_DEV_EMTEL} -name "*.bash" -type f -exec chmod 775 {} \;
-find ${PATH_DEV_EMTEL} -type d -exec chmod 775 {} \;
-chown -R ${CHOWN_USER_GROUP} ${PATH_DEV_EMTEL}
+find ${PATH_DEV_EMCOM} -type f -exec chmod 664 {} \;
+find ${PATH_DEV_EMCOM} -name "*.bash" -type f -exec chmod 775 {} \;
+find ${PATH_DEV_EMCOM} -type d -exec chmod 775 {} \;
+chown -R ${CHOWN_USER_GROUP} ${PATH_DEV_EMCOM}
 
 cd ${OLDPWD}
 
