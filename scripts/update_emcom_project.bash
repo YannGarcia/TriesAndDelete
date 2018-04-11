@@ -139,7 +139,7 @@ do
         cp ${TTCN_3_ORG_PATH}/$i/ttcn/*.ttcn ${TTCN_3_DST_PATH}/$i/ttcn
         cp ${TTCN_3_ORG_PATH}/$i/xsd/*.xsd ${TTCN_3_DST_PATH}/$i/xsd
         cp ${TTCN_3_ORG_PATH}/$i/xsd/*.ttcn ${TTCN_3_DST_PATH}/$i/ttcn
-	      cp ${CC_SRC_PATH}/EncDec/LibSip_EncdecDeclarations.cc ${TTCN_3_DST_PATH}/$i/src
+	      cp ${CC_SRC_PATH}/EncDec/LibSip_Encdec.cc ${TTCN_3_DST_PATH}/$i/src
 	      cp ${CC_SRC_PATH}/Ports/$i/*.hh ${TTCN_3_DST_PATH}/$i/include
 	      cp ${CC_SRC_PATH}/Ports/$i/*.cc ${TTCN_3_DST_PATH}/$i/src
 	      cp ${CC_SRC_PATH}/include/$i/*.hh ${TTCN_3_DST_PATH}/$i/include
