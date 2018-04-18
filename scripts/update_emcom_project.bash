@@ -78,6 +78,8 @@ ln -sf $TOP/../titan.TestPorts.Common_Components.Abstract_Socket/src/Abstract_So
 FWK_DIR_LIST_HH=`find ${FWK_SRC_PATH}/Protocols/ -name "*.h*" -type f`
 FWK_DIR_LIST_THH=`find ${FWK_SRC_PATH}/Protocols/ -name "*.t.h*" -type f`
 FWK_DIR_LIST_CC=`find ${FWK_SRC_PATH}/Protocols/ -name "*.c*" -type f`
+FWK_DIR_LIST_L=`find ${FWK_SRC_PATH}/Protocols/ -name "*.l" -type f`
+FWK_DIR_LIST_Y=`find ${FWK_SRC_PATH}/Protocols/ -name "*.y" -type f`
 for i in ${FWK_DIR_LIST_HH}
 do
 	  cp $i ${FWK_DST_PATH}/include
@@ -90,6 +92,20 @@ for i in ${FWK_DIR_LIST_CC}
 do
 	  cp $i ${FWK_DST_PATH}/src
 done
+if [ "${FWK_DIR_LIST_L}" != "" ]
+then
+    for i in ${FWK_DIR_LIST_L}
+    do
+	      cp $i ${FWK_DST_PATH}/src
+    done
+fi
+if [ "${FWK_DIR_LIST_Y}" != "" ]
+then
+    for i in ${FWK_DIR_LIST_Y}
+    do
+	      cp $i ${FWK_DST_PATH}/src
+    done
+fi
 FWK_DIR_LIST_HH=`find ${FWK_SRC_PATH}/Framework/ -name "*.h*" -type f`
 FWK_DIR_LIST_CC=`find ${FWK_SRC_PATH}/Framework/ -name "*.c*" -type f`
 for i in ${FWK_DIR_LIST_HH}
@@ -146,6 +162,27 @@ do
 	      cp ${CC_SRC_PATH}/src/$i/*.cc ${TTCN_3_DST_PATH}/$i/src
     fi
 done
+
+# Generate Bison parsers is any
+cd ${FWK_DST_PATH}/src
+if [ "${FWK_DIR_LIST_Y}" != "" ]
+then
+    for i in ${FWK_DIR_LIST_Y}
+    do
+        BASE_NAME=$(basename "$i" .y)
+        bison -dv -p${BASE_NAME}_ -b${BASE_NAME}_ ${BASE_NAME}.y #--defines=../include/${BASE_NAME}.h -o${BASE_NAME}.c
+    done
+fi
+if [ "${FWK_DIR_LIST_L}" != "" ]
+then
+    for i in ${FWK_DIR_LIST_L}
+    do
+        BASE_NAME=$(basename "$i" .l)
+        flex -Cfr -8 -Bvpp -P${BASE_NAME}_ ${BASE_NAME}.l  # -o${BASE_NAME}_flex.c ${BASE_NAME}.l
+    done
+    mv ${BASE_NAME}_.tab.h ../include
+fi
+cd -
 
 # Apply patches
 PATH_PATCHES=`pwd`/etsi_emcom_patches
