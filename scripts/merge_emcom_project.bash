@@ -1,9 +1,10 @@
 #!/bin/bash
 
 # Debug mode
-#set -evx
+#set -e
+set -vx
 
-# Usage: sudo ./update_project.bash
+# Usage: sudo ./merge_emcom_project.bash
 # TODO Use git clone in temporary directory
 
 OLDPWD=`pwd`
@@ -28,38 +29,39 @@ RUN_PATH="${0%/*}"
 UNAME=`uname -n`
 if [ "${UNAME}" == "Ubuntu64" ]
 then # Win7 Virtualbox Ubuntu 16.04
-    SRC_EMTEL_PATH=/media/sf_F_DRIVE/FSCOM/ETSI/EMTEL/STF549/workspace_titan/STF549
+    SRC_EMCOM_PATH=/media/sf_F_DRIVE/FSCOM/ETSI/EMCOM/STF549/workspace_titan/STF549_ng112
 elif [ "${UNAME}" == "ubuntu-xenial" ]
 then # Vqgrant xenial-ubuntu
-    SRC_EMTEL_PATH=/media/sf_F_DRIVE/FSCOM/ETSI/EMTEL/STF549/workspace_titan/STF549
+    SRC_EMCOM_PATH=/media/sf_F_DRIVE/FSCOM/ETSI/EMCOM/STF549/workspace_titan/STF549_ng112
 elif [ "${UNAME}" == "vagrant" ]
 then # Vagrant xenial-ubuntu
-    SRC_EMTEL_PATH=/media/sf_F_DRIVE/FSCOM/ETSI/EMTEL/STF549/workspace_titan/STF549
+    SRC_EMCOM_PATH=/media/sf_F_DRIVE/FSCOM/ETSI/EMCOM/STF549/workspace_titan/STF549_ng112
 elif [ "${UNAME}" == "vagrant-prov" ]
-then # Vagrant ubuntu 16.04 with provisioner script to automate EMTEL project build & test
+then # Vagrant ubuntu 16.04 with provisioner script to automate EMCOM project build & test
 #    CHOWN_USER_GROUP=ubuntu:ubuntu
-    SRC_EMTEL_PATH=${HOME}/tmp/STF549
+    SRC_EMCOM_PATH=${HOME}/tmp/STF549
 elif [ "${UNAME}" == "yann-FSCOM" ]
 then # Win7 cygwin64
-    SRC_EMTEL_PATH=/cygdrive/f/FSCOM/ETSI/EMTEL/STF549/workspace_titan/STF549
+    SRC_EMCOM_PATH=/cygdrive/f/FSCOM/ETSI/EMCOM/STF549/workspace_titan/STF549_ng112
 else # docket-titan
-    SRC_EMTEL_PATH=${HOME}/tmp/STF549
+    SRC_EMCOM_PATH=${HOME}/tmp/STF549_ng112
 fi
-if [ "${PATH_DEV_EMTEL}" == "" ]
+if [ "${PATH_DEV_EMCOM}" == "" ]
 then
-    PATH_DEV_EMTEL=`pwd`/../etsi_emtel
+    PATH_DEV_EMCOM=`pwd`/../etsi_emcom
 fi
 
 # Update ETSI Framework files
 echo 'Merging ETSI Framework files'
-FWK_SRC_PATH=${SRC_EMTEL_PATH}/ccsrc
-FWK_DST_PATH=${PATH_DEV_EMTEL}/framework
+FWK_SRC_PATH=${SRC_EMCOM_PATH}/ccsrc
+FWK_DST_PATH=${PATH_DEV_EMCOM}/framework
 FWK_DIR_LIST_HH=`find ${FWK_SRC_PATH}/Protocols/ -name "*.h*" -type f`
 for i in ${FWK_DIR_LIST_HH}
 do
+    BN=`basename $i`
 	  s1=`sha256sum -b $i | cut -d' ' -f1`
 	  s2=`sha256sum -b ${FWK_DST_PATH}/include/${BN} | cut -d' ' -f1`
-	  if [ ${s1} != ${s2} ]
+	  if [ "${s1}" != "${s2}" ]
 	  then
 	      cp ${FWK_DST_PATH}/include/${BN} ${VAGRANT_DIR}
 	      if [ -f ${FWK_DST_PATH}/include/${BN}~ ]
@@ -74,7 +76,37 @@ do
     BN=`basename $i`
 	  s1=`sha256sum -b $i | cut -d' ' -f1`
 	  s2=`sha256sum -b ${FWK_DST_PATH}/src/${BN} | cut -d' ' -f1`
-	  if [ ${s1} != ${s2} ]
+	  if [ "${s1}" != "${s2}" ]
+	  then
+	      cp ${FWK_DST_PATH}/src/${BN} ${VAGRANT_DIR}
+	      if [ -f ${FWK_DST_PATH}/src/${BN}~ ]
+	      then
+		        rm ${FWK_DST_PATH}/src/${BN}~
+	      fi
+	  fi
+done
+FWK_DIR_LIST_Y=`find ${FWK_SRC_PATH}/Protocols/ -name "*.y" -type f`
+for i in ${FWK_DIR_LIST_Y}
+do
+    BN=`basename $i`
+	  s1=`sha256sum -b $i | cut -d' ' -f1`
+	  s2=`sha256sum -b ${FWK_DST_PATH}/src/${BN} | cut -d' ' -f1`
+	  if [ "${s1}" != "${s2}" ]
+	  then
+	      cp ${FWK_DST_PATH}/src/${BN} ${VAGRANT_DIR}
+	      if [ -f ${FWK_DST_PATH}/src/${BN}~ ]
+	      then
+		        rm ${FWK_DST_PATH}/src/${BN}~
+	      fi
+	  fi
+done
+FWK_DIR_LIST_L=`find ${FWK_SRC_PATH}/Protocols/ -name "*.l" -type f`
+for i in ${FWK_DIR_LIST_L}
+do
+    BN=`basename $i`
+	  s1=`sha256sum -b $i | cut -d' ' -f1`
+	  s2=`sha256sum -b ${FWK_DST_PATH}/src/${BN} | cut -d' ' -f1`
+	  if [ "${s1}" != "${s2}" ]
 	  then
 	      cp ${FWK_DST_PATH}/src/${BN} ${VAGRANT_DIR}
 	      if [ -f ${FWK_DST_PATH}/src/${BN}~ ]
@@ -90,7 +122,7 @@ do
     BN=`basename $i`
     s1=`sha256sum -b $i | cut -d' ' -f1`
     s2=`sha256sum -b ${FWK_DST_PATH}/include/${BN} | cut -d' ' -f1`
-    if [ ${s1} != ${s2} ]
+    if [ "${s1}" != "${s2}" ]
     then
 	      cp ${FWK_DST_PATH}/include/${BN} ${VAGRANT_DIR} 
 	      if [ -f ${FWK_DST_PATH}/include/${BN}~ ]
@@ -104,7 +136,7 @@ do
     BN=`basename $i`
     s1=`sha256sum -b $i | cut -d' ' -f1`
     s2=`sha256sum -b ${FWK_DST_PATH}/src/${BN} | cut -d' ' -f1`
-    if [ ${s1} != ${s2} ]
+    if [ "${s1}" != "${s2}" ]
     then
 	      cp ${FWK_DST_PATH}/src/${BN} ${VAGRANT_DIR}
 	      if [ -f ${FWK_DST_PATH}/src/${BN}~ ]
@@ -119,7 +151,7 @@ do
     BN=`basename $i`
     s1=`sha256sum -b $i | cut -d' ' -f1`
     s2=`sha256sum -b ${FWK_DST_PATH}/include/${BN} | cut -d' ' -f1`
-    if [ ${s1} != ${s2} ]
+    if [ "${s1}" != "${s2}" ]
     then
 	      cp ${FWK_DST_PATH}/include/${BN} ${VAGRANT_DIR}
 	      if [ -f ${FWK_DST_PATH}/include/${BN}~ ]
@@ -134,7 +166,7 @@ do
     BN=`basename $i`
     s1=`sha256sum -b $i | cut -d' ' -f1`
     s2=`sha256sum -b ${FWK_DST_PATH}/src/${BN} | cut -d' ' -f1`
-    if [ ${s1} != ${s2} ]
+    if [ "${s1}" != "${s2}" ]
     then
 	      cp ${FWK_DST_PATH}/src/${BN} ${VAGRANT_DIR}
 	      if [ -f ${FWK_DST_PATH}/src/${BN}~ ]
@@ -145,8 +177,8 @@ do
 done
 # Update ATS TTCN-3 files
 echo 'Update TTCN-3 files'
-TTCN_3_ORG_PATH=${SRC_EMTEL_PATH}/ttcn
-TTCN_3_DST_PATH=${PATH_DEV_EMTEL}/src
+TTCN_3_ORG_PATH=${SRC_EMCOM_PATH}/ttcn
+TTCN_3_DST_PATH=${PATH_DEV_EMCOM}/src
 TTCN_3_ATS_LIST='AtsPemea LibCommon'
 for i in ${TTCN_3_ATS_LIST}
 do
@@ -156,30 +188,30 @@ do
 	      BN=`basename $j`
 	      s1=`sha256sum -b $j | cut -d' ' -f1`
 	      s2=`sha256sum -b ${TTCN_3_DST_PATH}/$i/ttcn/${BN} | cut -d' ' -f1`
-	      if [ ${s1} != ${s2} ]
+	      if [ "${s1}" != "${s2}" ]
 	      then
 	          cp ${TTCN_3_DST_PATH}/$i/ttcn/${BN} ${VAGRANT_DIR}
 	      fi
     done
     # Other files
-    if [ -f ${SRC_EMTEL_PATH}/docs/$i/o2.cfg ]
+    if [ -f ${SRC_EMCOM_PATH}/docs/$i/o2.cfg ]
     then
-	      s1=`sha256sum -b ${PATH_DEV_EMTEL}/src/$i/docs/o2.cfg | cut -d' ' -f1`
-	      s2=`sha256sum -b ${SRC_EMTEL_PATH}/docs/$i/o2.cfg | cut -d' ' -f1`
-	      if [ ${s1} != ${s2} ]
+	      s1=`sha256sum -b ${PATH_DEV_EMCOM}/src/$i/docs/o2.cfg | cut -d' ' -f1`
+	      s2=`sha256sum -b ${SRC_EMCOM_PATH}/docs/$i/o2.cfg | cut -d' ' -f1`
+	      if [ "${s1}" != "${s2}" ]
 	      then
             mkdir -p ${VAGRANT_DIR}/docs/$i
-	          cp ${PATH_DEV_EMTEL}/src/$i/docs/o2.cfg ${VAGRANT_DIR}/docs/$i
+	          cp ${PATH_DEV_EMCOM}/src/$i/docs/o2.cfg ${VAGRANT_DIR}/docs/$i
 	      fi
     fi
-    if [ -f ${SRC_EMTEL_PATH}/etc/$i/$i.cfg ]
+    if [ -f ${SRC_EMCOM_PATH}/etc/$i/$i.cfg ]
     then
-	      s1=`sha256sum -b ${PATH_DEV_EMTEL}/src/$i/etc/$i.cfg | cut -d' ' -f1`
-	      s2=`sha256sum -b ${SRC_EMTEL_PATH}/etc/$i/$i.cfg | cut -d' ' -f1`
-	      if [ ${s1} != ${s2} ]
+	      s1=`sha256sum -b ${PATH_DEV_EMCOM}/src/$i/etc/$i.cfg | cut -d' ' -f1`
+	      s2=`sha256sum -b ${SRC_EMCOM_PATH}/etc/$i/$i.cfg | cut -d' ' -f1`
+	      if [ "${s1}" != "${s2}" ]
 	      then
             mkdir -p ${VAGRANT_DIR}/etc/$i
-	          cp ${PATH_DEV_EMTEL}/src/$i/etc/%i.cfg ${VAGRANT_DIR}/etc/$i
+	          cp ${PATH_DEV_EMCOM}/src/$i/etc/%i.cfg ${VAGRANT_DIR}/etc/$i
 	      fi
     fi
 done
@@ -193,7 +225,7 @@ do
 	      BN=`basename $j`
 	      s1=`sha256sum -b $j | cut -d' ' -f1`
 	      s2=`sha256sum -b ${TTCN_3_DST_PATH}/$i/ttcn/${BN} | cut -d' ' -f1`
-	      if [ ${s1} != ${s2} ]
+	      if [ "${s1}" != "${s2}" ]
 	      then
 	          cp ${TTCN_3_DST_PATH}/$i/ttcn/${BN} ${VAGRANT_DIR}
 	          rm ${TTCN_3_DST_PATH}/$i/ttcn/${BN}~
@@ -202,7 +234,7 @@ do
 done
 
 
-LIST_FILES=`find ${PATH_DEV_EMTEL} -name "*~" -type f`
+LIST_FILES=`find ${PATH_DEV_EMCOM} -name "*~" -type f`
 for i in ${LIST_FILES}
 do
     BN=$i

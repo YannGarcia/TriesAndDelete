@@ -3,7 +3,7 @@
 # Debug mode
 #set -evx
 
-# Usage: sudo ./update_project.bash
+# Usage: sudo ./merge_ite_project.bash
 # TODO Use git clone in temporary directory
 
 OLDPWD=`pwd`
@@ -82,6 +82,36 @@ do
 	          fi
 	      fi
     fi
+done
+FWK_DIR_LIST_Y=`find ${FWK_SRC_PATH}/Protocols/ -name "*.y" -type f`
+for i in ${FWK_DIR_LIST_Y}
+do
+    BN=`basename $i`
+	  s1=`sha256sum -b $i | cut -d' ' -f1`
+	  s2=`sha256sum -b ${FWK_DST_PATH}/src/${BN} | cut -d' ' -f1`
+	  if [ "${s1}" != "${s2}" ]
+	  then
+	      cp ${FWK_DST_PATH}/src/${BN} ${VAGRANT_DIR}
+	      if [ -f ${FWK_DST_PATH}/src/${BN}~ ]
+	      then
+		        rm ${FWK_DST_PATH}/src/${BN}~
+	      fi
+	  fi
+done
+FWK_DIR_LIST_L=`find ${FWK_SRC_PATH}/Protocols/ -name "*.l" -type f`
+for i in ${FWK_DIR_LIST_L}
+do
+    BN=`basename $i`
+	  s1=`sha256sum -b $i | cut -d' ' -f1`
+	  s2=`sha256sum -b ${FWK_DST_PATH}/src/${BN} | cut -d' ' -f1`
+	  if [ "${s1}" != "${s2}" ]
+	  then
+	      cp ${FWK_DST_PATH}/src/${BN} ${VAGRANT_DIR}
+	      if [ -f ${FWK_DST_PATH}/src/${BN}~ ]
+	      then
+		        rm ${FWK_DST_PATH}/src/${BN}~
+	      fi
+	  fi
 done
 FWK_DIR_LIST_HH=`find ${FWK_SRC_PATH}/Framework/ -name "*.h*" -type f`
 FWK_DIR_LIST_CC=`find ${FWK_SRC_PATH}/Framework/ -name "*.c*" -type f`

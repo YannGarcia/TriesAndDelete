@@ -27,7 +27,7 @@ then
     f_usage
 fi
 
-ATS_NAME=Pemea
+ATS_NAME=Pki
 
 #CURPWD=`pwd`
 if [ ! "${PWD##*/}" == "objs" ]
@@ -75,9 +75,9 @@ then
 
     if [ "${OSTYPE}" == "cygwin" ]
     then
-        asn1_compiler.exe ${ASN1_FILES}
+        asn1_compiler.exe -e ${ASN1_FILES}
     else
-        asn1_compiler ${ASN1_FILES}
+        asn1_compiler -e ${ASN1_FILES}
     fi
     if [ "$?" != "0" ]
     then
@@ -85,31 +85,31 @@ then
     fi
 fi
 
-REFERENCES="LibCommon LibIts/Common LibIts/BTP LibIts/GeoNetworking LibIts/Ipv6OverGeoNetworking LibIts/Security LibIts/CAM LibIts/DENM LibIts/IVIM LibIts/MapemSpatem LibIts/SremSsem"
+REFERENCES="LibCommon LibIts/Common LibIts/BTP LibIts/GeoNetworking LibIts/Ipv6OverGeoNetworking LibIts/Security LibIts/CAM LibIts/DENM LibIts/IVIM LibIts/MapemSpatem LibIts/SremSsem LibIts/Http LibItsPki"
 for i in ${REFERENCES}
 do
     # TTCN code
     for j in `find ${PATH_DEV_ITS}/src/$i/ttcn -type f -name "*.ttcn"`;
     do
-	      ln -sf $j ../ttcn/`basename $j`
+	ln -sf $j ../ttcn/`basename $j`
     done
     # Include source code
     files=`find ${PATH_DEV_ITS}/src/$i/include -type f`
     if [ "${files}" != " " ]
     then
-	      for j in ${files};
-	      do
-	          ln -sf $j ../include/`basename $j`
-	      done
+	for j in ${files};
+	do
+	    ln -sf $j ../include/`basename $j`
+	done
     fi
     # CC source code
     files=`find ${PATH_DEV_ITS}/src/$i/src -type f`
     if [ "${files}" != " " ]
     then
-	      for j in ${files};
-	      do
-	          ln -sf $j ../src/`basename $j`
-	      done
+	for j in ${files};
+	do
+	    ln -sf $j ../src/`basename $j`
+	done
     fi
 done
 
@@ -120,13 +120,13 @@ TTCN_FILES=`find .. -name '*.ttcn*'`
 if [ "${OSTYPE}" == "cygwin" ]
 then
     rm ../bin/*.exe ../lib/*.dll
-    compiler.exe -d -e -f -g -j -l -L -O -t -R -U none -x -X ${TTCN_FILES} ${ASN1_FILES} 2>&1 3>&1 | tee build.log
+    compiler.exe -d -e -f -g -j -l -L -t -R -U none -x -X ${TTCN_FILES} ${ASN1_FILES} 2>&1 3>&1 | tee build.log
     if [ "$?" == "1" ]
     then
         f_exit "Failed to compile ATS" 4
     fi
 else
-    compiler -d -e -f -g -l -L -O -t -R -U none -x -X ${TTCN_FILES} ${ASN1_FILES} 2>&1 3>&1 | tee build.log
+    compiler -d -e -f -g -l -L -t -R -U none -x -X ${TTCN_FILES} ${ASN1_FILES} 2>&1 3>&1 | tee build.log
     if [ "$?" == "1" ]
     then 
         f_exit "Failed to generate ATS source code" 6
@@ -180,33 +180,32 @@ fi
 # Patch ATS generated files
 #./bin/patch.bash 2>&1 3>&1 | tee --append build.log
 # Add compiler/linker options
-# -DASN_DISABLE_OER_SUPPORT is required for CAMCodec and DENMCodec
 if [ "$1" == "prof" ]
 then
     if [ "${OSTYPE}" == "cygwin" ]
     then
-        CXXFLAGS_DEBUG_MODE='s/-Wall/-pg -Wall -std=c++11 -D_XOPEN_SOURCE=700 -pthreads -fstack-check -fstack-protector/g'
+        CXXFLAGS_DEBUG_MODE='s/-Wall/-pg -Wall -std=c++11 -DAS_USE_SSL -D_XOPEN_SOURCE=700 -pthreads -fstack-check -fstack-protector/g'
     else
-        CXXFLAGS_DEBUG_MODE='s/-Wall/-pg -Wall -std=c++11 -pthreads -fstack-check -fstack-protector/g'
+        CXXFLAGS_DEBUG_MODE='s/-Wall/-pg -Wall -std=c++11 -DAS_USE_SSL -pthreads -fstack-check -fstack-protector/g'
     fi
     LDFLAGS_DEBUG_MODE='s/LDFLAGS = /LDFLAGS = -pg -pthread -fstack-check -fstack-protector/g'
 else
     if [ "${OSTYPE}" == "cygwin" ]
     then
-        CXXFLAGS_DEBUG_MODE='s/-Wall/-ggdb -O0 -Wall -std=c++11 -D_XOPEN_SOURCE=700 -pthread -fstack-check -fstack-protector/g'
+        CXXFLAGS_DEBUG_MODE='s/-Wall/-ggdb -O0 -Wall -std=c++11 -DAS_USE_SSL -D_XOPEN_SOURCE=700 -pthread -fstack-check -fstack-protector/g'
     else
-        CXXFLAGS_DEBUG_MODE='s/-Wall/-ggdb -O0 -Wall -std=c++11 -pthread -fstack-check -fstack-protector/g'
+        CXXFLAGS_DEBUG_MODE='s/-Wall/-ggdb -O0 -Wall -std=c++11 -DAS_USE_SSL -pthread -fstack-check -fstack-protector/g'
     fi
     LDFLAGS_DEBUG_MODE='s/LDFLAGS = /LDFLAGS = -g -pthread -fstack-check -fstack-protector/g'
 fi
-ADD_INCLUDE='/CPPFLAGS = /a\\CPPFLAGS += -I/usr/local/share -I$(PATH_DEV_ITS)/include -I$(PATH_DEV_ITS)/include/asn1 -I$(PATH_DEV_ITS)/framework/include -I../include -I../../LibIts/Common/include -I../../LibIts/GeoNetworking/include -I$(HOME_INC) -I.'
-ADD_LIBRARIES='s/LINUX_LIBS = -lxml2/LINUX_LIBS = -lrt -lxml2 -lstdc++fs -lpcap -L$(PATH_DEV_ITS)\/lib -lItsAsn /g'
+ADD_INCLUDE='/CPPFLAGS = /a\\CPPFLAGS += -I/usr/local/share -I$(PATH_DEV_ITS)/include -I$(PATH_DEV_ITS)/include/asn1 -I$(PATH_DEV_ITS)/framework/include -I../include -I../../LibIts/Common/include -I../../LibIts/BTP/include -I../../LibIts/CAM/include -I../../LibIts/DENM/include -I$(HOME_INC) -I.'
+ADD_LIBRARIES='s/LINUX_LIBS = -lxml2/LINUX_LIBS = -lrt -lxml2 -lssl -lstdc++fs -lpcap -L$(PATH_DEV_ITS)\/lib -lItsAsn /g'
 sed --in-place "${CXXFLAGS_DEBUG_MODE}" ./Makefile 
 sed --in-place "${LDFLAGS_DEBUG_MODE}" ./Makefile
 sed --in-place "${ADD_INCLUDE}" ./Makefile
 sed --in-place "${ADD_LIBRARIES}" ./Makefile
 # Update COMPILER_FLAGS
-COMPILER_FLAGS='s/COMPILER_FLAGS = /COMPILER_FLAGS = -e -O /g'
+COMPILER_FLAGS='s/COMPILER_FLAGS = /COMPILER_FLAGS = -e /g'
 sed --in-place "${COMPILER_FLAGS}" ./Makefile
 # Update clean clause
 CLEAN_LINE='s/$(RM) $(EXECUTABLE)/$(RM) ..\/bin\/$(EXECUTABLE) ..\/src\/*.o/g'
@@ -232,11 +231,13 @@ ADD_RUN_LINE_1='$arun_v: all'
 ADD_RUN_LINE_2='$a\\t@sudo LD_LIBRARY_PATH=$(LD_LIBRARY_PATH) valgrind -v --tool=memcheck --leak-check=yes --show-reachable=yes --track-fds=yes --run-cxx-freeres=yes $(PWD)/../bin/$(EXECUTABLE) $(HOST) $(PORT)'
 sed --in-place "${ADD_RUN_LINE_1}" ./Makefile 
 sed --in-place "${ADD_RUN_LINE_2}" ./Makefile 
-# Add gendoc entry
-ADD_RUN_LINE_1='$agendoc: ../docs/o2.cfg'
+# Add Doxygen entry
+ADD_RUN_LINE_1='$agendoc:'
 ADD_RUN_LINE_2='$a\\tdoxygen ../docs/o2.cfg'
+ADD_RUN_LINE_3='$a\\tmandb ../docs/man'
 sed --in-place "${ADD_RUN_LINE_1}" ./Makefile 
 sed --in-place "${ADD_RUN_LINE_2}" ./Makefile 
+sed --in-place "${ADD_RUN_LINE_3}" ./Makefile 
 
 # Build all
 make all 2>&1 3>&1 | tee --append build.log

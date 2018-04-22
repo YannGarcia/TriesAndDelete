@@ -100,6 +100,8 @@ ln -sf $TOP/../titan.TestPorts.Common_Components.Abstract_Socket/src/Abstract_So
 FWK_DIR_LIST_HH=`find ${FWK_SRC_PATH}/Protocols/ -name "*.h*" -type f`
 FWK_DIR_LIST_THH=`find ${FWK_SRC_PATH}/Protocols/ -name "*.t.h*" -type f`
 FWK_DIR_LIST_CC=`find ${FWK_SRC_PATH}/Protocols/ -name "*.c*" -type f`
+FWK_DIR_LIST_L=`find ${FWK_SRC_PATH}/Protocols/ -name "*.l" -type f`
+FWK_DIR_LIST_Y=`find ${FWK_SRC_PATH}/Protocols/ -name "*.y" -type f`
 for i in ${FWK_DIR_LIST_HH}
 do
     if [ `basename $i` != BTPPort.hh ]
@@ -121,6 +123,20 @@ do
 	      cp $i ${FWK_DST_PATH}/src
     fi
 done
+if [ "${FWK_DIR_LIST_L}" != "" ]
+then
+    for i in ${FWK_DIR_LIST_L}
+    do
+	      cp $i ${FWK_DST_PATH}/src
+    done
+fi
+if [ "${FWK_DIR_LIST_Y}" != "" ]
+then
+    for i in ${FWK_DIR_LIST_Y}
+    do
+	      cp $i ${FWK_DST_PATH}/src
+    done
+fi
 FWK_DIR_LIST_HH=`find ${FWK_SRC_PATH}/Framework/ -name "*.h*" -type f`
 FWK_DIR_LIST_CC=`find ${FWK_SRC_PATH}/Framework/ -name "*.c*" -type f`
 for i in ${FWK_DIR_LIST_HH}
@@ -157,7 +173,7 @@ echo 'Update TTCN-3 files'
 TTCN_3_ORG_PATH=${SRC_ITS_PATH}/ttcn
 TTCN_3_DST_PATH=${PATH_DEV_ITS}/src
 CC_SRC_PATH=${SRC_ITS_PATH}/ccsrc
-TTCN_3_ATS_LIST='AtsAutoInterop AtsCAM AtsDENM AtsBTP AtsGeoNetworking AtsSecurity AtsRSUsSimulator LibCommon TestCodec AtsGenCert'
+TTCN_3_ATS_LIST='AtsAutoInterop AtsCAM AtsDENM AtsBTP AtsGeoNetworking AtsSecurity AtsRSUsSimulator LibCommon TestCodec AtsGenCert AtsPki'
 for i in ${TTCN_3_ATS_LIST}
 do
     if [ ! -d ${TTCN_3_DST_PATH}/$i ]
@@ -171,7 +187,7 @@ do
 done
 
 # Update libraries & CC files
-TTCN_3_LIB_LIST='Common BTP CAM DENM GeoNetworking Ipv6OverGeoNetworking Security MapemSpatem IVIM SremSsem AtsRSUsSimulator Http'
+TTCN_3_LIB_LIST='Common BTP CAM DENM GeoNetworking Ipv6OverGeoNetworking Security MapemSpatem IVIM SremSsem AtsRSUsSimulator Http Pki'
 for i in ${TTCN_3_LIB_LIST}
 do
     if [ ! -d ${TTCN_3_DST_PATH}/LibIts/$i ]
@@ -225,6 +241,10 @@ do
     then
 	      cp ${CC_SRC_PATH}/EncDec/LibItsSecurity_Encdec.cc ${TTCN_3_DST_PATH}/LibIts/$i/src
 	      cp ${CC_SRC_PATH}/Externals/LibItsSecurity_externals.cc ${TTCN_3_DST_PATH}/LibIts/$i/src
+    elif [ "$i" == "Pki" ]
+    then
+	      cp ${CC_SRC_PATH}/EncDec/LibItsSecurity_Encdec.cc ${TTCN_3_DST_PATH}/LibIts/$i/src
+	      cp ${CC_SRC_PATH}/Externals/LibItsSecurity_externals.cc ${TTCN_3_DST_PATH}/LibIts/$i/src
     elif [ "$i" == "MapemSpatem" ]
     then
 	      cp ${CC_SRC_PATH}/EncDec/LibItsMapemSpatem_Encdec.cc ${TTCN_3_DST_PATH}/LibIts/$i/src
@@ -253,6 +273,26 @@ do
 	      cp ${CC_SRC_PATH}/Ports/LibIts_ports/RSUsSimulator_ports/*.hh ${TTCN_3_DST_PATH}/$i/include
     fi
 done
+
+# Generate Bison parsers is any
+cd ${FWK_DST_PATH}/src
+if [ "${FWK_DIR_LIST_Y}" != "" ]
+then
+    for i in ${FWK_DIR_LIST_Y}
+    do
+        BASE_NAME=$(basename "$i" .y)
+        bison ${BASE_NAME}.y --defines=../include/${BASE_NAME}.h -o${BASE_NAME}.c
+    done
+fi
+if [ "${FWK_DIR_LIST_L}" != "" ]
+then
+    for i in ${FWK_DIR_LIST_L}
+    do
+        BASE_NAME=$(basename "$i" .l)
+        lex -o${BASE_NAME}_flex.c ${BASE_NAME}.l
+    done
+fi
+cd -
 
 # Apply patches
 PATH_PATCHES=`pwd`/etsi_its_patches
