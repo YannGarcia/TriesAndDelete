@@ -49,6 +49,7 @@ then
     then
 	      mv ${HOME}/tmp/emcom.tar.bz2 ${HOME}/tmp/emcom.tar.`date +'%Y%m%d'`.bz2
     fi
+    find ${PATH_DEV_EMCOM} -name "*.o" -exec rm {} \;
     tar jcvf ${HOME}/tmp/emcom.tar.bz2 ${PATH_DEV_EMCOM}
     rm -fr ${PATH_DEV_EMCOM}
 fi
@@ -191,6 +192,7 @@ then
     cp ${PATH_PATCHES}/ng112.bash ${PATH_DEV_EMCOM}/src/AtsNg112/bin
     cp ${PATH_PATCHES}/../run_mtc.bash ${PATH_DEV_EMCOM}/src/AtsNg112/bin
     cp ${PATH_PATCHES}/../run_ptcs.bash ${PATH_DEV_EMCOM}/src/AtsNg112/bin
+    cp ${PATH_PATCHES}/../run_all.bash ${PATH_DEV_EMCOM}/src/AtsNg112/bin
 fi
 
 # Set rights
