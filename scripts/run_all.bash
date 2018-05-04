@@ -1,8 +1,15 @@
 #!/bin/bash
-set -e
+#set -e
 #set -vx
 
 clear
+
+if ! [[ $1 =~ "^[0-9]+$" ]]
+then
+    COUNTER=$1
+else
+    COUNTER=1
+fi
 
 CURPWD=`pwd`
 if [ ! "${PWD##*/}" == "objs" ]
@@ -15,9 +22,23 @@ then
     fi
 fi
 
-../bin/run_mtc.bash &
+rm ../logs/merged.log.*
 
-../bin/run_ptcs.bash
+for i in $(seq 1 1 $COUNTER)
+do
+    ../bin/run_mtc.bash &
+    ../bin/run_ptcs.bash
+
+    dup=$(ps -ef | grep "$0" | grep -v grep | wc -l)
+    while [ ${dup} -eq 3 ]
+    do
+        sleep 1
+        dup=$(ps -ef | grep "$0" | grep -v grep | wc -l)
+    done
+    sleep 1
+    
+    mv ../logs/merged.log ../logs/merged.log.`date +'%Y%m%d%S'`
+done
 
 exit 0
 
