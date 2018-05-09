@@ -1,5 +1,6 @@
 #!/bin/bash
-#set -evx
+#set -e
+#set -vx
 
 clear
 
