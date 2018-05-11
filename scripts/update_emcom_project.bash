@@ -2,7 +2,7 @@
 
 # Debug mode
 #set -e
-set -vx
+#set -vx
 
 # Usage: sudo ./update_emcom_project.bash
 # TODO Use git clone in temporary directory
@@ -123,7 +123,7 @@ echo 'Update TTCN-3 files'
 TTCN_3_ORG_PATH=${SRC_EMCOM_PATH}/ttcn
 TTCN_3_DST_PATH=${PATH_DEV_EMCOM}/src
 CC_SRC_PATH=${SRC_EMCOM_PATH}/ccsrc
-TTCN_3_ATS_LIST='AtsNg112'
+TTCN_3_ATS_LIST='AtsNg112 TestCodec'
 for i in ${TTCN_3_ATS_LIST}
 do
     if [ ! -d ${TTCN_3_DST_PATH}/$i ]
@@ -156,7 +156,7 @@ do
         cp ${TTCN_3_ORG_PATH}/$i/ttcn/*.ttcn ${TTCN_3_DST_PATH}/$i/ttcn
         cp ${TTCN_3_ORG_PATH}/$i/xsd/*.xsd ${TTCN_3_DST_PATH}/$i/xsd
         cp ${TTCN_3_ORG_PATH}/$i/xsd/*.ttcn ${TTCN_3_DST_PATH}/$i/ttcn
-	      cp ${CC_SRC_PATH}/EncDec/LibSip_Encdec.cc ${TTCN_3_DST_PATH}/$i/src
+	      cp ${CC_SRC_PATH}/EncDec/$i/*_Encdec.cc ${TTCN_3_DST_PATH}/$i/src
 	      cp ${CC_SRC_PATH}/Ports/$i/*.hh ${TTCN_3_DST_PATH}/$i/include
 	      cp ${CC_SRC_PATH}/Ports/$i/*.cc ${TTCN_3_DST_PATH}/$i/src
 	      cp ${CC_SRC_PATH}/include/$i/*.hh ${TTCN_3_DST_PATH}/$i/include
@@ -165,25 +165,25 @@ do
 done
 
 # Generate Bison parsers is any
-cd ${FWK_DST_PATH}/src
-if [ "${FWK_DIR_LIST_Y}" != "" ]
-then
-    for i in ${FWK_DIR_LIST_Y}
-    do
-        BASE_NAME=$(basename "$i" .y)
-        bison -dv -p${BASE_NAME}_ -b${BASE_NAME}_ ${BASE_NAME}.y #--defines=../include/${BASE_NAME}.h -o${BASE_NAME}.c
-    done
-fi
-if [ "${FWK_DIR_LIST_L}" != "" ]
-then
-    for i in ${FWK_DIR_LIST_L}
-    do
-        BASE_NAME=$(basename "$i" .l)
-        flex -Cfr -8 -Bvpp -P${BASE_NAME}_ ${BASE_NAME}.l  # -o${BASE_NAME}_flex.c ${BASE_NAME}.l
-    done
-    mv ${BASE_NAME}_.tab.h ../include
-fi
-cd -
+#cd ${FWK_DST_PATH}/src
+#if [ "${FWK_DIR_LIST_Y}" != "" ]
+#then
+#    for i in ${FWK_DIR_LIST_Y}
+#    do
+#        BASE_NAME=$(basename "$i" .y)
+#        bison -dv -p${BASE_NAME}_ -b${BASE_NAME}_ ${BASE_NAME}.y #--defines=../include/${BASE_NAME}.h -o${BASE_NAME}.c
+#    done
+#fi
+#if [ "${FWK_DIR_LIST_L}" != "" ]
+#then
+#    for i in ${FWK_DIR_LIST_L}
+#    do
+#        BASE_NAME=$(basename "$i" .l)
+#        flex -Cfr -8 -Bvpp -P${BASE_NAME}_ ${BASE_NAME}.l  # -o${BASE_NAME}_flex.c ${BASE_NAME}.l
+#    done
+#    mv ${BASE_NAME}_.tab.h ../include
+#fi
+#cd -
 
 # Apply patches
 PATH_PATCHES=`pwd`/etsi_emcom_patches
