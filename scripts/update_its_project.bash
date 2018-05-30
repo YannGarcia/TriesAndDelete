@@ -242,6 +242,11 @@ do
     then
 	      cp ${CC_SRC_PATH}/EncDec/LibItsSecurity_Encdec.cc ${TTCN_3_DST_PATH}/LibIts/$i/src
 	      cp ${CC_SRC_PATH}/Externals/LibItsSecurity_externals.cc ${TTCN_3_DST_PATH}/LibIts/$i/src
+    elif [ "$i" == "Http" ]
+    then
+	      cp ${CC_SRC_PATH}/EncDec/LibItsHttp_Encdec.cc ${TTCN_3_DST_PATH}/LibIts/$i/src
+	      cp ${CC_SRC_PATH}/Ports/LibIts_ports/Http_ports/*.cc ${TTCN_3_DST_PATH}/LibIts/$i/src
+	      cp ${CC_SRC_PATH}/Ports/LibIts_ports/Http_ports/*.hh ${TTCN_3_DST_PATH}/LibIts/$i/include
     elif [ "$i" == "Pki" ]
     then
 	      cp ${CC_SRC_PATH}/EncDec/LibItsSecurity_Encdec.cc ${TTCN_3_DST_PATH}/LibIts/$i/src

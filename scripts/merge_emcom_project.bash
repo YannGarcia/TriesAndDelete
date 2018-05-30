@@ -179,9 +179,10 @@ done
 echo 'Update TTCN-3 files'
 TTCN_3_ORG_PATH=${SRC_EMCOM_PATH}/ttcn
 TTCN_3_DST_PATH=${PATH_DEV_EMCOM}/src
-TTCN_3_ATS_LIST='AtsPemea LibCommon'
+TTCN_3_ATS_LIST='AtsNg112 LibEmcom/LibNg112 LibCommon LibSip LibItsHttp'
 for i in ${TTCN_3_ATS_LIST}
 do
+    # TTCN-3 files
     LIST_TTCN_FILES=`find ${TTCN_3_ORG_PATH}/$i -name "*.ttcn" -type f`
     for j in ${LIST_TTCN_FILES}
     do
@@ -191,6 +192,18 @@ do
 	      if [ "${s1}" != "${s2}" ]
 	      then
 	          cp ${TTCN_3_DST_PATH}/$i/ttcn/${BN} ${VAGRANT_DIR}
+	      fi
+    done
+    # XSD files
+    LIST_TTCN_FILES=`find ${TTCN_3_ORG_PATH}/$i -name "*.xsd" -type f`
+    for j in ${LIST_TTCN_FILES}
+    do
+	      BN=`basename $j`
+	      s1=`sha256sum -b $j | cut -d' ' -f1`
+	      s2=`sha256sum -b ${TTCN_3_DST_PATH}/$i/ttcn/${BN} | cut -d' ' -f1`
+	      if [ "${s1}" != "${s2}" ]
+	      then
+	          cp ${TTCN_3_DST_PATH}/$i/xsd/${BN} ${VAGRANT_DIR}
 	      fi
     done
     # Other files

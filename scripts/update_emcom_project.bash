@@ -2,7 +2,7 @@
 
 # Debug mode
 #set -e
-#set -vx
+set -vx
 
 # Usage: sudo ./update_emcom_project.bash
 # TODO Use git clone in temporary directory
@@ -145,9 +145,12 @@ do
 	      mkdir -p ${TTCN_3_DST_PATH}/$i/docs ${TTCN_3_DST_PATH}/$i/src ${TTCN_3_DST_PATH}/$i/include ${TTCN_3_DST_PATH}/$i/ttcn ${TTCN_3_DST_PATH}/$i/xsd
     fi
     cp ${TTCN_3_ORG_PATH}/$i/*.ttcn ${TTCN_3_DST_PATH}/$i/ttcn
-    # Update CC files
-    if [ "$i" == "LibNg112" ]
+    # Update files
+    if [ "$i" == "LibEmcom/LibNg112" ]
     then
+        cp ${TTCN_3_ORG_PATH}/$i/ttcn/*.ttcn ${TTCN_3_DST_PATH}/$i/ttcn
+        cp ${TTCN_3_ORG_PATH}/$i/xsd/*.xsd ${TTCN_3_DST_PATH}/$i/xsd
+        cp ${TTCN_3_ORG_PATH}/$i/xsd/*.ttcn ${TTCN_3_DST_PATH}/$i/ttcn
 	      cp ${CC_SRC_PATH}/include/$i/*.hh ${TTCN_3_DST_PATH}/$i/include
 	      cp ${CC_SRC_PATH}/src/$i/*.cc ${TTCN_3_DST_PATH}/$i/src
     fi
@@ -156,6 +159,15 @@ do
         cp ${TTCN_3_ORG_PATH}/$i/ttcn/*.ttcn ${TTCN_3_DST_PATH}/$i/ttcn
         cp ${TTCN_3_ORG_PATH}/$i/xsd/*.xsd ${TTCN_3_DST_PATH}/$i/xsd
         cp ${TTCN_3_ORG_PATH}/$i/xsd/*.ttcn ${TTCN_3_DST_PATH}/$i/ttcn
+	      cp ${CC_SRC_PATH}/EncDec/$i/*_Encdec.cc ${TTCN_3_DST_PATH}/$i/src
+	      cp ${CC_SRC_PATH}/Ports/$i/*.hh ${TTCN_3_DST_PATH}/$i/include
+	      cp ${CC_SRC_PATH}/Ports/$i/*.cc ${TTCN_3_DST_PATH}/$i/src
+	      cp ${CC_SRC_PATH}/include/$i/*.hh ${TTCN_3_DST_PATH}/$i/include
+	      cp ${CC_SRC_PATH}/src/$i/*.cc ${TTCN_3_DST_PATH}/$i/src
+    fi
+    if [ "$i" == "LibHttp" ]
+    then
+        cp ${TTCN_3_ORG_PATH}/$i/*.ttcn ${TTCN_3_DST_PATH}/$i/ttcn
 	      cp ${CC_SRC_PATH}/EncDec/$i/*_Encdec.cc ${TTCN_3_DST_PATH}/$i/src
 	      cp ${CC_SRC_PATH}/Ports/$i/*.hh ${TTCN_3_DST_PATH}/$i/include
 	      cp ${CC_SRC_PATH}/Ports/$i/*.cc ${TTCN_3_DST_PATH}/$i/src
@@ -189,10 +201,16 @@ done
 PATH_PATCHES=`pwd`/etsi_emcom_patches
 if [ -d ${PATH_PATCHES} ]
 then
+    # Update Ng112
     cp ${PATH_PATCHES}/ng112.bash ${PATH_DEV_EMCOM}/src/AtsNg112/bin
     cp ${PATH_PATCHES}/../run_mtc.bash ${PATH_DEV_EMCOM}/src/AtsNg112/bin
     cp ${PATH_PATCHES}/../run_ptcs.bash ${PATH_DEV_EMCOM}/src/AtsNg112/bin
     cp ${PATH_PATCHES}/../run_all.bash ${PATH_DEV_EMCOM}/src/AtsNg112/bin
+    # Update TestCodec
+    cp ${PATH_PATCHES}/testcodec_generate_makefile.bash ${PATH_DEV_EMCOM}/src/TestCodec/bin
+    cp ${PATH_PATCHES}/../run_mtc.bash ${PATH_DEV_EMCOM}/src/TestCodec/bin
+    cp ${PATH_PATCHES}/../run_ptcs.bash ${PATH_DEV_EMCOM}/src/TestCodec/bin
+    cp ${PATH_PATCHES}/../run_all.bash ${PATH_DEV_EMCOM}/src/TestCodec/bin
 fi
 
 # Set rights
