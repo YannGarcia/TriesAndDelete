@@ -60,6 +60,15 @@ then
     mkdir -p ${PATH_DEV_EMCOM}/xsd ${PATH_DEV_EMCOM}/framework ${PATH_DEV_EMCOM}/include ${PATH_DEV_EMCOM}/bin ${PATH_DEV_EMCOM}/lib ${PATH_DEV_EMCOM}/objs ${PATH_DEV_EMCOM}/src ${PATH_DEV_EMCOM}/docs
 fi
 
+# Install external libraries
+if [ ! -d ${HOME_FRAMEWORKS} ]
+then
+    mkdir -p ${PATH_DEV_EMCOM}/xsd ${PATH_DEV_EMCOM}/framework ${PATH_DEV_EMCOM}/include ${PATH_DEV_EMCOM}/bin ${PATH_DEV_EMCOM}/lib ${PATH_DEV_EMCOM}/objs ${PATH_DEV_EMCOM}/src ${PATH_DEV_EMCOM}/docs
+fi
+
+
+
+
 # Update XSD files
 echo 'Updating XSD files'
 XSD_SRC_PATH=${SRC_EMCOM_PATH}/xsd

@@ -106,13 +106,13 @@ TTCN_FILES=`find .. -name '*.ttcn*'`
 if [ "${OSTYPE}" == "cygwin" ]
 then
     rm ../bin/*.exe ../lib/*.dll
-    compiler.exe -e -f -g -l -L -M -O -t -R -U none ${TTCN_FILES} 2>&1 3>&1 | tee build.log
+    compiler.exe -e -f -g -l -L -M -n -O -t -R -U none ${TTCN_FILES} 2>&1 3>&1 | tee build.log
     if [ "$?" == "1" ]
     then
         f_exit "Failed to compile ATS" 4
     fi
 else
-    compiler -e -f -g -l -L -M -O -t -R -U none ${TTCN_FILES} 2>&1 3>&1 | tee build.log
+    compiler -e -f -g -l -L -M -n -O -t -R -U none ${TTCN_FILES} 2>&1 3>&1 | tee build.log
     if [ "$?" == "1" ]
     then 
         f_exit "Failed to generate ATS source code" 6
@@ -192,8 +192,8 @@ else
     fi
     LDFLAGS_DEBUG_MODE='s/LDFLAGS = /LDFLAGS = -g -pthread -fstack-check -fstack-protector/g'
 fi
-ADD_INCLUDE='/CPPFLAGS = /a\\CPPFLAGS += -I/usr/local/share -I$(PATH_DEV_EMCOM)/include -I$(PATH_DEV_EMCOM)/framework/include -I../include -I../../LibEmcom/Common/include -I../../LibEmcom/LibPemea/include -I$(HOME_INC) -I.'
-ADD_LIBRARIES='s/LINUX_LIBS = -lxml2/LINUX_LIBS = -lrt -lxml2 -lpcap -lstdc++fs -lssl/g'
+ADD_INCLUDE='/CPPFLAGS = /a\\CPPFLAGS += -I/usr/local/share -I$(PATH_DEV_EMCOM)/include -I$(PATH_DEV_EMCOM)/framework/include -I../include -I../../LibEmcom/Common/include -I../../LibEmcom/LibNg112/include -I$(HOME_FRAMEWORKS)/osip/include -I$(HOME_INC) -I.'
+ADD_LIBRARIES='s/LINUX_LIBS = -lxml2/LINUX_LIBS = -lrt -lxml2 -lpcap -lstdc++fs -lssl -L\$\(HOME_FRAMEWORKS\)\/osip\/src\/osipparser2\/\.libs -losipparser2/g'
 sed --in-place "${CXXFLAGS_DEBUG_MODE}" ./Makefile 
 sed --in-place "${LDFLAGS_DEBUG_MODE}" ./Makefile
 sed --in-place "${ADD_INCLUDE}" ./Makefile
