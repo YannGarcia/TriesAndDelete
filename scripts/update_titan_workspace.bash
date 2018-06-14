@@ -1,10 +1,25 @@
 #!/bin/bash
-#set -xv
+set -xv
 #set -e
 
 if [ ! -d /media/sf_F_DRIVE/FSCOM/ETSI/ITS/STF525_Auto_Interop/workspace_titan/STF525_Auto_Interop ]
 then
+    if [ -! -d $HOME/tmp/STF525 ]
+    then
+        exit -1
+    else
+        ORG_PATH=$HOME/tmp/STF525
+    fi
+else
+    ORG_PATH=/media/sf_F_DRIVE/FSCOM/ETSI/ITS/STF525_Auto_Interop/workspace_titan/STF525_Auto_Interop
+fi
+if [ "$ORG_PATH" == "" ]
+then
     exit -1
+fi
+if [ ! -d ${HOME}/tmp/workspace_titan/STF525_Auto_Interop/src ]
+then
+    mkdir -p ${HOME}/tmp/workspace_titan/STF525_Auto_Interop/src
 fi
 cd ${HOME}/tmp/workspace_titan/STF525_Auto_Interop/src
 
@@ -28,17 +43,17 @@ fi
 find . -name ".o" -type f -exec rm {} \;
 
 # Copy configuration files
-cp -Rp /media/sf_F_DRIVE/FSCOM/ETSI/ITS/STF525_Auto_Interop/workspace_titan/STF525_Auto_Interop/src/etc .
+cp -Rp ${ORG_PATH}/src/etc .
 # Copy testdata files
-cp -Rp /media/sf_F_DRIVE/FSCOM/ETSI/ITS/STF525_Auto_Interop/workspace_titan/STF525_Auto_Interop/src/testdata .
+cp -Rp ${ORG_PATH}/src/testdata .
 # Copy source files
-cp -Rp /media/sf_F_DRIVE/FSCOM/ETSI/ITS/STF525_Auto_Interop/workspace_titan/STF525_Auto_Interop/src/ccsrc/ .
+cp -Rp ${ORG_PATH}/src/ccsrc/ .
 # Create link to TITAN Abstract_Socket
 ln -sf $TOP/../titan.TestPorts.Common_Components.Abstract_Socket/src/Abstract_Socket.cc ./ccsrc/Protocols/Tcp/Abstract_Socket.cc
 ln -sf $TOP/../titan.TestPorts.Common_Components.Abstract_Socket/src/Abstract_Socket.hh ./ccsrc/Protocols/Tcp/Abstract_Socket.hh
 # Copy TTCN-3 files
-cp -Rp /media/sf_F_DRIVE/FSCOM/ETSI/ITS/STF525_Auto_Interop/workspace_titan/STF525_Auto_Interop/src/ttcn/ .
-cp -Rp /media/sf_F_DRIVE/FSCOM/ETSI/ITS/STF525_Auto_Interop/workspace_titan/STF525_Auto_Interop/src/asn1/ .
+cp -Rp ${ORG_PATH}/src/ttcn/ .
+cp -Rp ${ORG_PATH}/src/asn1/ .
 # Remove origine ASN.1 file for IS/ISO-TS-19091
 if [ -d ./asn1/LibIts/IS/ISO_TS_19091/original ]
 then

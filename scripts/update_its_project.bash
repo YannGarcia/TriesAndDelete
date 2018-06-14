@@ -350,6 +350,11 @@ then
     cp ${PATH_PATCHES}/../run_mtc.bash ${PATH_DEV_ITS}/src/TestCodec/bin
     cp ${PATH_PATCHES}/../run_ptcs.bash ${PATH_DEV_ITS}/src/TestCodec/bin
     cp ${PATH_PATCHES}/../run_all.bash ${PATH_DEV_ITS}/src/TestCodec/bin
+    # Update Pki
+    cp ${PATH_PATCHES}/pki_generate_makefile.bash ${PATH_DEV_ITS}/src/AtsPki/bin
+    cp ${PATH_PATCHES}/../run_mtc.bash ${PATH_DEV_ITS}/src/AtsPki/bin
+    cp ${PATH_PATCHES}/../run_ptcs.bash ${PATH_DEV_ITS}/src/AtsPki/bin
+    cp ${PATH_PATCHES}/../run_all.bash ${PATH_DEV_ITS}/src/AtsPki/bin
 fi
 
 # Set rights
