@@ -178,19 +178,19 @@ if [ "$1" == "prof" ]
 then
     if [ "${OSTYPE}" == "cygwin" ]
     then
-        CXXFLAGS_DEBUG_MODE='s/-Wall/-pg -Wall -std=c++11 -D_XOPEN_SOURCE=700 -DAS_USE_SSL -pthreads -fstack-check -fstack-protector/g'
+        CXXFLAGS_DEBUG_MODE='s/-Wall/-pg -Wall -std=c++11 -D_XOPEN_SOURCE=700 -DAS_USE_SSL -pthreads -fstack-check -fstack-protector -fsanitize=leak -fsanitize=address -fno-omit-frame-pointer/g'
     else
-        CXXFLAGS_DEBUG_MODE='s/-Wall/-pg -Wall -std=c++11 -DAS_USE_SSL -pthreads -fstack-check -fstack-protector/g'
+        CXXFLAGS_DEBUG_MODE='s/-Wall/-pg -Wall -std=c++11 -DAS_USE_SSL -pthreads -fstack-check -fstack-protector -fsanitize=leak -fsanitize=address -fno-omit-frame-pointer/g'
     fi
-    LDFLAGS_DEBUG_MODE='s/LDFLAGS = /LDFLAGS = -pg -pthread -fstack-check -fstack-protector/g'
+    LDFLAGS_DEBUG_MODE='s/LDFLAGS = /LDFLAGS = -pg -pthread -fstack-check -fstack-protector -fsanitize=leak -fsanitize=address -fno-omit-frame-pointer/g'
 else
     if [ "${OSTYPE}" == "cygwin" ]
     then
-        CXXFLAGS_DEBUG_MODE='s/-Wall/-ggdb -O0 -Wall -std=c++11 -DAS_USE_SSL -D_XOPEN_SOURCE=700 -pthread -fstack-check -fstack-protector/g'
+        CXXFLAGS_DEBUG_MODE='s/-Wall/-ggdb -O0 -Wall -std=c++11 -DAS_USE_SSL -D_XOPEN_SOURCE=700 -pthread -fstack-check -fstack-protector -fsanitize=leak -fsanitize=address -fno-omit-frame-pointer/g'
     else
-        CXXFLAGS_DEBUG_MODE='s/-Wall/-ggdb -O0 -Wall -std=c++11 -DAS_USE_SSL -pthread -fstack-check -fstack-protector/g'
+        CXXFLAGS_DEBUG_MODE='s/-Wall/-ggdb -O0 -Wall -std=c++11 -DAS_USE_SSL -pthread -fstack-check -fstack-protector -fsanitize=leak -fsanitize=address -fno-omit-frame-pointer/g'
     fi
-    LDFLAGS_DEBUG_MODE='s/LDFLAGS = /LDFLAGS = -g -pthread -fstack-check -fstack-protector/g'
+    LDFLAGS_DEBUG_MODE='s/LDFLAGS = /LDFLAGS = -g -pthread -fstack-check -fstack-protector -fsanitize=address -fno-omit-frame-pointer -fsanitize=leak -fsanitize=address -fno-omit-frame-pointer/g'
 fi
 ADD_INCLUDE='/CPPFLAGS = /a\\CPPFLAGS += -I/usr/local/share -I$(PATH_DEV_EMCOM)/include -I$(PATH_DEV_EMCOM)/framework/include -I../include -I../../LibEmcom/Common/include -I../../LibEmcom/LibNg112/include -I$(HOME_FRAMEWORKS)/osip/include -I$(HOME_INC) -I.'
 ADD_LIBRARIES='s/LINUX_LIBS = -lxml2/LINUX_LIBS = -lrt -lxml2 -lpcap -lstdc++fs -lssl -L\$\(HOME_FRAMEWORKS\)\/osip\/src\/osipparser2\/\.libs -losipparser2/g'

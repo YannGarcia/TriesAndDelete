@@ -105,13 +105,13 @@ TTCN_FILES=`find .. -name '*.ttcn*'`
 if [ "${OSTYPE}" == "cygwin" ]
 then
     rm ../bin/*.exe ../lib/*.dll
-    compiler.exe -b -d -e -f -g -j -l -L -O -t -R -U none -x -X ${TTCN_FILES} 2>&1 3>&1 | tee build.log
+    compiler.exe -b -d -e -f -g -j -l -L -n -O -t -R -U none -x -X ${TTCN_FILES} 2>&1 3>&1 | tee build.log
     if [ "$?" == "1" ]
     then
         f_exit "Failed to compile ATS" 4
     fi
 else
-    compiler -b -d -e -f -g -j -l -L -O -t -R -U none -x -X ${TTCN_FILES} 2>&1 3>&1 | tee build.log
+    compiler -b -d -e -f -g -j -l -L -n -O -t -R -U none -x -X ${TTCN_FILES} 2>&1 3>&1 | tee build.log
     if [ "$?" == "1" ]
     then 
         f_exit "Failed to generate ATS source code" 6
@@ -177,19 +177,19 @@ if [ "$1" == "prof" ]
 then
     if [ "${OSTYPE}" == "cygwin" ]
     then
-        CXXFLAGS_DEBUG_MODE='s/-Wall/-pg -Wall -std=c++11 -D_XOPEN_SOURCE=700 -DAS_USE_SSL -pthreads -fstack-check -fstack-protector/g'
+        CXXFLAGS_DEBUG_MODE='s/-Wall/-pg -Wall -std=c++11 -D_XOPEN_SOURCE=700 -DAS_USE_SSL -pthreads -fstack-check -fstack-protector -fsanitize=leak -fsanitize=address -fno-omit-frame-pointer/g'
     else
-        CXXFLAGS_DEBUG_MODE='s/-Wall/-pg -Wall -std=c++11 -DAS_USE_SSL -pthreads -fstack-check -fstack-protector/g'
+        CXXFLAGS_DEBUG_MODE='s/-Wall/-pg -Wall -std=c++11 -DAS_USE_SSL -pthreads -fstack-check -fstack-protector -fsanitize=leak -fsanitize=address -fno-omit-frame-pointer/g'
     fi
-    LDFLAGS_DEBUG_MODE='s/LDFLAGS = /LDFLAGS = -pg -pthread -fstack-check -fstack-protector/g'
+    LDFLAGS_DEBUG_MODE='s/LDFLAGS = /LDFLAGS = -pg -pthread -fstack-check -fstack-protector -fsanitize=leak -fsanitize=address -fno-omit-frame-pointer/g'
 else
     if [ "${OSTYPE}" == "cygwin" ]
     then
-        CXXFLAGS_DEBUG_MODE='s/-Wall/-ggdb -O0 -Wall -std=c++11 -DAS_USE_SSL -D_XOPEN_SOURCE=700 -pthread -fstack-check -fstack-protector/g'
+        CXXFLAGS_DEBUG_MODE='s/-Wall/-ggdb -O0 -Wall -std=c++11 -DAS_USE_SSL -D_XOPEN_SOURCE=700 -pthread -fstack-check -fstack-protector -fsanitize=leak -fsanitize=address -fno-omit-frame-pointer/g'
     else
-        CXXFLAGS_DEBUG_MODE='s/-Wall/-ggdb -O0 -Wall -std=c++11 -DAS_USE_SSL -pthread -fstack-check -fstack-protector/g'
+        CXXFLAGS_DEBUG_MODE='s/-Wall/-ggdb -O0 -Wall -std=c++11 -DAS_USE_SSL -pthread -fstack-check -fstack-protector -fsanitize=leak -fsanitize=address -fno-omit-frame-pointer/g'
     fi
-    LDFLAGS_DEBUG_MODE='s/LDFLAGS = /LDFLAGS = -g -pthread -fstack-check -fstack-protector/g'
+    LDFLAGS_DEBUG_MODE='s/LDFLAGS = /LDFLAGS = -g -pthread -fstack-check -fstack-protector -fsanitize=leak -fsanitize=address -fno-omit-frame-pointer/g'
 fi
 ADD_INCLUDE='/CPPFLAGS = /a\\CPPFLAGS += -I/usr/local/share -I$(PATH_DEV_EMTEL)/include -I$(PATH_DEV_EMTEL)/framework/include -I../include -I../../LibEmtel/Common/include -I../../LibEmtel/LibPemea/include -I$(HOME_INC) -I.'
 ADD_LIBRARIES='s/LINUX_LIBS = -lxml2/LINUX_LIBS = -lrt -lxml2 -lstdc++fs -lssl/g'
