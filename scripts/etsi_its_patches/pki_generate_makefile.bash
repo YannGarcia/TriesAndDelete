@@ -85,7 +85,7 @@ then
     fi
 fi
 
-REFERENCES="LibCommon LibIts/Common LibIts/BTP LibIts/GeoNetworking LibIts/Ipv6OverGeoNetworking LibIts/Security LibIts/CAM LibIts/DENM LibIts/IVIM LibIts/MapemSpatem LibIts/SremSsem LibIts/Http LibItsPki"
+REFERENCES="LibCommon LibIts/Common LibIts/BTP LibIts/GeoNetworking LibIts/Ipv6OverGeoNetworking LibIts/Security LibIts/CAM LibIts/DENM LibIts/IVIM LibIts/MapemSpatem LibIts/SremSsem LibIts/Http LibIts/Pki"
 for i in ${REFERENCES}
 do
     # TTCN code
