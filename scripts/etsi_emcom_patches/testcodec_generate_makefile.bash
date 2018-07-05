@@ -237,5 +237,6 @@ if [ "$?" == "1" ]
 then
     f_exit "Failed to generate ATS source code" 9
 fi
+export LD_LIBRARY_PATH=~/frameworks/osip/src/osipparser2/.libs:$LD_LIBRARY_PATH
 ../bin/Ats${ATS_NAME} -v
 f_exit "Build done successfully" 0
