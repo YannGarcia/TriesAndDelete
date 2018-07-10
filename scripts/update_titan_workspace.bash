@@ -1,7 +1,8 @@
 #!/bin/bash
-#set -xv
+set -xv
 #set -e
 
+TITAN_PATH=${HOME}/tmp/workspace_titan
 if [ ! -d /media/sf_F_DRIVE/FSCOM/ETSI/ITS/STF525_Auto_Interop/workspace_titan/STF525_Auto_Interop ]
 then
     if [ -! -d $HOME/tmp/STF525 ]
@@ -17,11 +18,11 @@ if [ "$ORG_PATH" == "" ]
 then
     exit -1
 fi
-if [ ! -d ${HOME}/tmp/workspace_titan/STF525_Auto_Interop/src ]
+if [ ! -d ${TITAN_PATH}/STF525_Auto_Interop/src ]
 then
-    mkdir -p ${HOME}/tmp/workspace_titan/STF525_Auto_Interop/src
+    mkdir -p ${TITAN_PATH}/STF525_Auto_Interop/src
 fi
-cd ${HOME}/tmp/workspace_titan/STF525_Auto_Interop/src
+cd ${TITAN_PATH}/STF525_Auto_Interop/src
 
 # Cleanup bin folders
 if [ -d ./bin ]
@@ -43,17 +44,19 @@ fi
 find . -name ".o" -type f -exec rm {} \;
 
 # Copy configuration files
-cp -Rp ${ORG_PATH}/src/etc .
+cp -Rp ${ORG_PATH}/etc .
 # Copy testdata files
-cp -Rp ${ORG_PATH}/src/testdata .
+cp -Rp ${ORG_PATH}/testdata .
 # Copy source files
-cp -Rp ${ORG_PATH}/src/ccsrc/ .
+cp -Rp ${ORG_PATH}/ccsrc/ .
 # Create link to TITAN Abstract_Socket
 ln -sf $TOP/../titan.TestPorts.Common_Components.Abstract_Socket/src/Abstract_Socket.cc ./ccsrc/Protocols/Tcp/Abstract_Socket.cc
 ln -sf $TOP/../titan.TestPorts.Common_Components.Abstract_Socket/src/Abstract_Socket.hh ./ccsrc/Protocols/Tcp/Abstract_Socket.hh
 # Copy TTCN-3 files
-cp -Rp ${ORG_PATH}/src/ttcn/ .
-cp -Rp ${ORG_PATH}/src/asn1/ .
+cp -Rp ${ORG_PATH}/ttcn/ .
+cp -Rp ${ORG_PATH}/asn1/ .
+# Copy Eclipse TPD file
+cp -Rp ${ORG_PATH}/STF525_Auto_Interop.tpd .
 # Remove origine ASN.1 file for IS/ISO-TS-19091
 if [ -d ./asn1/LibIts/IS/ISO_TS_19091/original ]
 then
